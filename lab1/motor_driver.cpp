@@ -94,7 +94,7 @@ motor_driver::motor_driver (
 
 //-------------------------------------------------------------------------------------
 /** @brief   This method sets the appropriate input direction based on the incoming pwm parameter labeled power. 
- *  @param   ch The A/D channel which is being read must be from 0 to 7
+ *  @param   sig int16_t the incoming signed input that tells our pwm signal going into the Output/Compare how strong the motor will be moving
  *  @return  no return
  */
 

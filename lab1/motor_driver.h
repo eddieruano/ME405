@@ -73,9 +73,9 @@ class motor_driver
 
 	// prototype for set_power method of motor_driver
     void set_power (int16_t);
-    // prototypre for the brake method of motor_driver
+    // prototype for the brake method of motor_driver with parameter
 	void brake (int16_t);
-	
+	// prototype for brake method w/o parameter
 	void brake (void);
 
 }; // end of class motor_driver

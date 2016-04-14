@@ -18,10 +18,13 @@
 /** @brief   This is the constuctor for the motor_driver class.
  *  @details This constructor takes in several addresses and delivers them to the protected variables declared in our header file. 
  *  @param   serial_PORT_incoming This holds the address to the incoming data register 
- *  @param   ch The A/D channel which is being read must be from 0 to 7
- *  @param   ch The A/D channel which is being read must be from 0 to 7
- *  @param   ch The A/D channel which is being read must be from 0 to 7
- *  @return  The result of the A/D conversion
+ *  @param   diag_PORT_incoming This holds the address to the incoming data register
+ *  @param   pwm_PORT_incoming This holds the address to the incoming data register
+ *  @param   ocr_PORT_incoming This holds the address to the incoming ocr register
+ *  @param   input_APIN_incoming This holds defined value for INA pin
+ *  @param   input_BPIN_incoming This holds defined value for INB pin
+ *  @param   diag_PIN_incoming This holds defined value for appropriate diag pin
+ *  @param   pwm_BPIN_incoming This holds defined value for pwm pin
  */
 
 motor_driver::motor_driver (

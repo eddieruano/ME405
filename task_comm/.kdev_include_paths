@@ -1,0 +1,6 @@
+RESOLVE: SOURCE=/home/jr/src/ME405/labs/task_comm BUILD=/home/jr/src/ME405/labs/task_comm/build
+/usr/lib/avr/include
+../lib/freertos
+../lib/frtcpp
+../lib/misc
+../lib/serial

@@ -1,0 +1,93 @@
+\hypertarget{classadc}{
+\section{adc Class Reference}
+\label{classadc}\index{adc@{adc}}
+}
+
+
+This class {\bfseries will} run the A/D converter on an AVR processor.  
+
+
+{\ttfamily \#include $<$adc.h$>$}\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classadc_af3b8262c08f5fc5ae325a20622883424}{adc} (emstream $\ast$=NULL)
+\begin{DoxyCompactList}\small\item\em This constructor sets up an A/D converter. \item\end{DoxyCompactList}\item 
+uint16\_\-t \hyperlink{classadc_a2190a59696a7093e1ea605e998ccf97e}{read\_\-once} (uint8\_\-t)
+\begin{DoxyCompactList}\small\item\em This method takes one A/D reading from the given channel and returns it. \item\end{DoxyCompactList}\item 
+uint16\_\-t \hyperlink{classadc_a58f1030fe64d3dea4ccd8a2687dd6fce}{read\_\-oversampled} (uint8\_\-t, uint8\_\-t)
+\begin{DoxyCompactList}\small\item\em This method takes multiple readings specified by an input parameter from a particular channel and return the average of those readings. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classadc_a14680b48b723bf1adddd2741ebb18a3e}{
+emstream $\ast$ \hyperlink{classadc_a14680b48b723bf1adddd2741ebb18a3e}{ptr\_\-to\_\-serial}}
+\label{classadc_a14680b48b723bf1adddd2741ebb18a3e}
+
+\begin{DoxyCompactList}\small\item\em The ADC class uses this pointer to the serial port to say hello. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class {\bfseries will} run the A/D converter on an AVR processor. It should have some better comments. Yes, this is a {\bfseries subtle} {\bfseries hint}... {\bfseries Please} {\bfseries fix} {\bfseries these} {\bfseries comments} {\bfseries before} {\bfseries turning} {\bfseries this} {\bfseries in!} 
+
+Definition at line 46 of file adc.h.
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classadc_af3b8262c08f5fc5ae325a20622883424}{
+\index{adc@{adc}!adc@{adc}}
+\index{adc@{adc}!adc@{adc}}
+\subsubsection[{adc}]{\setlength{\rightskip}{0pt plus 5cm}adc::adc (emstream $\ast$ {\em p\_\-serial\_\-port} = {\ttfamily NULL})}}
+\label{classadc_af3b8262c08f5fc5ae325a20622883424}
+
+
+This constructor sets up an A/D converter. This constructor takes the pointer given to it and initializes itself. Also, here we set the voltage refrence and enable the A/D converter as well as set the prescaler to 32, through some bitshifting. 
+\begin{DoxyParams}{Parameters}
+\item[{\em p\_\-serial\_\-port}]A pointer to the serial port which writes debugging info. \end{DoxyParams}
+
+
+Definition at line 39 of file adc.cpp.
+
+References ptr\_\-to\_\-serial.
+
+\subsection{Member Function Documentation}
+\hypertarget{classadc_a2190a59696a7093e1ea605e998ccf97e}{
+\index{adc@{adc}!read\_\-once@{read\_\-once}}
+\index{read\_\-once@{read\_\-once}!adc@{adc}}
+\subsubsection[{read\_\-once}]{\setlength{\rightskip}{0pt plus 5cm}uint16\_\-t adc::read\_\-once (uint8\_\-t {\em ch})}}
+\label{classadc_a2190a59696a7093e1ea605e998ccf97e}
+
+
+This method takes one A/D reading from the given channel and returns it. Given a channel, this method first checks to make sure only valid channels are accepted by setting any outside parameter to channel 0. Then we set the correct register to enable the A/D and use a while loop to wait until the completion bit is 0. At that point, the loop breaks and the results stored in ADCL and ADCH are concatenated into the 16 bit return value. 
+\begin{DoxyParams}{Parameters}
+\item[{\em ch}]The A/D channel which is being read must be from 0 to 7 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ADC\_\-value, the 16 bit returned value of the concatendated High and Low results. 
+\end{DoxyReturn}
+
+
+Definition at line 61 of file adc.cpp.
+
+Referenced by read\_\-oversampled(), and task\_\-brightness::run().\hypertarget{classadc_a58f1030fe64d3dea4ccd8a2687dd6fce}{
+\index{adc@{adc}!read\_\-oversampled@{read\_\-oversampled}}
+\index{read\_\-oversampled@{read\_\-oversampled}!adc@{adc}}
+\subsubsection[{read\_\-oversampled}]{\setlength{\rightskip}{0pt plus 5cm}uint16\_\-t adc::read\_\-oversampled (uint8\_\-t {\em channel}, \/  uint8\_\-t {\em samples})}}
+\label{classadc_a58f1030fe64d3dea4ccd8a2687dd6fce}
+
+
+This method takes multiple readings specified by an input parameter from a particular channel and return the average of those readings. 
+\begin{DoxyParams}{Parameters}
+\item[{\em channel}]this parameter specifies which channel we're going to be averaging \item[{\em samples}]this specifies how many samples we're going to be taking and serves as the basis for our average division. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+average\_\-result, this is the average value read over that channel per those samples. 
+\end{DoxyReturn}
+
+
+Definition at line 96 of file adc.cpp.
+
+References read\_\-once().
+
+Referenced by operator$<$$<$().
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{adc_8h}{adc.h}\item 
+\hyperlink{adc_8cpp}{adc.cpp}\end{DoxyCompactItemize}

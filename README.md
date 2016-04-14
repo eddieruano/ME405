@@ -1,2 +1,2 @@
 # ME405
-ME 405 Cal Poly Doeee
+Lab code and project code for Mechatronics 405

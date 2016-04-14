@@ -1,0 +1,52 @@
+\hypertarget{classtask__brightness}{
+\section{task\_\-brightness Class Reference}
+\label{classtask__brightness}\index{task\_\-brightness@{task\_\-brightness}}
+}
+
+
+This task controls the brightness of an LED using an analog input from the A/D converter.  
+
+
+{\ttfamily \#include $<$task\_\-brightness.h$>$}\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtask__brightness_a5802baf3a0c9fe53ccbce8966d1fad47}{task\_\-brightness} (const char $\ast$, unsigned portBASE\_\-TYPE, size\_\-t, emstream $\ast$)
+\item 
+void \hyperlink{classtask__brightness_a615beac07a99f0856f048a46fd9a3898}{run} (void)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This task controls the brightness of an LED using an analog input from the A/D converter. The A/D converter is run using a driver in files {\ttfamily \hyperlink{adc_8h}{adc.h}} and {\ttfamily \hyperlink{adc_8cpp}{adc.cpp}}. Code in this task sets up a timer/counter in PWM mode and controls the LED's average brightness. 
+
+Definition at line 60 of file task\_\-brightness.h.
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classtask__brightness_a5802baf3a0c9fe53ccbce8966d1fad47}{
+\index{task\_\-brightness@{task\_\-brightness}!task\_\-brightness@{task\_\-brightness}}
+\index{task\_\-brightness@{task\_\-brightness}!task_brightness@{task\_\-brightness}}
+\subsubsection[{task\_\-brightness}]{\setlength{\rightskip}{0pt plus 5cm}task\_\-brightness::task\_\-brightness (const char $\ast$ {\em a\_\-name}, \/  unsigned portBASE\_\-TYPE {\em a\_\-priority}, \/  size\_\-t {\em a\_\-stack\_\-size}, \/  emstream $\ast$ {\em p\_\-ser\_\-dev})}}
+\label{classtask__brightness_a5802baf3a0c9fe53ccbce8966d1fad47}
+This constructor creates a task which controls the brightness of an LED using input from an A/D converter. The main job of this constructor is to call the constructor of parent class ({\ttfamily frt\_\-task} ); the parent's constructor the work. 
+\begin{DoxyParams}{Parameters}
+\item[{\em a\_\-name}]A character string which will be the name of this task \item[{\em a\_\-priority}]The priority at which this task will initially run (default: 0) \item[{\em a\_\-stack\_\-size}]The size of this task's stack in bytes (default: configMINIMAL\_\-STACK\_\-SIZE) \item[{\em p\_\-ser\_\-dev}]Pointer to a serial device (port, radio, SD card, etc.) which can be used by this task to communicate (default: NULL) \end{DoxyParams}
+
+
+Definition at line 49 of file task\_\-brightness.cpp.
+
+\subsection{Member Function Documentation}
+\hypertarget{classtask__brightness_a615beac07a99f0856f048a46fd9a3898}{
+\index{task\_\-brightness@{task\_\-brightness}!run@{run}}
+\index{run@{run}!task_brightness@{task\_\-brightness}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void task\_\-brightness::run (void)}}
+\label{classtask__brightness_a615beac07a99f0856f048a46fd9a3898}
+This method is called once by the RTOS scheduler. Each time around the for (;;) loop, it reads the A/D converter and uses the result to control the brightness of an LED. 
+
+Definition at line 67 of file task\_\-brightness.cpp.
+
+References adc::read\_\-once().
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{task__brightness_8h}{task\_\-brightness.h}\item 
+\hyperlink{task__brightness_8cpp}{task\_\-brightness.cpp}\end{DoxyCompactItemize}

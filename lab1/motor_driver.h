@@ -37,27 +37,27 @@ class motor_driver
 	protected:
 		/// The motor_driver class uses this pointer to the serial port to say hello
 		emstream* serial_PORT;
-		//pointer and DDR to input register
+		/// pointer and DDR to input register
 		volatile uint8_t* input_DDR;
 		volatile uint8_t* input_PORT;
-		//pointer and DDR to diagnostic register
+		/// pointer and DDR to diagnostic register
 		volatile uint8_t* diag_DDR;
 		volatile uint8_t* diag_PORT;
-		//pointer and DDR to pwm register
+		/// pointer and DDR to pwm register
 		volatile uint8_t* pwm_DDR;
 		volatile uint8_t* pwm_PORT;
-		//pointer to the comp register
+		/// pointer to the comp register
 		volatile uint16_t* ocr_PORT;
-		//pinA value to set the input register
+		/// pinA value to set the input register
 		uint8_t input_APIN;
-		//pinB value to set the input register
+		/// pinB value to set the input register
 		uint8_t input_BPIN;
-		//pin valye to set the diag register
+		/// pin valye to set the diag register
 		uint8_t diag_PIN; 
-		//pin value to set the pwm register
+		/// pin value to set the pwm register
 		uint8_t pwm_PIN;
 
-		//set the public constructor and the public methods
+		///set the public constructor and the public methods
     public:
 		motor_driver (
 			emstream* serial_PORT_incoming,
@@ -71,11 +71,11 @@ class motor_driver
 			uint8_t pwm_PIN_incoming	    
 			        );
 
-	// prototype for set_power method of motor_driver
+	/// prototype for set_power method of motor_driver
     void set_power (int16_t);
-    // prototype for the brake method of motor_driver with parameter
+    /// prototype for the brake method of motor_driver with parameter
 	void brake (int16_t);
-	// prototype for brake method w/o parameter
+	/// prototype for brake method w/o parameter
 	void brake (void);
 
 }; // end of class motor_driver

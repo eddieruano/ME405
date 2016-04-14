@@ -197,6 +197,12 @@ void motor_driver::brake (int16_t brake)
 
 }
 
+//-------------------------------------------------------------------------------------
+/** @brief This method actively brakes by setting both pins high. This is stronger braking than just letting it freewheel
+ *  @param brake int16_t is a signal that if true will indicate brakes
+ *  @return no return
+ */
+
  void motor_driver::brake ()
 { 
   // Need to set DDR to outputs for the input port
@@ -215,14 +221,18 @@ void motor_driver::brake (int16_t brake)
 
 }
 
-//------------------
-/**
- *
+//-------------------------------------------------------------------------------------
+/** @brief   This overloaded operator prints information about a motor driver. 
+ *  @details It prints out appropriate information about the motor driver being delivered in the parameter.
+ *  @param   serpt Reference to a serial port to which the printout will be printed
+ *  @param   a2d   Reference to the motor driver which is being accessed
+ *  @return  A reference to the same serial device on which we write information.
+ *           This is used to string together things to write with @c << operators
  */
 emstream& operator << (emstream& serpt, motor_driver& motdrv)
 {
 	// Prints info to serial
-	serpt << PMS ("I will print useful things. ")<<endl;
+	serpt << PMS ("Motor Driver Input: ")*motdrv.input_PORT<<endl;
 
 
 	return (serpt);

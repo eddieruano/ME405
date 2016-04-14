@@ -90,7 +90,7 @@ int main (void)
 	// serial port will be used by the user interface task after setup is complete and
 	// the task scheduler has been started by the function vTaskStartScheduler()
 	rs232* p_ser_port = new rs232 (9600, 1);
-	*p_ser_port << clrscr << PMS ("ME405 Lab 1 Program") << endl;
+	*p_ser_port << clrscr << PMS ("ME405 Lab 1 Motor Driver Program") << endl;
 
 	// Create the queues and other shared data items here
 	p_print_ser_queue = new TextQueue (32, "Print", p_ser_port, 10);

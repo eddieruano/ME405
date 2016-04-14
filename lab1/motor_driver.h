@@ -37,14 +37,17 @@ class motor_driver
 	protected:
 		/// The motor_driver class uses this pointer to the serial port to say hello
 		emstream* serial_PORT;
-		/// pointer and DDR to input register
+		/// pointer to input DDR register
 		volatile uint8_t* input_DDR;
+		/// pointer to the data input register
 		volatile uint8_t* input_PORT;
-		/// pointer and DDR to diagnostic register
+		/// pointer to diagnostic register
 		volatile uint8_t* diag_DDR;
+		/// pointer to the diag input register
 		volatile uint8_t* diag_PORT;
-		/// pointer and DDR to pwm register
+		/// pointer to DDR pwm register
 		volatile uint8_t* pwm_DDR;
+		/// pointer to pwm port
 		volatile uint8_t* pwm_PORT;
 		/// pointer to the comp register
 		volatile uint16_t* ocr_PORT;

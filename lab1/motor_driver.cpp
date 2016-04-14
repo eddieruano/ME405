@@ -15,7 +15,11 @@
 
 
 //-------------------------------------------------------------------------------------
-/** @brief   This method takes one A/D reading from the given channel and returns it. 
+/** @brief   This is the constuctor for the motor_driver class.
+ *  @details This constructor takes in several addresses and delivers them to the protected variables declared in our header file. 
+ *  @param   serial_PORT_incoming This holds the address to the incoming data register 
+ *  @param   ch The A/D channel which is being read must be from 0 to 7
+ *  @param   ch The A/D channel which is being read must be from 0 to 7
  *  @param   ch The A/D channel which is being read must be from 0 to 7
  *  @return  The result of the A/D conversion
  */

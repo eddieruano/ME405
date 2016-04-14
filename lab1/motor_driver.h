@@ -1,6 +1,7 @@
 //======================================================================================
 /** @file motor_driver.h
- *    This file contains a header file for the motor driver for a stepper motor
+ *    This file contains a header file for the motor driver for a regular DC 
+ *    motor. 
  *
  *  Revisions: n/a
  *  Author(s): Eddie Ruano
@@ -24,8 +25,8 @@
 
 
 //-------------------------------------------------------------------------------------
-/** @brief   This class will run the stepper motor.
- *  @details This class sets up the correct things
+/** @brief   This class will run the DC motor.
+ *  @details This class sets up a driver for a DC motor to be used with the H bridge on the custom Atmega1281 board. It sets up no private variables, and has multiple protected variables. The protected variables include 6 pointers to registers that hold the correct data for the 
  *  
  */
 

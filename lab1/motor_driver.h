@@ -84,7 +84,7 @@ class motor_driver
 }; // end of class motor_driver
 
 
-// This operator prints useful info about particular given motor driver
+/// This operator prints useful info about particular given motor driver
 emstream& operator << (emstream&, motor_driver&);
 //closes the removal of the code
 #endif

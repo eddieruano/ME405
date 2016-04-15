@@ -3,7 +3,7 @@
 ** support, and with no warranty, express or implied, as to its usefulness for
 ** any purpose.
 **
-** bitbot.h
+** bitbot.cpp
 ** Description: This is the header file for our BITBOT helper.
 **
 ** Author: Eddie Ruano
@@ -31,87 +31,6 @@ bitbot::bitbot (emstream* the_serial_incoming)
 }
 
 
-/* -------------------------------------------------------------------------*/
-/** @brief   
- *  @details .
- *  @param   
- *  @return  
- */
-
-void bitbot::clear_reg (volatile uint8_t*)
-{
-    
-}
-
-/* -------------------------------------------------------------------------*/
-/** @brief   
- *  @details .
- *  @param   
- *  @return  
- */
-
-void bitbot::clear_bit (volatile uint8_t*, uint8_t)
-{
-    
-}
-/* -------------------------------------------------------------------------*/
-/** @brief   
- *  @details .
- *  @param   
- *  @return  
- */
-
-void bitbot::set_reg (volatile uint8_t*)
-{
-    
-}
-/* -------------------------------------------------------------------------*/
-/** @brief   
- *  @details .
- *  @param   
- *  @return  
- */
-
-void bitbot::set_bit (volatile uint8_t*, uint8_t)
-{
-    
-}
-/* -------------------------------------------------------------------------*/
-/** @brief   
- *  @details .
- *  @param   
- *  @return  
- */
-
-void bitbot::set_input_DDR (volatile uint8_t*, uint8_t)
-{
-    
-}
-
-/* -------------------------------------------------------------------------*/
-/** @brief   
- *  @details .
- *  @param   
- *  @return  
- */
-
-void bitbot::set_output_DDR (volatile uint8_t*, uint8_t)
-{
-    
-}
-/* -------------------------------------------------------------------------*/
-/** @brief   
- *  @details .
- *  @param   
- *  @return  
- */
-
-void bitbot::say_hello (void)
-{
-    *the_serial << PMS ("Hello World.") <<endl;
-    cout<< "Hello World";
-    return true;
-}
 
 
 

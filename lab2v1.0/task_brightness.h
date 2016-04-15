@@ -47,15 +47,13 @@
 
 #include "rs232int.h"                       // ME405/507 library for serial comm.
 #include "adc.h"                            // Header for A/D converter driver class
-#include "motor_driver.h"
+#include "motor_driver.h"                   // Header for Generic Motor driver
 
 
 //-------------------------------------------------------------------------------------
-/** @brief   This task controls the brightness of an LED using an analog input from 
- *           the A/D converter. 
- *  @details The A/D converter is run using a driver in files @c adc.h and @c adc.cpp.
- *           Code in this task sets up a timer/counter in PWM mode and controls the 
- *           LED's average brightness. 
+/** @brief  This task controls the brightness of an LED based on input from an A/D converter that also drives 2 motors.
+ *  @details The A/D converter is run using a driver in files @c adc.h and @c adc.cpp. and the motor_driver is run using a driver in files @c motor_driver.h and @c motor_driver.cpp
+ *           Code in this task sets up a timer/counter in PWM mode and controls the LED's average brightness through Timer/Counter 3 and the Timer/Counter 1 in fast non-inverted PWM sets up the correct input for the pwm of the motor.
  */
 
 class task_brightness : public TaskBase

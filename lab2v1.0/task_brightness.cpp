@@ -73,17 +73,6 @@ void task_brightness::run (void)
    // so the A/D converter cannot be used from any other function or method
    adc* p_my_adc = new adc (p_serial);
 
-   //**  CREATE THE MOTOR DRIVERS  **//
-   
-   // create a pointer to a motor driver object and pass it addresses to PORTC, PORTB, OC1B and Pin Values for PC0, PC2, and PB6 as the PWM
-   motor_driver* p_motor1 = new motor_driver(p_serial, &PORTC, &PORTC, &PORTB, &OCR1B, PC0, PC1, PC2, PB6);
-
-   // create a pointer to a motor driver object and pass it addresses to PORTD, PORTB, OC1A and Pin Values for PD5, PD7, and PB5 as the PWM
-   motor_driver* p_motor2 = new motor_driver(p_serial, &PORTD, &PORTD, &PORTB, &OCR1A, PD5, PD6, PD7, PB5);
-
-
-
-
    // Configure counter/timer 3 as a PWM for LED brightness. First set the data
    // direction register so that the pin used for the PWM will be an output. The 
    // pin is Port E pin 4, which is also OC3B (Output Compare B for Timer 3)
@@ -97,19 +86,7 @@ void task_brightness::run (void)
 
    // The CS31 and CS30 bits set the prescaler for this timer/counter to run the
    // timer at F_CPU / 64
-   TCCR3B |= (1 << WGM32) | (1 << CS31)  | (1 << CS30);
-
-
-
-
-   // Configure counter/timer 1 as a PWM for Motor Drivers. 
-   // COM1A1/COM1B1 to set to non inverting mode. 
-   // WGM10 to set to Fast PWM mode (only half ughhhhh)
-   TCCR1A |= (1 << WGM10) | (1 << COM1A1) | (1 << COM1B1);
-   // This is the second Timer/Counter Register
-   // WGM12 (other half of Fast PWM) 
-   // CS11 Sets the presacler to 8 (010)
-   TCCR1B |= (1 << WGM12) | (1 << CS11); 
+   TCCR3B |= (1 << WGM32) | (1 << CS31)  | (1 << CS30); 
 
    // This is the task loop for the brightness control task. This loop runs until the
    // power is turned off or something equally dramatic occurs
@@ -121,48 +98,11 @@ void task_brightness::run (void)
       // Convert the A/D reading into a PWM duty cycle. The A/D reading is between 0
       // and 1023; the duty cycle should be between 0 and 255. Thus, divide by 4
       uint16_t duty_cycle = a2d_reading / 4;
-      
-      int16_t power = ((int16_t)duty_cycle * 1);
-      
-      //doesn't let the duty_cycle go to 0 because then the power is 0.
-      if(duty_cycle == 0){duty_cycle++;}
-      //From 00 - 64 we want to decrease forwards 
-      //From 65 - 128 we want to increase backwards
-      //From 129 - 192 we want to set both outs to high to set holding brake
-      //From 193 - 255 we want to set both outs to low so that they don't affect the motor
-      if(duty_cycle <= 64)
-      {
-         //forwards start from high speed to go to low speed
-         power = 255 - (4 * duty_cycle);
-        
-         p_motor1->set_power(power);
-         p_motor2->set_power(duty_cycle);
-      }
-      else if(duty_cycle > 64 && duty_cycle <= 128)
-      {
-         //backwards start from low speed to go to high speed
-         power = -4 * (duty_cycle - 64);
-         p_motor1->set_power(power);
-         p_motor2->set_power(-1*duty_cycle);
-      }
-      else if( duty_cycle > 128 && duty_cycle <= 192)
-      {
-         //power stopping
-         power = 4 * (duty_cycle - 128);
-         p_motor1->brake(power);
-         p_motor2->brake(power);
-      }
-      else
-      {
-         //free wheeling
-         p_motor1->brake();
-         p_motor2->brake();
-      }
 
       //print the Duty_Cycle in comparison to the Power Signal being pumped into set_power
 
-      *p_serial <<PMS ("Duty_Cycle: ")<< duty_cycle <<dec <<endl
-           <<PMS ("Power_Signal: ")<< power <<dec <<endl;
+      *p_serial <<PMS ("ADC Reading: ")<< a2d_reading <<dec <<endl
+           <<PMS ("Power_Signal: ")<< duty_cycle <<dec <<endl;
 
 
       // Set the brightness. Since the PWM has already been set up, we only need to
@@ -177,7 +117,7 @@ void task_brightness::run (void)
 
       // This is a method we use to cause a task to make one run through its task
       // loop every N milliseconds and let other tasks run at other times
-      delay_from_for_ms (previousTicks, 10);
+      delay_from_for_ms (previousTicks, 1000);
    }
 }
 

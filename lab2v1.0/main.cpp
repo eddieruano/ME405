@@ -53,6 +53,7 @@
 #include "taskshare.h"                      // Header for thread-safe shared data
 #include "shares.h"                         // Global ('extern') queue declarations
 #include "task_brightness.h"                // Header for the data acquisition task
+#include "task_motor.h"
 #include "task_user.h"                      // Header for user interface task
 
 
@@ -101,6 +102,9 @@ int main (void)
 
 	// Create a task which reads the A/D and adjusts an LED's brightness accordingly
 	new task_brightness ("Bright", task_priority (2), 280, p_ser_port);
+
+	// Create new motor task
+	new task_motor ("Motor", task_priority (2), 280, p_ser_port);
 
 	// Create a motor driver task that will go here
 

@@ -19,19 +19,19 @@
  *    @li 01-04-2015 JRR Names of share & queue classes changed; allocated with new now
  *
  *  License:
- *		This file is copyright 2015 by JR Ridgely and released under the Lesser GNU
- *		Public License, version 2. It intended for educational use only, but its use
- *		is not limited thereto. */
-/*		THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- *		AND	ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * 		IMPLIED 	WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * 		ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * 		LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUEN-
- * 		TIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * 		OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * 		CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * 		OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * 		OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
+ *    This file is copyright 2015 by JR Ridgely and released under the Lesser GNU
+ *    Public License, version 2. It intended for educational use only, but its use
+ *    is not limited thereto. */
+/*    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ *    AND   ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ *       IMPLIED  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ *       ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ *       LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUEN-
+ *       TIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ *       OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ *       CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ *       OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *       OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 //*************************************************************************************
 
 
@@ -55,6 +55,7 @@
 #include "task_brightness.h"                // Header for the data acquisition task
 #include "task_motor.h"
 #include "task_user.h"                      // Header for user interface task
+#include "task_encoder.h"                                            // Header for task_encoder
 
 
 // Declare the queues which are used by tasks to communicate with each other here.
@@ -71,6 +72,10 @@
  */
 TextQueue* p_print_ser_queue;
 
+uint32_t* encoder_current_position;
+
+uint32_t* encoder_current_velocity;
+
 
 //=====================================================================================
 /** The main function sets up the RTOS.  Some test tasks are created. Then the
@@ -81,39 +86,39 @@ TextQueue* p_print_ser_queue;
 
 int main (void)
 {
-	// Disable the watchdog timer unless it's needed later. This is important because
-	// sometimes the watchdog timer may have been left on...and it tends to stay on
-	MCUSR = 0;
-	wdt_disable ();
+   // Disable the watchdog timer unless it's needed later. This is important because
+   // sometimes the watchdog timer may have been left on...and it tends to stay on
+   MCUSR = 0;
+   wdt_disable ();
 
-	// Configure a serial port which can be used by a task to print debugging infor-
-	// mation, or to allow user interaction, or for whatever use is appropriate.  The
-	// serial port will be used by the user interface task after setup is complete and
-	// the task scheduler has been started by the function vTaskStartScheduler()
-	rs232* p_ser_port = new rs232 (9600, 1);
-	*p_ser_port << clrscr << PMS ("ME405 Driver Program") << endl;
+   // Configure a serial port which can be used by a task to print debugging infor-
+   // mation, or to allow user interaction, or for whatever use is appropriate.  The
+   // serial port will be used by the user interface task after setup is complete and
+   // the task scheduler has been started by the function vTaskStartScheduler()
+   rs232* p_ser_port = new rs232 (9600, 1);
+   *p_ser_port << clrscr << PMS ("ME405 Driver Program") << endl;
 
-	// Create the queues and other shared data items here
-	p_print_ser_queue = new TextQueue (32, "Print", p_ser_port, 10);
+   // Create the queues and other shared data items here
+   p_print_ser_queue = new TextQueue (32, "Print", p_ser_port, 10);
 
-	// The user interface is at low priority; it could have been run in the idle task
-	// but it is desired to exercise the RTOS more thoroughly in this test program
-	new task_user ("UserInt", task_priority (1), 260, p_ser_port);
+   // The user interface is at low priority; it could have been run in the idle task
+   // but it is desired to exercise the RTOS more thoroughly in this test program
+   new task_user ("UserInt", task_priority (1), 260, p_ser_port);
 
-	// Create a task which reads the A/D and adjusts an LED's brightness accordingly
-	new task_brightness ("Bright", task_priority (2), 280, p_ser_port);
+   // Create a task which reads the A/D and adjusts an LED's brightness accordingly
+   new task_brightness ("Bright", task_priority (2), 280, p_ser_port);
 
-	// Create new motor task
-	new task_motor ("Motor", task_priority (2), 280, p_ser_port);
+   // Create new motor task
+   new task_motor ("Motor", task_priority (2), 280, p_ser_port);
 
-	// Create new task that will read the encoder
-	new task_encoder ("Encoder", task_encoder (3), 280, p_ser_port);
-
-
+   // Create new task that will read the encoder
+   new task_encoder ("Encoder", task_encoder (3), 280, p_ser_port);
 
 
-	// Here's where the RTOS scheduler is started up. It should never exit as long as
-	// power is on and the microcontroller isn't rebooted
-	vTaskStartScheduler ();
+
+
+   // Here's where the RTOS scheduler is started up. It should never exit as long as
+   // power is on and the microcontroller isn't rebooted
+   vTaskStartScheduler ();
 }
 

@@ -1,5 +1,5 @@
 //======================================================================================
-/** @file motor_driver.h
+/** @file encoder_driver.h
  *    This file contains a header file for the motor driver for a regular DC 
  *    motor. 
  *
@@ -13,9 +13,9 @@
  * to remove this code if it already read the define in the next line
  * of code below.
 */
-#ifndef MOTOR_DRIVER 
+#ifndef encoder_driver 
 
-#define MOTOR_DRIVER
+#define encoder_driver
 
 #include "emstream.h"               // Header for serial ports and devices
 #include "FreeRTOS.h"               // Header for the FreeRTOS RTOS
@@ -31,14 +31,14 @@
  *  
  */
 
-class motor_driver
+class encoder_driver
 {
    private:
       int8_t motor_direction;
       uint8_t motor_speed;
 
    protected:
-      /// The motor_driver class uses this pointer to the serial port to say hello
+      /// The encoder_driver class uses this pointer to the serial port to say hello
       emstream* serial_PORT;
       /// pointer to input DDR register
       volatile uint8_t* input_DDR;
@@ -65,7 +65,7 @@ class motor_driver
 
       ///set the public constructor and the public methods
     public:
-      motor_driver (
+      encoder_driver (
          emstream* serial_PORT_incoming,
          volatile uint8_t* input_PORT_incoming,
          volatile uint8_t* diag_PORT_incoming,
@@ -77,9 +77,9 @@ class motor_driver
          uint8_t pwm_PIN_incoming    
                   );
 
-   /// prototype for set_power method of motor_driver
+   /// prototype for set_power method of encoder_driver
    void set_power (int16_t);
-   /// prototype for the brake method of motor_driver with parameter
+   /// prototype for the brake method of encoder_driver with parameter
    void brake (int16_t);
    /// prototype for brake method w/o parameter
    void brake (void);
@@ -90,11 +90,11 @@ class motor_driver
    /// prototype for a status printer that will give us useful information
    void set_pwm(int8_t);
 
-}; // end of class motor_driver
+}; // end of class encoder_driver
 
 
 /// This operator prints useful info about particular given motor driver
-emstream& operator << (emstream&, motor_driver&);
+emstream& operator << (emstream&, encoder_driver&);
 // closes the removal of the code
 #endif
 

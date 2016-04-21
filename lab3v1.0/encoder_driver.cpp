@@ -35,6 +35,12 @@ encoder_driver::encoder_driver (
   sei();
 
    emstream* serial_PORT_incoming,
+   volatile uint8_t* interrupt_control,
+   volatile uint8_t* interrupt_enable,
+   volatile uint8_t* temp,
+   uint8_t a_pin_enable,
+   uint8_t b_pin_enable,
+   
            
                            )
 {
@@ -49,17 +55,15 @@ encoder_driver::encoder_driver (
 
 
 // Set up ISR for PINB6
-ISR()
+ISR(vector_a)
 {
-
+  while(1){}
 }
 // Set up ISR for PINB7
 ISR()
-
 {
-
-}
-
+  while(1){}
+{
 
 
 //-------------------------------------------------------------------------------------

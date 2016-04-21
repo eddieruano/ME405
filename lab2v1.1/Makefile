@@ -30,7 +30,7 @@ PROJECT_NAME = Lab2 Task Motor Installed
 
 # A list of the source (.c, .cc, .cpp) files in the project. Files in library 
 # subdirectories do not go in this list; they're included automatically
-SOURCES = main.cpp task_user.cpp task_brightness.cpp task_motor.cpp adc.cpp motor_driver.cpp task_encoder.cpp encoder_driver.cpp
+SOURCES = main.cpp task_user.cpp task_brightness.cpp task_motor.cpp adc.cpp motor_driver.cpp 
 
 # Clock frequency of the CPU, in Hz. This number should be an unsigned long integer.
 # For example, 16 MHz would be represented as 16000000UL. 
@@ -240,15 +240,15 @@ vpath %.c $(LIB_FULL)
 # Rules to make downloadable binary files in ELF (which contains debugging 
 # information), BIN (pure binary machine code), and HEX (text binary) formats
 $(BIN): $(ELF)
-    @$(OBJCOPY) -O binary $< $@
+	@$(OBJCOPY) -O binary $< $@
 
 $(HEX): $(ELF)
-    @$(OBJCOPY) -j .text -j .data -O ihex $< $@
+	@$(OBJCOPY) -j .text -j .data -O ihex $< $@
 
 $(ELF): $(LIB_FILE) $(OBJECTS)
-    @echo "Linking:     " $(OBJECTS) $(LIB_FILE) " --> " $@
-    @$(LD) $(BASE_FLAGS) $(OBJECTS) $(LIB_FILE) -o $@
-    @$(SIZER) $@
+	@echo "Linking:     " $(OBJECTS) $(LIB_FILE) " --> " $@
+	@$(LD) $(BASE_FLAGS) $(OBJECTS) $(LIB_FILE) -o $@
+	@$(SIZER) $@
 
 # Auto-generate dependency info for existing .o files
 -include $(OBJECTS:.o=.d)
@@ -256,24 +256,24 @@ $(ELF): $(LIB_FILE) $(OBJECTS)
 # Rules to compile and assemble source code into object code. An image of each source
 # directory is created under the build directory and object files are put there
 $(BUILDDIR)/%.o: %.c
-    @mkdir -p $(dir $@)
-    @echo "Compiling:   " $< " --> " $@
-    @$(CC) -c $(C_FLAGS) -MMD -MP -MF $(BUILDDIR)/$(*F).d $< -o $@
+	@mkdir -p $(dir $@)
+	@echo "Compiling:   " $< " --> " $@
+	@$(CC) -c $(C_FLAGS) -MMD -MP -MF $(BUILDDIR)/$(*F).d $< -o $@
 
 $(BUILDDIR)/%.o: %.cpp
-    @mkdir -p $(dir $@)
-    @echo "Compiling:   " $< " --> " $@
-    @$(CXX) -c $(CPP_FLAGS) -MMD -MP -MF $(BUILDDIR)/$(*F).d $< -o $@
+	@mkdir -p $(dir $@)
+	@echo "Compiling:   " $< " --> " $@
+	@$(CXX) -c $(CPP_FLAGS) -MMD -MP -MF $(BUILDDIR)/$(*F).d $< -o $@
 
 $(BUILDDIR)/%.o: %.S
-    @mkdir -p $(dir $@)
-    @echo "Assembling:  " $< " --> " $@
-    @$(CC) -c $(C_FLAGS) -MMD -MP -MF $(BUILDDIR)/$(*F).d $< -o $@
+	@mkdir -p $(dir $@)
+	@echo "Assembling:  " $< " --> " $@
+	@$(CC) -c $(C_FLAGS) -MMD -MP -MF $(BUILDDIR)/$(*F).d $< -o $@
 
 # This rule will build the library file from all the .o files in the library folders
 $(LIB_FILE): $(LIB_OBJS)
-    @echo "Library-ing:  (*.o) --> " $@
-    @$(AR) -c -r $@ $(LIB_OBJS)
+	@echo "Library-ing:  (*.o) --> " $@
+	@$(AR) -c -r $@ $(LIB_OBJS)
 
 #==================================== TARGETS =========================================
 
@@ -288,15 +288,15 @@ all: $(HEX) $(BIN)
 
 install:  $(ELF) $(BIN) $(HEX)
   ifeq ($(PROG), bsd)
-    $(DUDE) -p $(MCU) -P $(PPORT) -c bsd -V -E noreset -Uflash:w:$(HEX)
+	$(DUDE) -p $(MCU) -P $(PPORT) -c bsd -V -E noreset -Uflash:w:$(HEX)
   else ifeq ($(PROG), jtagice)
-    $(ICE) -e -p -f $(ELF) -j $(JPORT)
+	$(ICE) -e -p -f $(ELF) -j $(JPORT)
   else ifeq ($(PROG), bootloader)
-    @echo "ERROR: No bootloader set up for this Makefile"
+	@echo "ERROR: No bootloader set up for this Makefile"
   else ifeq ($(PROG), usbtiny)
-    $(DUDE) -p $(MCU) -c usbtiny -V -B 1 -Uflash:w:$(HEX)
+	$(DUDE) -p $(MCU) -c usbtiny -V -B 1 -Uflash:w:$(HEX)
   else
-    @echo "ERROR: No programmer" $(PROG) "in the Makefile"
+	@echo "ERROR: No programmer" $(PROG) "in the Makefile"
   endif
 
 #--------------------------------------------------------------------------------------
@@ -305,17 +305,17 @@ install:  $(ELF) $(BIN) $(HEX)
 
 fuses: nothing
   ifeq ($(PROG), bsd)
-    $(DUDE) -p $(MCU) -P $(PPORT) -c $(PROG) -V -E noreset -Ulfuse:w:$(LFUSE):m 
-    $(DUDE) -p $(MCU) -P $(PPORT) -c $(PROG) -V -E noreset -Uhfuse:w:$(HFUSE):m 
-    $(DUDE) -p $(MCU) -P $(PPORT) -c $(PROG) -V -E noreset -Uefuse:w:$(EFUSE):m
+	$(DUDE) -p $(MCU) -P $(PPORT) -c $(PROG) -V -E noreset -Ulfuse:w:$(LFUSE):m 
+	$(DUDE) -p $(MCU) -P $(PPORT) -c $(PROG) -V -E noreset -Uhfuse:w:$(HFUSE):m 
+	$(DUDE) -p $(MCU) -P $(PPORT) -c $(PROG) -V -E noreset -Uefuse:w:$(EFUSE):m
   else ifeq ($(PROG), jtagice)
-    @echo "ERROR: Fuse byte programming not set up for JTAG in this Makefile"
+	@echo "ERROR: Fuse byte programming not set up for JTAG in this Makefile"
   else ifeq ($(PROG), usbtiny)
-    $(DUDE) -p $(MCU) -c usbtiny -q -V -Ulfuse:w:$(LFUSE):m
-    $(DUDE) -p $(MCU) -c usbtiny -q -V -Uhfuse:w:$(HFUSE):m
-    $(DUDE) -p $(MCU) -c usbtiny -q -V -Uefuse:w:$(EFUSE):m
+	$(DUDE) -p $(MCU) -c usbtiny -q -V -Ulfuse:w:$(LFUSE):m
+	$(DUDE) -p $(MCU) -c usbtiny -q -V -Uhfuse:w:$(HFUSE):m
+	$(DUDE) -p $(MCU) -c usbtiny -q -V -Uefuse:w:$(EFUSE):m
   else
-    @echo "ERROR: Only bsd or USBtiny set to program fuse bytes in this Makefile"
+	@echo "ERROR: Only bsd or USBtiny set to program fuse bytes in this Makefile"
   endif
 
 #--------------------------------------------------------------------------------------
@@ -323,13 +323,13 @@ fuses: nothing
 
 readfuses: nothing
   ifeq ($(PROG), bsd)
-    @echo "ERROR: Not yet programmed to read fuses with bsd/ISP cable"
+	@echo "ERROR: Not yet programmed to read fuses with bsd/ISP cable"
   else ifeq ($(PROG), jtagice)
-    @$(ICE) -e -j $(JPORT) --read-fuses
+	@$(ICE) -e -j $(JPORT) --read-fuses
   else ifeq ($(PROG), bootloader)
-    @echo "ERROR: Not yet programmed to read fuses via bootloader"
+	@echo "ERROR: Not yet programmed to read fuses via bootloader"
   else
-    @echo "ERROR: No known device specified to read fuses"
+	@echo "ERROR: No known device specified to read fuses"
   endif
 
 #-----------------------------------------------------------------------------
@@ -337,12 +337,12 @@ readfuses: nothing
 
 reset:
   ifeq ($(PROG), bsd)
-    $(DUDE) -c bsd -p $(MCU) -P $(PPORT) -c $(PROG) -V -E noreset \
-        -Ulfuse:r:/dev/null:r
+	$(DUDE) -c bsd -p $(MCU) -P $(PPORT) -c $(PROG) -V -E noreset \
+		-Ulfuse:r:/dev/null:r
   else ifeq ($(PROG), usbtiny)
-    $(DUDE) -p $(MCU) -c usbtiny -q -V -Ulfuse:r:/dev/null:r
+	$(DUDE) -p $(MCU) -c usbtiny -q -V -Ulfuse:r:/dev/null:r
   else
-    @echo "ERROR: make reset only works with parallel ISP cable"
+	@echo "ERROR: make reset only works with parallel ISP cable"
   endif
 
 #--------------------------------------------------------------------------------------
@@ -351,10 +351,10 @@ reset:
 
 .PHONY: doc libdoc
 doc:
-    @doxygen doxygen.conf
+	@doxygen doxygen.conf
 
 libdoc:
-    @doxygen doxy_lib.conf
+	@doxygen doxy_lib.conf
 
 #--------------------------------------------------------------------------------------
 # 'make clean' will erase the compiled files, listing files, etc. so you can restart
@@ -362,16 +362,16 @@ libdoc:
 # a CVS or SVN or Git repository. 
 
 clean:
-    @echo -n Cleaning compiled files and documentation...
-    @rm -rf $(BUILDDIR)
-    @echo done.
+	@echo -n Cleaning compiled files and documentation...
+	@rm -rf $(BUILDDIR)
+	@echo done.
 
 #--------------------------------------------------------------------------------------
 # 'make library' will build the library file, using an automatically generated list of
 # all the C, C++, and assembly source files in the library directories in LIB_DIRS
 
 library: $(LIB_OBJS)
-    @avr-ar -r $(LIB_NAME) $(LIB_OBJS)
+	@avr-ar -r $(LIB_NAME) $(LIB_OBJS)
 
 #------------------------------------------------------------------------------
 # This target produces a (large) list of all the predefined macros which are
@@ -381,7 +381,7 @@ library: $(LIB_OBJS)
 # types, and so on
 .PHONY: defines
 defines:
-    $(CC) -mmcu=$(MCU) -dM -E - < /dev/null
+	$(CC) -mmcu=$(MCU) -dM -E - < /dev/null
 
 #--------------------------------------------------------------------------------------
 # 'make term' will run a PuTTY terminal using the settings that are most commonly used
@@ -389,17 +389,17 @@ defines:
 # installed PuTTY on the local computer and configured the default settings, of course
 
 term:
-    @putty -load "Default Settings" &
+	@putty -load "Default Settings" &
 
 #--------------------------------------------------------------------------------------
 # 'make help' will show a list of things this makefile can do
 
 help:
-    @echo 'make          - Build program file ready to download'
-    @echo 'make install  - Build program and download with parallel ISP cable'
-    @echo 'make reset    - Reset processor with parallel cable RESET line'
-    @echo 'make doc      - Generate documentation with Doxygen'
-    @echo 'make clean    - Remove compiled files from all directories'
-    @echo ' '
-    @echo 'Notes: 1. Other less commonly used targets are in the Makefile'
-    @echo '       2. You can combine targets, as in "make clean all"'
+	@echo 'make          - Build program file ready to download'
+	@echo 'make install  - Build program and download with parallel ISP cable'
+	@echo 'make reset    - Reset processor with parallel cable RESET line'
+	@echo 'make doc      - Generate documentation with Doxygen'
+	@echo 'make clean    - Remove compiled files from all directories'
+	@echo ' '
+	@echo 'Notes: 1. Other less commonly used targets are in the Makefile'
+	@echo '       2. You can combine targets, as in "make clean all"'

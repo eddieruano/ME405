@@ -69,49 +69,7 @@ void task_encoder::run (void)
    // The loop to contunially run the motors
    while (1)
    {
-      // Read the A/D converter from channel 1
-      uint16_t a2d_reading = p_adc->read_once(1);
 
-      // Convert the A/D reading into a PWM duty cycle. The A/D reading is between 0
-      // and 1023; the duty cycle should be between 0 and 255. Thus, divide by 4
-      uint16_t duty_cycle = a2d_reading / 4;
-
-      int16_t power = ((int16_t)duty_cycle * 1);
-
-      //doesn't let the duty_cycle go to 0 because then the power is 0.
-      if (duty_cycle == 0) {duty_cycle++;}
-      //From 00 - 64 we want to decrease forwards
-      //From 65 - 128 we want to increase backwards
-      //From 129 - 192 we want to set both outs to high to set holding brake
-      //From 193 - 255 we want to set both outs to low so that they don't affect the motor
-      if (duty_cycle <= 64)
-      {
-         //forwards start from high speed to go to low speed
-         power = 255 - (4 * duty_cycle);
-
-         p_motor1->set_power(power);
-         p_motor2->set_power(duty_cycle);
-      }
-      else if (duty_cycle > 64 && duty_cycle <= 128)
-      {
-         //backwards start from low speed to go to high speed
-         power = -4 * (duty_cycle - 64);
-         p_motor1->set_power(power);
-         p_motor2->set_power(-1 * duty_cycle);
-      }
-      else if ( duty_cycle > 128 && duty_cycle <= 192)
-      {
-         //power stopping
-         power = 4 * (duty_cycle - 128);
-         p_motor1->brake(power);
-         p_motor2->brake(power);
-      }
-      else
-      {
-         //free wheeling
-         p_motor1->brake();
-         p_motor2->brake();
-      }
 
       *p_serial << PMS ("Duty_Cycle: ") << duty_cycle << dec << endl
                 << PMS ("Power_Signal: ") << power << dec << endl;

@@ -73,13 +73,15 @@ void task_user::run (void)
     time_stamp a_time;                      // Holds the time so it can be displayed
     uint32_t number_entered = 0;            // Holds a number being entered by user
 
+
+
     // Tell the user how to get into command mode (state 1), where the user interface
     // task does interesting things such as diagnostic printouts
     *p_serial << PMS ("Hello.") << endl
-              << PMS ("Welcome to the Driver Controller") << endl;
+              << PMS ("Welcome to the Controller") << endl;
 
     // Helper function to print options avaliable to users.
-    printOptions();
+    print_help_message();
 
 
     // This is an infinite loop; it runs until the power is turned off.
@@ -100,7 +102,7 @@ void task_user::run (void)
                 case ('m'):
                     //Lets go control some motors!
                     transition_to(2);
-                    *p_serial << endl;
+                    break;
                 // The 't' command asks what time it is right now
                 case ('t'):
                     *p_serial << (a_time.set_to_now ()) << endl;
@@ -190,11 +192,164 @@ void task_user::run (void)
 
             break; // End of state 1
         case (2):
-            
+            // Print beginning options
+            printOptions();
+            // Check to see if user input
+            if (p_serial->check_for_char ())       // If the user typed a
+            {
+                // character, read
+                char_in = p_serial->getchar ();
 
+                if (char_in == '1')
+                {
+
+                    transition_to(3);
+                }
+                else if (char_in == '2')
+                {
+
+                    transition_to(4);
+                }
+                else if (char_in == '3')
+                {
+                    transition_to(1);
+                }
+                else
+                {
+                    *p_serial << PMS("Invalid Option. ");
+                    //go back to top
+                    transition_to(2);
+                }
+            }
+            // Check the print queue to see if another task has sent this task
+            // something to be printed
+            else if (p_print_ser_queue->check_for_char ())
+            {
+                p_serial->putchar (p_print_ser_queue->getchar ());
+            }
+            else {
+                transition_to(2); //stay here
+            }
 
             break;
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        case (3):
+            motor_select -> put(0);
+            printMotorOptions();
+
+            // Check to see if user input
+            if (p_serial->check_for_char ())       // If the user typed a
+            {
+                // character, read
+                char_in = p_serial->getchar ();
+
+                if (char_in == 's')
+                {
+                    *p_serial << PMS("How much brake force (0 - 255): ") << endl;
+
+
+                    number_entered = get_number(char_in);
+                    motor_command -> put(0);
+                    motor_power -> put(number_entered);
+
+                }
+                else if (char_in == 'a')
+                {
+                    *p_serial << PMS("How much motor power (0 - 255): ") << endl;
+
+
+                    number_entered = get_number(char_in);
+                    motor_command -> put(1);
+                    motor_power -> put(number_entered);
+                }
+
+            }
+            else if (char_in == 'f')
+            {
+                *p_serial << PMS("FREE WHEELS: ") << endl;
+
+                number_entered = get_number(char_in);
+                motor_command -> put(2);
+                motor_power -> put(number_entered);
+
+            }
+            else if (char_in == 'c')
+            {
+                *p_serial << PMS("Changing direction.. ") << endl;
+                motor_command -> put(-1);
+                if (motor_direction -> get() == -1)
+                {
+                    motor_direction -> put(1);
+                }
+                else
+                {
+                    motor_direction -> put(-1);
+                }
+            }
+            else
+            {
+                *p_serial << PMS("Invalid Option. ");
+                //go back to top
+                transition_to(2);
+            }
+            break;
+        case (4):
+            motor_select -> put(1);
+            printMotorOptions();
+
+            // Check to see if user input
+            if (p_serial->check_for_char ())       // If the user typed a
+            {
+                // character, read
+                char_in = p_serial->getchar ();
+
+                if (char_in == 's')
+                {
+                    *p_serial << PMS("How much brake force (0 - 255): ") << endl;
+
+                    number_entered = get_number(char_in);
+                    motor_command -> put(0);
+                    motor_power -> put(number_entered);
+
+                }
+                else if (char_in == 'a')
+                {
+                    *p_serial << PMS("How much motor power (0 - 255): ") << endl;
+                    number_entered = get_number(char_in);
+                    motor_command -> put(1);
+                    motor_power -> put(number_entered);
+                }
+
+            }
+            else if (char_in == 'f')
+            {
+                *p_serial << PMS("FREE WHEELS: ") << endl;
+
+                number_entered = get_number(char_in);
+                motor_command -> put(2);
+                motor_power -> put(number_entered);
+
+            }
+            else if (char_in == 'c')
+            {
+                *p_serial << PMS("Changing direction.. ") << endl;
+                motor_command -> put(-1);
+                if (motor_direction -> get() == -1)
+                {
+                    motor_direction -> put(1);
+                }
+                else
+                {
+                    motor_direction -> put(-1);
+                }
+            }
+            else
+            {
+                *p_serial << PMS("Invalid Option. ");
+                //go back to top
+                transition_to(2);
+            }
+            break;
         // We should never get to the default state. If we do, complain and restart
         default:
             *p_serial << PMS ("Illegal state! Resetting AVR") << endl;
@@ -219,7 +374,8 @@ void task_user::run (void)
 
 void task_user::print_help_message (void)
 {
-    *p_serial << PROGRAM_VERSION << PMS (" help") << endl;
+    *p_serial << PMS (" help") << endl;
+    *p_serial << PMS ("  m:     Control Motors") << endl;
     *p_serial << PMS ("  t:     Show the time right now") << endl;
     *p_serial << PMS ("  s:     Version and setup information") << endl;
     *p_serial << PMS ("  d:     Stack dump for tasks") << endl;
@@ -240,36 +396,90 @@ void task_user::print_help_message (void)
 
 void task_user::show_status (void)
 {
-    time_stamp the_time;                    // Holds current time for printing
+//     time_stamp the_time;                    // Holds current time for printing
 
-    // First print the program version, compile date, etc.
-    *p_serial << endl << PROGRAM_VERSION << PMS (__DATE__) << endl
-              << PMS ("System time: ") << the_time.set_to_now ()
-              << PMS (", Heap: ") << heap_left() << "/" << configTOTAL_HEAP_SIZE
-#ifdef OCR5A
-              << PMS (", OCR5A: ") << OCR5A << endl << endl;
-#elif (defined OCR3A)
-              << PMS (", OCR3A: ") << OCR3A << endl << endl;
-#else
-              << PMS (", OCR1A: ") << OCR1A << endl << endl;
-#endif
+//     // First print the program version, compile date, etc.
+//     *p_serial << endl << PROGRAM_VERSION << PMS (__DATE__) << endl
+//               << PMS ("System time: ") << the_time.set_to_now ()
+//               << PMS (", Heap: ") << heap_left() << "/" << configTOTAL_HEAP_SIZE
+// #ifdef OCR5A
+//               << PMS (", OCR5A: ") << OCR5A << endl << endl;
+// #elif (defined OCR3A)
+//               << PMS (", OCR3A: ") << OCR3A << endl << endl;
+// #else
+//               << PMS (", OCR1A: ") << OCR1A << endl << endl;
+// #endif
 
-    // Have the tasks print their status; then the same for the shared data items
-    print_task_list (p_serial);
-    *p_serial << endl;
-    print_all_shares (p_serial);
+//     // Have the tasks print their status; then the same for the shared data items
+//     print_task_list (p_serial);
+//     *p_serial << endl;
+//     print_all_shares (p_serial);
 }
 
+/**
+ * @brief      { function_description }
+ */
 void task_user::printOptions (void)
 {
 
     //Print the controls avaliable to user
     *p_serial << PMS ("Press '1' to focus on Motor 1") << endl
               << PMS ("Press '2' to focus on Motor 2") << endl
-              << PMS ("Press")
+              << PMS ("Press 'q' to quit") << endl;
 }
 
-void task_user::extract_direction (void)
+/**
+ * @brief      { function_description }
+ */
+void task_user::printMotorOptions (void)
 {
+    //Print the controls avaliable to user
+    *p_serial << PMS ("Press 's' to BRAKE") << endl
+              << PMS ("Press 'a' to SET SPEED") << endl
+              << PMS ("Press 'f' to FREE WHEEL") << endl
+              << PMS ("Press 'c' to change direction") << endl;
+}
+ uint32_t task_user::get_number (char in)
+{
+    //emstream* p_serial = p;
+    uint32_t number_entered = 0;
+    if (p_serial->check_for_char ())        // If the user typed a
+    {   // character, read
+        in = p_serial->getchar ();     // the character
 
+        // Respond to numeric characters, Enter or Esc only. Numbers are
+        // put into the numeric value we're building up
+        if (in >= '0' && in <= '9')
+        {
+            *p_serial << in;
+            number_entered *= 10;
+            number_entered += in - '0';
+        }
+        // Carriage return is ignored; the newline character ends the entry
+        else if (in == 10)
+        {
+            *p_serial << "\r";
+        }
+        // Carriage return or Escape ends numeric entry
+        else if (in == 13 || in == 27)
+        {
+            *p_serial << endl << PMS ("Number entered: ")
+                      << number_entered << endl;
+            //transition_to (0);
+        }
+        else
+        {
+            *p_serial << PMS ("<invalid char \"") << in
+                      << PMS ("\">");
+        }
+    }
+
+    // Check the print queue to see if another task has sent this task
+    // something to be printed
+    else if (p_print_ser_queue->check_for_char ())
+    {
+        p_serial->putchar (p_print_ser_queue->getchar ());
+    }
+
+    return number_entered;
 }

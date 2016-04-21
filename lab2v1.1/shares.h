@@ -26,8 +26,8 @@
 //*************************************************************************************
 
 // This define prevents this .h file from being included multiple times in a .cpp file
-#ifndef _SHARES_H_
-#define _SHARES_H_
+#ifndef _SHARES_H
+#define _SHARES_H
 
 //-------------------------------------------------------------------------------------
 // Externs:  In this section, we declare variables and functions that are used in all
@@ -40,11 +40,11 @@ extern TextQueue* p_print_ser_queue;
 
 /// This declares a taskshare which indicates that this variable is a shared 
 /// variable. This variable will hold the duty cycle of a motor. 
-extern Task_Share<uint8_t>* motor_power;
+extern TaskShare<uint8_t>* motor_power;
 
 /// This declares a taskshare which indicates that this variable is a shared 
 /// variable. This variable will hold the duty cycle of a motor.
-extern Task_Share<uint8_t>* brake_power;
+extern TaskShare<uint8_t>* brake_power;
 
 /// This declares a taskshare which indicates that this variable is a shared 
 /// variable. This variable will hold the direction of the motor. 
@@ -52,7 +52,7 @@ extern Task_Share<uint8_t>* brake_power;
 ///  0 Indicates STOPPED
 ///  1 Indicates FORWARDS
 ///  2 Indicates FREEWHEEL
-extern Task_Share<int8_t>* motor_direction;
+extern TaskShare<int8_t>* motor_direction;
 
 /// This declares a taskshare which indicates that this variable is a shared 
 /// variable. This variable will hold the command that the user wishes the motor
@@ -61,8 +61,14 @@ extern Task_Share<int8_t>* motor_direction;
 ///  0 Indicates STOP W/ brake_power
 ///  1 Indicates SET POWER
 ///  2 Indicates FREEWHEEL
-extern Task_Share<int8_t>* motor_command;
+extern TaskShare<int8_t>* motor_command;
+/// This declares a taskshare which indicates that this variable is a shared 
+/// variable. This variable will hold the select for each motor.
+/// 0 Indicates Motor 0
+/// 1 Indicates Motor 1
+extern TaskShare<uint8_t>* motor_select;
 
 
 
-#endif // _SHARES_H_
+
+#endif // _SHARES_H

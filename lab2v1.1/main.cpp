@@ -65,15 +65,16 @@
  *  stream of characters. It's used by tasks that send things to the user interface
  *  task to be printed.
  */
+
 TextQueue* p_print_ser_queue;
 
 /// This declares a taskshare which indicates that this variable is a shared 
 /// variable. This variable will hold the duty cycle of a motor. 
-extern Task_Share<uint8_t> motor_power;
+TaskShare<uint8_t>* motor_power;
 
 /// This declares a taskshare which indicates that this variable is a shared 
 /// variable. This variable will hold the duty cycle of a motor.
-extern Task_Share<uint8_t> brake_power;
+TaskShare<uint8_t>* brake_power;
 
 /// This declares a taskshare which indicates that this variable is a shared 
 /// variable. This variable will hold the direction of the motor. 
@@ -81,7 +82,25 @@ extern Task_Share<uint8_t> brake_power;
 ///  0 Indicates STOPPED
 ///  1 Indicates FORWARDS
 ///  2 Indicates FREEWHEEL
-extern Task_Share<int8_t> motor_direction;
+TaskShare<int8_t>* motor_direction;
+
+
+
+/// This declares a taskshare which indicates that this variable is a shared 
+/// variable. This variable will hold the command that the user wishes the motor
+/// to do.
+/// -1 Indicates CHANGE_DIRECTION
+///  0 Indicates STOP W/ brake_power
+///  1 Indicates SET POWER
+///  2 Indicates FREEWHEEL
+TaskShare<int8_t>* motor_command;
+
+
+/// This declares a taskshare which indicates that this variable is a shared 
+/// variable. This variable will hold the select for each motor.
+/// 0 Indicates Motor 0
+/// 1 Indicates Motor 1
+TaskShare<uint8_t>* motor_select;
 
 
 //=====================================================================================
@@ -114,6 +133,7 @@ int main (void)
     brake_power = new TaskShare<uint8_t> ("Motor Brake Power");
     motor_direction = new TaskShare<int8_t> ("Motor Direction");
     motor_command = new TaskShare<int8_t> ("Motor Directive");
+    motor_select = new TaskShare<uint8_t> ("Motor Select");
 
 
     // Configure counter/timer 1 as a PWM for Motor Drivers.
@@ -126,14 +146,14 @@ int main (void)
     TCCR1B |= (1 << WGM12) | (1 << CS11);
 
     // Set up PWM
-    adc* p_generic_adc = new adc (p_serial);
+    adc* p_generic_adc = new adc (p_ser_port);
 
     //**  CREATE THE MOTOR DRIVERS  **//
 
     // create a pointer to a motor driver object and pass it addresses to 
     // PORTC, PORTB, OC1B and Pin Values for PC0, PC2, and PB6 as the PWM
     motor_driver* p_motor1 = new motor_driver(
-                                    p_serial, 
+                                    p_ser_port, 
                                     &PORTC, 
                                     &PORTC, 
                                     &PORTB, 
@@ -146,7 +166,7 @@ int main (void)
     // create a pointer to a motor driver object and pass it addresses to 
     // PORTD, PORTB, OC1A and Pin Values for PD5, PD7, and PB5 as the PWM
     motor_driver* p_motor2 = new motor_driver(
-                                    p_serial, 
+                                    p_ser_port, 
                                     &PORTD, 
                                     &PORTD, 
                                     &PORTB, 
@@ -161,10 +181,10 @@ int main (void)
     new task_user ("User Interface", task_priority (1), 260, p_ser_port);
 
     // Create new motor task for motor 1
-    new task_motor ("Motor 1 Task", task_priority (2), 280, p_ser_port, p_motor1);
+    new task_motor ("Motor 1 Task", task_priority (2), 280, p_ser_port, p_motor1, 0);
 
     // Create new motor task for motor 2
-    new task_motor ("Motor 2 Task", task_priority(2), 280, p_ser_port, p_motor2);
+    new task_motor ("Motor 2 Task", task_priority(2), 280, p_ser_port, p_motor2, 1);
 
     // Create new task that will read the encoder #LATER
     //new task_encoder ("Encoder", task_encoder (3), 280, p_ser_port);

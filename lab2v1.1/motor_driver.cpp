@@ -188,7 +188,7 @@ void motor_driver::set_power (int16_t sig)
          // put mod signal into pwm reg (comparator)
          // make sure value isn't negative
          pwm = sig;
-         set_pwm(pwm););
+         set_pwm(pwm);
       }
       else
       { /*empty on purpose */}

@@ -64,6 +64,7 @@ private:
 	// No private variables or methods for this class
 
 protected:
+
 	// This method displays a simple help message telling the user what to do. It's
 	// protected so that only methods of this class or possibly descendents can use it
 	void print_help_message (void);
@@ -71,6 +72,12 @@ protected:
 	// This method displays information about the status of the system
 	void show_status (void);
 
+	//
+	//
+	//
+	uint32_t get_number (char);
+	void printMotorOptions (void);
+	void printOptions (void);
 public:
 	// This constructor creates a user interface task object
 	task_user (const char*, unsigned portBASE_TYPE, size_t, emstream*);

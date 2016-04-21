@@ -100,8 +100,12 @@ void task_user::run (void)
                 switch (char_in)
                 {
                 case ('m'):
-                    //Lets go control some motors!
-                    transition_to(3);
+                    *p_serial << PMS ("Motor Control Selected. ") << endl;
+                            << PMS ("Press '1' to focus on Motor 1") << endl;
+                            << PMS ("Press '2' to focus on Motor 2") << endl;
+                            << PMS ("Press 'q' to quit") << endl;
+                    number_entered = 0;
+                    transition_to (1);
                     break;
                 // The 't' command asks what time it is right now
                 case ('t'):
@@ -440,7 +444,7 @@ void task_user::printMotorOptions (void)
               << PMS ("Press 'f' to FREE WHEEL") << endl
               << PMS ("Press 'c' to change direction") << endl;
 }
- uint32_t task_user::get_number (char in)
+uint32_t task_user::get_number (char in)
 {
     //emstream* p_serial = p;
     uint32_t number_entered = 0;

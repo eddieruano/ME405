@@ -14,16 +14,16 @@
  *    This file is copyright 2012 by JR Ridgely and released under the Lesser GNU
  *    Public License, version 2. It intended for educational use only, but its use
  *    is not limited thereto. */
-/*    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- *    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- *    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- *    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- *    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUEN-
+/*    THIS SOFTWARE IS PROVIDED By THE COPyRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ *    AND ANy EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ *    IMPLIED WARRANTIES OF MERCHANTABILITy AND FITNESS FOR A PARTICULAR PURPOSE
+ *    ARE DISCLAIMED. IN NO EVENT SHALL THE COPyRIGHT OWNER OR CONTRIBUTORS BE
+ *    LIABLE FOR ANy DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARy, OR CONSEQUEN-
  *    TIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
  *    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- *    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- *    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- *    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
+ *    CAUSED AND ON ANy THEORy OF LIABILITy, WHETHER IN CONTRACT, STRICT LIABILITy,
+ *    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANy WAy OUT OF THE USE
+ *    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITy OF SUCH DAMAGE. */
 //**************************************************************************************
 
 #include <avr/io.h>                         // Port I/O for SFR's
@@ -50,7 +50,7 @@ const TickType_t ticks_to_delay = ((configTICK_RATE_HZ / 1000) * 5);
  */
 
 task_user::task_user (const char* a_name,
-                      unsigned portBASE_TYPE a_priority,
+                      unsigned portBASE_TyPE a_priority,
                       size_t a_stack_size,
                       emstream* p_ser_dev
                      )
@@ -100,10 +100,10 @@ void task_user::run (void)
                 switch (char_in)
                 {
                 case ('m'):
-                    *p_serial << PMS ("Motor Control Selected. ") << endl;
-                            << PMS ("Press '1' to focus on Motor 1") << endl;
-                            << PMS ("Press '2' to focus on Motor 2") << endl;
-                            << PMS ("Press 'q' to quit") << endl;
+                    *p_serial << PMS ("Motor Control Selected. ") << endl
+                              << PMS ("Press '1' to focus on Motor 1") << endl
+                              << PMS ("Press '2' to focus on Motor 2") << endl
+                              << PMS ("Press 'q' to quit") << endl;
                     number_entered = 0;
                     transition_to (1);
                     break;
@@ -114,7 +114,7 @@ void task_user::run (void)
 
                 // The 's' command asks for version and status information
                 case ('s'):
-                    show_status ();
+                    show_status ()
                     break;
 
                 // The 'd' command has all the tasks dump their stacks
@@ -162,6 +162,12 @@ void task_user::run (void)
 
                 // Respond to numeric characters, Enter or Esc only. Numbers are
                 // put into the numeric value we're building up
+                if (char_in == 'q')
+                {
+                    *p_serial << PMS ("Quitting..") << endl;
+                    //go back
+                    transition_to(0);
+                }
                 if (char_in >= '0' && char_in <= '9')
                 {
                     *p_serial << char_in;
@@ -176,9 +182,17 @@ void task_user::run (void)
                 // Carriage return or Escape ends numeric entry
                 else if (char_in == 13 || char_in == 27)
                 {
-                    *p_serial << endl << PMS ("Number entered: ")
-                              << number_entered << endl;
-                    transition_to (0);
+                    if (num_sign == 0) //added functionality based on sign of val
+                    {
+                        *p_serial << PMS ("You entered: ")
+                                  << number_entered << endl;
+                    }
+                    else
+                    {
+                        *p_serial << PMS ("You entered: -")
+                                  << number_entered << endl;
+                        number_entered *= -1;//add the negative value
+                    }
                 }
                 else
                 {
@@ -195,164 +209,74 @@ void task_user::run (void)
             }
 
             break; // End of state 1
+        //
+        //
+        //
+        // State 2 waits for the user to make a decision about Motor 1
         case (2):
-            // Print beginning options
-            printOptions();
-            // Check to see if user input
+            *p_serial << PMS ("Press 's' to BRAKE") << endl
+                      << PMS ("Press 'a' to SET POWER") << endl
+                      << PMS ("Press 'f' to FREE WHEEL") << endl
+                      << PMS ("Press 'c' to change direction") << endl;
+
             if (p_serial->check_for_char ())       // If the user typed a
-            {
-                // character, read
-                char_in = p_serial->getchar ();
+            {   // character, read
+                char_in = p_serial->getchar ();    // the character
 
-                if (char_in == '1')
+                // Now we check to see what the user inputted
+                switch (char_in)
                 {
+                // The 's' command Applies Brakes
+                case ('s'):
 
-                    transition_to(3);
-                }
-                else if (char_in == '2')
-                {
+                    number_entered = 0;
+                    transition_to (1);
+                    break;
+                // The 'a' command sets the motor power
+                case ('a'):
+                    *p_serial << PMS ("Enter the power (0-255): ") << endl;
+                    break;
 
-                    transition_to(4);
-                }
-                else if (char_in == '3')
-                {
-                    transition_to(1);
-                }
-                else
-                {
-                    *p_serial << PMS("Invalid Option. ");
-                    //go back to top
-                    transition_to(2);
-                }
-            }
-            // Check the print queue to see if another task has sent this task
-            // something to be printed
-            else if (p_print_ser_queue->check_for_char ())
-            {
-                p_serial->putchar (p_print_ser_queue->getchar ());
-            }
-            else {
-                transition_to(2); //stay here
-            }
+                // The 's' command asks for version and status information
+                case ('f'):
+                    show_status ()
+                    break;
+
+                // The 'd' command has all the tasks dump their stacks
+                case ('c'):
+                    print_task_stacks (p_serial);
+                    break;
+
+                // The 'h' command is a plea for help; '?' works also
+                case ('h'):
+                case ('?'):
+                    print_help_message ();
+                    break;
+
+                // The 'n' command runs a test of entering a number
+                case ('n'):
+                    *p_serial << PMS ("Enter decimal numeric digits, "
+                                      "then RETURN or ESC") << endl;
+                    number_entered = 0;
+                    transition_to (1);
+                    break;
+
+
+                // If character isn't recognized, ask What's That Function?
+                default:
+                    *p_serial << '"' << char_in
+                              << PMS ("\": Cannot recognize that character") << endl;
+                    break;
+                }; // End switch for characters
+            } // End if a character was received
 
             break;
-        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        // State 3 waits for the user to make a decision about Motor 1
         case (3):
-            motor_select -> put(0);
-            printMotorOptions();
 
-            // Check to see if user input
-            if (p_serial->check_for_char ())       // If the user typed a
-            {
-                // character, read
-                char_in = p_serial->getchar ();
-
-                if (char_in == 's')
-                {
-                    *p_serial << PMS("How much brake force (0 - 255): ") << endl;
-
-
-                    number_entered = get_number(char_in);
-                    motor_command -> put(0);
-                    motor_power -> put(number_entered);
-
-                }
-                else if (char_in == 'a')
-                {
-                    *p_serial << PMS("How much motor power (0 - 255): ") << endl;
-
-
-                    number_entered = get_number(char_in);
-                    motor_command -> put(1);
-                    motor_power -> put(number_entered);
-                }
-
-            }
-            else if (char_in == 'f')
-            {
-                *p_serial << PMS("FREE WHEELS: ") << endl;
-
-                number_entered = get_number(char_in);
-                motor_command -> put(2);
-                motor_power -> put(number_entered);
-
-            }
-            else if (char_in == 'c')
-            {
-                *p_serial << PMS("Changing direction.. ") << endl;
-                motor_command -> put(-1);
-                if (motor_direction -> get() == -1)
-                {
-                    motor_direction -> put(1);
-                }
-                else
-                {
-                    motor_direction -> put(-1);
-                }
-            }
-            else
-            {
-                *p_serial << PMS("Invalid Option. ");
-                //go back to top
-                transition_to(2);
-            }
             break;
         case (4):
-            motor_select -> put(1);
-            printMotorOptions();
 
-            // Check to see if user input
-            if (p_serial->check_for_char ())       // If the user typed a
-            {
-                // character, read
-                char_in = p_serial->getchar ();
-
-                if (char_in == 's')
-                {
-                    *p_serial << PMS("How much brake force (0 - 255): ") << endl;
-
-                    number_entered = get_number(char_in);
-                    motor_command -> put(0);
-                    motor_power -> put(number_entered);
-
-                }
-                else if (char_in == 'a')
-                {
-                    *p_serial << PMS("How much motor power (0 - 255): ") << endl;
-                    number_entered = get_number(char_in);
-                    motor_command -> put(1);
-                    motor_power -> put(number_entered);
-                }
-
-            }
-            else if (char_in == 'f')
-            {
-                *p_serial << PMS("FREE WHEELS: ") << endl;
-
-                number_entered = get_number(char_in);
-                motor_command -> put(2);
-                motor_power -> put(number_entered);
-
-            }
-            else if (char_in == 'c')
-            {
-                *p_serial << PMS("Changing direction.. ") << endl;
-                motor_command -> put(-1);
-                if (motor_direction -> get() == -1)
-                {
-                    motor_direction -> put(1);
-                }
-                else
-                {
-                    motor_direction -> put(-1);
-                }
-            }
-            else
-            {
-                *p_serial << PMS("Invalid Option. ");
-                //go back to top
-                transition_to(2);
-            }
             break;
         // We should never get to the default state. If we do, complain and restart
         default:

@@ -101,7 +101,7 @@ void task_user::run (void)
                 {
                 case ('m'):
                     //Lets go control some motors!
-                    transition_to(2);
+                    transition_to(3);
                     break;
                 // The 't' command asks what time it is right now
                 case ('t'):
@@ -426,6 +426,7 @@ void task_user::printOptions (void)
     *p_serial << PMS ("Press '1' to focus on Motor 1") << endl
               << PMS ("Press '2' to focus on Motor 2") << endl
               << PMS ("Press 'q' to quit") << endl;
+    return;
 }
 
 /**

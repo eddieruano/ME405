@@ -47,7 +47,7 @@ protected:
 
 public:
     // This constructor creates a generic task of which many copies can be made
-    task_motor (const char*, unsigned portBASE_TYPE, size_t, emstream*);
+    task_motor (const char*, unsigned portBASE_TYPE, size_t, emstream*,adc*,uint8_t);
 
     // This method is called by the RTOS once to run the task loop for ever and ever.
     void run (void);

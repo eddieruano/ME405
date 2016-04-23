@@ -1,6 +1,6 @@
 //**************************************************************************************
 /** @file task_user.h
- *    Header file for task_user in which the prototypes for that class are 
+ *    Header file for task_user in which the prototypes for that class are
  *    created. Added New Methods.
  *
  *  Revisions:
@@ -49,15 +49,20 @@
 
 /// This macro defines a string that identifies the name and version of this
 /// program.
-#define PROGRAM_VERSION		PMS ("ME405 Lab 2 Motor Driver Interface");
+#define PROGRAM_VERSION PMS ("ME405 Lab 2 Motor Driver Interface")
 
 
 
 /**
- * @brief      This task will interact with the user and make the motors 
+ * @brief      This task will interact with the user and make the motors
  * 			   operate based on their input. Added some methods so make the
  * 			   printing of information more streamlined.
  */
+
+
+
+
+
 class task_user : public TaskBase
 {
 private:
@@ -72,9 +77,7 @@ protected:
 	// This method displays information about the status of the system
 	void show_status (void);
 
-	//
-	//
-	//
+
 	uint32_t get_number (char);
 	void printMotorOptions (void);
 	void printOptions (void);

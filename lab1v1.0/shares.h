@@ -38,5 +38,21 @@
 // This queue allows tasks to send characters to the user interface task for display.
 extern TextQueue* p_print_ser_queue;
 
+/// This declares a taskshare which indicates that this variable is a shared 
+/// variable. This variable will hold the duty cycle of a motor. 
+extern TaskShare<int16_t>* motor_power;
+/// This declares a taskshare which indicates that this variable is a shared 
+/// variable. This variable will hold the command that the user wishes the motor
+/// to do.
+///  0 Indicates SET POWER
+///  1 Indicates BRAKE W/ brake_power
+///  2 Indicates FREEWHEEL
+extern TaskShare<int8_t>* motor_directive;
+/// This declares a taskshare which indicates that this variable is a shared 
+/// variable. This variable will hold the select for each motor.
+/// 0 Indicates Motor 0
+/// 1 Indicates Motor 1
+extern TaskShare<uint8_t>* motor_select;
+
 
 #endif // _SHARES_H_

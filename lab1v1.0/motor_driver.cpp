@@ -80,17 +80,17 @@ motor_driver::motor_driver (
 
     // Print a handy debugging message
     DBG (serial_PORT, "Motor Driver Construced Successfully" << endl);
-    DBG (serial_PORT, "Printing Addresses... "<<endl);
-    DBG (serial_PORT, "input_PORT_ADDRESS: " <<input_PORT<<endl);
-    DBG (serial_PORT, "input_DDR_ADDRESS: " <<input_DDR<<endl);
-    DBG (serial_PORT, "pwm_PORT_ADDRESS: " <<pwm_PORT<<endl);
-    DBG (serial_PORT, "pwm_DDR_ADDRESS: " <<pwm_DDR<<endl);
-    DBG (serial_PORT, "Printing Binary Values... "<<endl);
-    DBG (serial_PORT, "input_PORT: " <<*input_PORT<<bin<<endl);
-    DBG (serial_PORT, "input_DDR: " <<*input_DDR<<bin<<endl);
-    DBG (serial_PORT, "pwm_PORT: " <<*pwm_PORT<<bin<<endl);
-    DBG (serial_PORT, "pwm_DDR: " <<*pwm_DDR<<bin<<endl);
-    DBG (serial_PORT, "END PRINTING MOTOR CONSTRUCTOR." <<endl);
+    // DBG (serial_PORT, "Printing Addresses... "<<endl);
+    // DBG (serial_PORT, "input_PORT_ADDRESS: " <<input_PORT<<endl);
+    // DBG (serial_PORT, "input_DDR_ADDRESS: " <<input_DDR<<endl);
+    // DBG (serial_PORT, "pwm_PORT_ADDRESS: " <<pwm_PORT<<endl);
+    // DBG (serial_PORT, "pwm_DDR_ADDRESS: " <<pwm_DDR<<endl);
+    // DBG (serial_PORT, "Printing Binary Values... "<<endl);
+    // DBG (serial_PORT, "input_PORT: " <<*input_PORT<<bin<<endl);
+    // DBG (serial_PORT, "input_DDR: " <<*input_DDR<<bin<<endl);
+    // DBG (serial_PORT, "pwm_PORT: " <<*pwm_PORT<<bin<<endl);
+    // DBG (serial_PORT, "pwm_DDR: " <<*pwm_DDR<<bin<<endl);
+    // DBG (serial_PORT, "END PRINTING MOTOR CONSTRUCTOR." <<endl);
 }
 
 
@@ -137,7 +137,7 @@ void motor_driver::set_power (int16_t sig)
         }
 
         *ocr_PORT = speed;
-        DBG (serial_PORT, "FORWARDS! @ "<<speed<<endl);
+        //DBG (serial_PORT, "FORWARDS! @ "<<speed<<endl);
     }
     else if(sig < 0)
     {
@@ -155,7 +155,7 @@ void motor_driver::set_power (int16_t sig)
         }
 
         *ocr_PORT = speed;
-        DBG (serial_PORT, "BACKWARDS! @ "<<speed<<endl);
+        //DBG (serial_PORT, "BACKWARDS! @ "<<speed<<endl);
     }
     else
     {
@@ -163,8 +163,8 @@ void motor_driver::set_power (int16_t sig)
       DBG (serial_PORT, "Uhhhhh.. Sig problems"<<endl);
     }
     
-    DBG (serial_PORT, "input_PORT: " <<*input_PORT <<endl);
-    DBG (serial_PORT, "OCR_PORT: " <<*ocr_PORT <<endl);
+    //DBG (serial_PORT, "input_PORT: " <<*input_PORT <<endl);
+    //DBG (serial_PORT, "OCR_PORT: " <<*ocr_PORT <<endl);
 }
 //-------------------------------------------------------------------------------------
 /** @brief This method actively brakes by setting both pins high. This is stronger braking than just letting it freewheel
@@ -172,7 +172,7 @@ void motor_driver::set_power (int16_t sig)
  *  @return no return
  */
 
-void motor_driver::brake (int16_t brake)
+void motor_driver::brake (int16_t f_brake)
 {   
     //* SETTING THE DATA DIRECTION *//
 
@@ -191,11 +191,10 @@ void motor_driver::brake (int16_t brake)
     // PINA = HIGH, PINB = HIGH
     *input_PORT |= (1 << input_APIN);
     *input_PORT |= (1 << input_BPIN);
-    if(brake < 0)
+    if(f_brake < 0)
     {
-        brake = brake * -1;
+        f_brake = f_brake * -1;
     }
-    *ocr_PORT = brake;
 
 
 }
@@ -235,7 +234,7 @@ void motor_driver::brake (int16_t brake)
 emstream& operator << (emstream& serpt, motor_driver& motdrv)
 {
 	// Prints info to serial
-	serpt << PMS ("Motor Driver Input: ")*motdrv.input_PORT<<endl;
+	serpt << PMS ("Motor Driver Input: ")<<endl;
 
 
 	return (serpt);

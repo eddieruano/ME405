@@ -73,11 +73,17 @@ task_motor::task_motor (const char* a_name,
 
 void task_motor::run(void)
 {
+   *p_serial << PMS ("In Task Motor:")<<endl;
+   *p_serial << PMS ("Diag")<<endl 
+                << PMS ("ID")<< identifier <<dec<< endl
+                << PMS ("ADDRESS OF M1")<< motor <<dec<< endl;
+
+
+                adc* p_adc = new adc (p_ser_port);
 
    TickType_t previousTicks = xTaskGetTickCount ();
-// The loop to contunially run the motors
-   while (1)
-   {
+
+   for(;;){
       // make sure we can choose between motors
       if (motor_select->get() == identifier)
       {
@@ -112,7 +118,7 @@ void task_motor::run(void)
 
       // This is a method we use to cause a task to make one run through its task
       // loop every N milliseconds and let other tasks run at other times
-      delay_from_for_ms (previousTicks, 50);
+      delay_from_for_ms (previousTicks, 1000);
    }
 }
 

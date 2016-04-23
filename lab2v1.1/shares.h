@@ -40,11 +40,11 @@ extern TextQueue* p_print_ser_queue;
 
 /// This declares a taskshare which indicates that this variable is a shared 
 /// variable. This variable will hold the duty cycle of a motor. 
-extern TaskShare<uint8_t>* motor_power;
+extern TaskShare<int16_t>* motor_power;
 
 /// This declares a taskshare which indicates that this variable is a shared 
 /// variable. This variable will hold the duty cycle of a motor.
-extern TaskShare<uint8_t>* brake_power;
+extern TaskShare<int16_t>* brake_power;
 
 /// This declares a taskshare which indicates that this variable is a shared 
 /// variable. This variable will hold the direction of the motor. 

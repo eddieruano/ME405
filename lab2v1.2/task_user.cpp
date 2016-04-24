@@ -65,7 +65,7 @@ task_user::task_user (const char* a_name,
     // Nothing is done in the body of this constructor. All the work is done in the
     // call to the frt_task constructor on the line just above this one
     is_menu_visible = false;
-    number_entered = 0;
+    //number_entered = 0;
     in_main_motor_module = false;
     in_single_motor_module = false;
     local_motor1_directive = FREEWHEEL;
@@ -82,7 +82,7 @@ void task_user::run (void)
     //*p_serial << PMS("in the user")<<endl;
     time_stamp a_time;                      // Holds the time so it can be displayed
     number_entered = 0;            // Holds a number being entered by user
-    uint8_t redirect = 0;
+    
 
     for (;;)
     {
@@ -141,8 +141,8 @@ void task_user::run (void)
                 case ('n'):
                     *p_serial << PMS ("Enter decimal numeric digits, "
                                       "then RETURN or ESC") << endl;
-                    number_entered = 0;
-                    redirect = 0;
+                    //number_entered = 0;
+                    //redirect = 0;
                     transition_to (5);
                     break;
 
@@ -172,6 +172,7 @@ void task_user::run (void)
                 in_single_motor_module = true;
 
                 getNumberInput();
+
                 if (isValidMotor(number_entered))
                 {
                     *p_serial << endl << PMS("->Selected: ") << number_entered;
@@ -183,7 +184,7 @@ void task_user::run (void)
                     local_motor_select = number_entered;
                     transition_to(1);
                 }
-                else if (char_in == 'q')
+                else if (char_in = 'q')
                 {
                     *p_serial << PMS("->Selected: ") << char_in << endl
                               << endl << endl
@@ -211,47 +212,94 @@ void task_user::run (void)
                     switch (char_in)
                     {
                     case ('s'):
-                        *p_serial << PMS("->Selected: ") << char_in << endl;
-                        *p_serial << endl << PMS ("Enter the Power Value (-255 to 255);") << endl
-                                  << PMS("  *Note: Negative Values = Reverse") << endl;
+                        *p_serial 
+                            << PMS("->Selected: ") << char_in << endl;
+                        *p_serial 
+                            << endl 
+                            << PMS ("Enter the Power Value (-255 to 255);") 
+                            << endl
+                            << PMS("  *Note: Negative Values = Reverse") 
+                            << endl;
 
                         //motor_directive -> put(1);
                         getNumberInput();
                         //setPower(motor_select->get(), number_entered);
                         setMotor(local_motor_select, number_entered, 1);
+                        *p_serial 
+                            << endl << endl 
+                            << PMS ("\tPower set at ") << number_entered 
+                            << PMS(". ") << endl;
+
                         resetMenus();
-                        transition_to(2);
+                        printDashBoard();
+                        *p_serial 
+                            << endl 
+                            << PMS("->Choose Motor ") << local_motor_select 
+                            << PMS(" operation: ") << endl;
+
+                        //transition_to(2);
                         break;
                     case ('b'):
-                        *p_serial << PMS("->Selected: ") << char_in << endl;
-                        *p_serial << PMS ("Enter the Brake Force(0 - 255)") << endl;
+                        *p_serial 
+                            << PMS("->Selected: ") << char_in 
+                            << endl;
+                        *p_serial 
+                            << PMS ("\t->Enter the Brake Force(0 - 255)") 
+                            << endl;
                         getNumberInput();
+                        *p_serial 
+                            << endl << endl 
+                            << PMS ("\tBrake set at ") << number_entered 
+                            << PMS(". ") << endl;
+
                         setMotor(local_motor_select, number_entered, 0);
+                        *p_serial 
+                            << endl << PMS("->Choose Motor ") 
+                            << local_motor_select 
+                            << PMS(" operation: ") << endl;
                         //set_brake(motor_select->get(), number_entered)
                         break;
                     case ('f'):
-                        *p_serial << PMS("->Selected: ") << char_in << endl;
-                        *p_serial << PMS ("Releasing Motor..") << endl;
+                        *p_serial 
+                            << PMS("->Selected: ") << char_in << endl;
+                        *p_serial 
+                            << PMS ("\t->Releasing Motor..") << endl;
                         setMotor(motor_select->get(), 0, 2);
+                        *p_serial 
+                            << endl << PMS("->Choose Motor ") 
+                            << local_motor_select << PMS(" operation: ") 
+                            << endl;
                         //getNumberInput();
                         break;
                     case ('p'):
-                        *p_serial << PMS("->Selected: ") << char_in << endl << PMS("->Entering Potentiometer Control... ") << endl;
-                        *p_serial << PMS ("->Potentiometer Activated.") << endl << endl
+                        *p_serial 
+                            << endl << PMS("->Selected: ") 
+                            << char_in << endl 
+                            << PMS("\t->Entering Potentiometer Control... ") << endl;
+                        *p_serial << PMS ("\t->Potentiometer Activated.") << endl << endl
                                   << PMS ("\t->Press 'q' to return to the Motor ") << local_motor_select << PMS(" Control")
                                   << endl << PMS ("\t->Press 'r' to refresh the DashBoard ") << endl;
                         transition_to(2);
                         resetMenus();
                         break;
                     case ('q'):
-                        *p_serial << PMS("->Selected: ") << char_in << endl << PMS(" Returning to Main Motor Module.. ") << endl;
+                        *p_serial 
+                            << PMS("->Selected: ") << char_in << endl 
+                            << PMS(" Returning to Main Motor Module.. ") 
+                            << endl;
                         transition_to(1);
                         resetMenus();
                         in_single_motor_module = false;
                         in_main_motor_module = true;
                         break;
                     default:
-                        *p_serial << endl << PMS("'") << char_in << PMS ("' is not a valid entry.") << endl;
+                        *p_serial 
+                            << endl << PMS("'") << char_in 
+                            << PMS ("' is not a valid entry.") << endl;
+                        *p_serial 
+                            << endl << PMS("->Choose Motor ") 
+                            << local_motor_select 
+                            << PMS(" operation: ") << endl;
                         break;
                     }
                 }
@@ -386,7 +434,8 @@ void task_user::printDashBoard(void)
 
         const char* status;
         const char* direction;
-        int16_t temp_power = local_motor1_power;
+        int16_t temp_power = motor_power -> get();
+        local_motor1_power = motor_power ->get();
         if (local_motor1_directive == 0)
         {status = "Stopped";}
         else if (local_motor1_directive == 1)
@@ -400,7 +449,7 @@ void task_user::printDashBoard(void)
         else if (local_motor1_directive == 3)
         {
             status = "PotMeter";
-            local_motor1_power = motor_power -> get();
+
         }
         else
         {
@@ -523,6 +572,14 @@ void task_user::getNumberInput()
                 number_entered *= 10;
                 number_entered += char_in - '0';
             }
+            // else if (char_in == '-')
+            // {
+            //     number_entered *= -1;
+            // }
+            // else if (char_in == 'q')
+            // {
+            //     return;
+            // }
             // Carriage return is ignored; the newline character ends the entry
             else if (char_in == 10)
             {
@@ -584,12 +641,12 @@ void task_user::setMotor(uint8_t motor_id, uint32_t power, int8_t direct)
     motor_select -> put(motor_id);
     motor_directive ->put(direct);
     motor_power->put(power);
-    // *p_serial << motor_select -> get()<<endl<<motor_directive->get()<<endl<<motor_power->get()<<endl;
+    //*p_serial << motor_select -> get()<<endl<<motor_directive->get()<<endl<<motor_power->get()<<endl;
     if (motor_id == 1)
     {
         local_motor1_directive = direct;
         local_motor1_power = power;
-        if (direct = 3)
+        if (direct == 3)
         {
             local_motor1_power = VAR;
         }
@@ -599,7 +656,7 @@ void task_user::setMotor(uint8_t motor_id, uint32_t power, int8_t direct)
     {
         local_motor2_directive = direct;
         local_motor2_power = power;
-        if (direct = 3)
+        if (direct == 3)
         {
             local_motor2_power = VAR;
         }

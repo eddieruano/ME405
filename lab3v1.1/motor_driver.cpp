@@ -137,6 +137,7 @@ void motor_driver::set_power (int16_t sig)
         }
 
         *ocr_PORT = speed;
+        
         //DBG (serial_PORT, "FORWARDS! @ "<<speed<<endl);
     }
     else if(sig < 0)

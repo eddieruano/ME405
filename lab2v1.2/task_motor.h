@@ -1,33 +1,43 @@
-//**************************************************************************************
+//*****************************************************************************
 /** @file task_motor.h
- *    This file contains the header for a task class that controls the MOTORness of an
- *    LED using a voltage measured from the A/D as input. The fun part: the MOTORness
- *    that is being controlled can be on another AVR computer, with signals being sent
- *    and received via wireless transceivers. 
+ *  @brief     This is the header file for the task_motor class. 
+
+ *  @details   It lays out 
+ *             prototypes for the task_motor constructor and the run class 
+ *             which is constantly called during operation. It also declared 3
+ *             local variables that hold a 'motor_driver' pointer, a unsigned 
+ *             byte holding the task identifier (1 or 2) which is checked for 
+ *             at the beginning of the task logic and a pointer to an 'adc' 
+ *             A/D converter class.
  *
- *  Revisions:
- *    @li 09-30-2012 JRR Original file was a one-file demonstration with two tasks
- *    @li 10-05-2012 JRR Split into multiple files, one for each task
- *    @li 10-25-2012 JRR Changed to a more fully C++ version with class task_sender
- *    @li 10-27-2012 JRR Altered from data sending task into LED blinking class
- *    @li 11-04-2012 JRR Altered again into the multi-task monstrosity
- *    @li 12-13-2012 JRR Yet again transmogrified; now it controls LED MOTORness
+ *  @author Eddie Ruano
  *
+ *  Revisions: @ 4/20/2016 added main structure
+ *             @ 4/22/2016 added pointers and correct logic
  *  License:
- *    This file is copyright 2012 by JR Ridgely and released under the Lesser GNU 
- *    Public License, version 2. It intended for educational use only, but its use
+ *    This file is copyright 2016 by Eddie Ruano and released under the Lesser 
+ *    GNU
+ *    Public License, version 2. It intended for educational use only, but its 
+ *    use
  *    is not limited thereto. */
-/*    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
- *    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- *    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- *    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
- *    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUEN-
- *    TIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- *    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
- *    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, 
- *    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+/*    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ *    IS"
+ *    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ *    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR 
+ *    PURPOSE
+ *    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ *    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+ *    CONSEQUEN-
+ *    TIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE 
+ *    GOODS
+ *    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
+ *    HOWEVER
+ *    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
+ *    LIABILITY,
+ *    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF 
+ *    THE USE
  *    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
-//**************************************************************************************
+//****************************************************************************
 
 // This define prevents this .h file from being included multiple times in a .cpp file
 #ifndef _TASK_MOTOR_H_
@@ -50,30 +60,32 @@
 #include "motor_driver.h"                   // Header for Generic Motor driver
 
 
-//-------------------------------------------------------------------------------------
-/** @brief  This task controls the MOTORness of an LED based on input from an A/D converter that also drives 2 motors.
- *  @details The A/D converter is run using a driver in files @c adc.h and @c adc.cpp. and the motor_driver is run using a driver in files @c motor_driver.h and @c motor_driver.cpp
- *           Code in this task sets up a timer/counter in PWM mode and controls the LED's average MOTORness through Timer/Counter 3 and the Timer/Counter 1 in fast non-inverted PWM sets up the correct input for the pwm of the motor.
- */
-
+//-----------------------------------------------------------------------------
 /**
- * @brief      { class_description }
+ * @brief      This class is the task motor class that handles a single motor
+ *             operation.
+ * @details    This is a task class that will control the operation of 
+ *             its own motor driver given to it as a pointer and initiated in
+ *             the main() function. it lays out the logic necessary to make 
+ *             commands from task_user to the motor driver happen.
  */
 class task_motor : public TaskBase
 {
 private:
-
+    /// No private variables or methods for this class
 protected:
-    // No protected variables or methods for this class
+    /// Holds identifier for this class, if it matches the global motor_select then this entire class and its motor becomes changeable. 
     uint8_t motor_identifier;
+    /// This holds the pointer to the motor that this task will control
     motor_driver* motor;
+    /// variable pointer that points to the A/D Converter given by main()
     adc* p_adc;
 
 public:
-    // This constructor creates a generic task of which many copies can be made
+    /// This constructor creates a generic task of which many copies can be made
     task_motor (const char*, unsigned portBASE_TYPE, size_t, emstream*,motor_driver*, adc*, uint8_t);
 
-    // This method is called by the RTOS once to run the task loop for ever and ever.
+    /// This method is called by the RTOS once to run the task loop for ever and ever.
     void run (void);
     
 };

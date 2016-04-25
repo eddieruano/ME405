@@ -98,6 +98,9 @@ TaskShare<uint8_t>* motor_select;
 TaskShare<int16_t>* encoder_pulses_per_sec;
 TaskShare<uint8_t>* encoder_previous_state; 
 
+TaskShare<uint8_t>* encoder_reg; 
+
+
 
 //=====================================================================================
 /** The main function sets up the RTOS.  Some test tasks are created. Then the
@@ -150,6 +153,7 @@ int main (void)
     motor_power = new TaskShare<int16_t> ("Motor Power");
     motor_select = new TaskShare<uint8_t> ("Motor Select");
     encoder_previous_state = new TaskShare<uint8_t> ("encoder previous state");
+    encoder_reg = new TaskShare<uint8_t> ("encoder reg");
 
 
     encoder_pulses_per_sec = new TaskShare<int16_t> ("Encoder Pulses");

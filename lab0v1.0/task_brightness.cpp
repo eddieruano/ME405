@@ -105,7 +105,7 @@ void task_brightness::run (void)
 		uint16_t duty_cycle = a2d_reading_c1 / 4;
 
 		//Lets print some stuff to the serial port!
-		*p_serial = PMS ("Channel 1: ") <<duty_cycle<<endl;
+		*p_serial << PMS ("Channel 1: ") <<duty_cycle<<endl;
 
 
 		// Set the brightness. Since the PWM has already been set up, we only need to

@@ -58,6 +58,7 @@ extern TaskShare<uint8_t>* motor_select;
 extern TaskShare<int16_t>* encoder_pulses_per_sec;
 
 extern TaskShare<uint8_t>* encoder_previous_state;
+extern TaskShare<uint8_t>* encoder_reg;
 
 
 

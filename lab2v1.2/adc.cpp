@@ -38,6 +38,9 @@
 
 adc::adc (emstream* p_serial_port)
 {
+	
+
+	
 	ptr_to_serial = p_serial_port;
 
 	//enables voltage refrence AVCC and sets AREF
@@ -48,8 +51,8 @@ adc::adc (emstream* p_serial_port)
 
 	// Print a handy debugging message
 	DBG (ptr_to_serial, "adc successfully constructed. " << endl);
-	DBG (ptr_to_serial, "ADMUX: "  <<bin<<ADMUX<<endl);
-	DBG (ptr_to_serial, "ADCSRA: " <<bin<<ADCSRA<<endl);
+	//DBG (ptr_to_serial, "ADMUX: "  <<bin<<ADMUX<<endl);
+	//DBG (ptr_to_serial, "ADCSRA: " <<bin<<ADCSRA<<endl);
 }
 
 

@@ -1,57 +1,79 @@
-//**************************************************************************************
+//*****************************************************************************
 /** @file task_motor.cpp
- *    This file contains the code for a task class which controls the brightness of an
- *    LED using a voltage measured from the A/D as input. The fun part: the brightness
- *    that is being controlled can be on another AVR computer, with signals being sent
- *    and received via wireless transceivers.
+ *  @brief     This class is the task motor class that handles a single motor
+ *             operation.
  *
- *  Revisions:
- *    @li 09-30-2012 JRR Original file was a one-file demonstration with two tasks
- *    @li 10-05-2012 JRR Split into multiple files, one for each task
- *    @li 10-25-2012 JRR Changed to a more fully C++ version with class task_sender
- *    @li 10-27-2012 JRR Altered from data sending task into LED blinking class
- *    @li 11-04-2012 JRR Altered again into the multi-task monstrosity
- *    @li 12-13-2012 JRR Yet again transmogrified; now it controls LED brightness
+ *  @details   This is a task class that will control the operation of
+ *             its own motor driver given to it as a pointer and initiated in
+ *             the main() function. it lays out the logic necessary to make
+ *             commands from task_user to the motor driver happen.
  *
+ *  @author Eddie Ruano
+ *
+ *  Revisions: @ 4/20/2016 added main structure
+ *             @ 4/22/2016 added pointers and correct logic
  *  License:
- *    This file is copyright 2012 by JR Ridgely and released under the Lesser GNU
- *    Public License, version 2. It intended for educational use only, but its use
+ *    This file is copyright 2016 by Eddie Ruano and released under the Lesser
+ *    GNU
+ *    Public License, version 2. It intended for educational use only, but its
+ *    use
  *    is not limited thereto. */
-/*    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+/*    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ *    IS"
  *    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- *    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ *    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ *    PURPOSE
  *    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- *    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUEN-
- *    TIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- *    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- *    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- *    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ *    CONSEQUEN-
+ *    TIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ *    GOODS
+ *    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ *    HOWEVER
+ *    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ *    LIABILITY,
+ *    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
+ *    THE USE
  *    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
-//**************************************************************************************
+//*****************************************************************************
 
-#include "textqueue.h"                      // Header for text queue class
+#include "textqueue.h"                 // Header for text queue class
 #include "task_motor.h"                // Header for this task
-#include "shares.h"                         // Shared inter-task communications
+#include "shares.h"                    // Shared inter-task communications
 
 
+//Set these defines in case we want to change things later.
 
+/// Value for BRAKE directive
 #define BRAKE 0
+/// Value for SETPOWER directive
 #define SETPOWER 1
+/// Value for FREEWHEEL directive
 #define FREEWHEEL 2
+/// Value for POTENTIOMETER directive
 #define POTENTIOMETER 3
 
-//-------------------------------------------------------------------------------------
-/** This constructor creates a task which controls the brightness of an LED using
- *  input from an A/D converter. The main job of this constructor is to call the
- *  constructor of parent class (\c frt_task ); the parent's constructor the work.
- *  @param a_name A character string which will be the name of this task
- *  @param a_priority The priority at which this task will initially run (default: 0)
- *  @param a_stack_size The size of this task's stack in bytes
- *                      (default: configMINIMAL_STACK_SIZE)
- *  @param p_ser_dev Pointer to a serial device (port, radio, SD card, etc.) which can
- *                   be used by this task to communicate (default: NULL)
- */
 
+/**
+ * @brief      This constructor builds an instance of a task_motor that will
+ *             be used to control a motor unique to the task.
+ *
+ * @param[in]  a_name         TA character string which will be the name of
+ *                            this task.
+ * @param[in]  a_priority     The priority at which this task will initially
+ *                            run (default: 0)
+ * @param[in]  a_stack_size   The size of this task's stack in bytes
+ *                            (default: configMINIMAL_STACK_SIZE)
+ * @param      p_ser_dev      Pointer to a serial device (port, radio, SD
+ *                            card, etc.) which can be used by this task to
+ *                            communicate (default: NULL)
+ * @param      motor_inc      The motor pointer that this task is tied to,
+ *                            since it's only one, each motor needs a task in
+ *                            order to operate
+ * @param      adc_inc        The A/D converter pointer that is given to the
+ *                            task in case of Potentiometer Mode
+ * @param[in]  motor_id_inc
+ */
 task_motor::task_motor (const char* a_name,
                         unsigned portBASE_TYPE a_priority,
                         size_t a_stack_size,
@@ -62,17 +84,26 @@ task_motor::task_motor (const char* a_name,
                        )
     : TaskBase (a_name, a_priority, a_stack_size, p_ser_dev)
 {
-    // Nothing is done in the body of this constructor. All the work is done in the
-    // call to the frt_task constructor on the line just above this one
+    // Initialize local variables unique to this task.
+
+    /// Need a motor pointer
     motor = motor_inc;
+    /// Need an adc pointer
     p_adc = adc_inc;
+    /// Need a motor identifier
     motor_identifier = motor_id_inc;
 }
 
 
-//-------------------------------------------------------------------------------------
-/** @ brief This method is called once by the RTOS scheduler.
-   @ details Each time around the for (;;) loop, it reads the A/D converter and uses the result to control the brightness of an LED. It also uses the input from the adc object to control the speed and direction of any motor driver object declared.
+
+/**
+ * @brief      This method is called once by the RTOS scheduler.
+ * @details    Each time that this method is run it initializes a tickcount and
+ *             loops in an infinite for(;;) loop that calls shared variables
+ *             that contain the directive, the power, and the selector for the
+ *             motor that need to be affected. If the selector matches local
+ *             selector assigned by the main function, then the local motor is
+ *             affected which in turn affects the motor assigned to it by main.
  */
 
 void task_motor::run (void)
@@ -80,82 +111,82 @@ void task_motor::run (void)
     // Make a variable which will hold times to use for precise task scheduling
     TickType_t previousTicks = xTaskGetTickCount ();
 
+    // Configure counter/timer 1 as a PWM for Motor Drivers.
+    // COM1A1/COM1B1 to set to non inverting mode.
+    // WGM10 to set to Fast PWM mode (only half ughhhhh)
+    TCCR1A |= (1 << WGM10) | (1 << COM1A1) | (1 << COM1B1);
+    // This is the second Timer/Counter Register
+    // WGM12 (other half of Fast PWM)
+    // CS11 Sets the presacler to 8 (010)
+    TCCR1B |= (1 << WGM12) | (1 << CS11);
+
     for (;;)
     {
-        int8_t LOCAL_motor_directive = motor_directive -> get();
+        // creates local variable to reduce the number of calls to
+        // 'motor_directive'
+        uint8_t LOCAL_motor_directive = motor_directive -> get();
+
+        //begin logic checks
         if (motor_identifier == motor_select -> get())
         {
-
+            //if Directive = 0, set the power of the motor.
             if (LOCAL_motor_directive == SETPOWER)
             {
-                //*p_serial << PMS("SET POWER")<<endl;
                 motor -> set_power(motor_power->get());
             }
+            //if Directive = 1, apply the motor brake
             else if (LOCAL_motor_directive == BRAKE)
             {
-                //*p_serial << PMS("SET BRAKE")<<endl;
                 motor -> brake(motor_power ->get());
             }
+            //if Directive = 2, freewheel the motor
             else if (LOCAL_motor_directive == FREEWHEEL)
             {
-                //*p_serial << PMS("SET FREE")<<endl;
                 motor -> brake();
             }
+            //if the Directive = 3, we enter potentiometer mode
             else if (LOCAL_motor_directive == POTENTIOMETER)
             {
+                //create variable to hold the reading of the adc. 1023
                 uint16_t duty_cycle = p_adc -> read_once(1);
-                //p_serial << duty_cycle<<endl;
-                duty_cycle = duty_cycle / 4;
-                //*p_serial << duty_cycle<<endl;
-                int16_t power = ((int16_t)duty_cycle * 1);
-                //doesn't let the duty_cycle go to 0 because then the power is 0.
-                if (duty_cycle == 0) {duty_cycle++;}
-                //From 00 - 64 we want to decrease forwards
-                //From 65 - 128 we want to increase backwards
-                //From 129 - 192 we want to set both outs to high to set holding brake
-                //From 193 - 255 we want to set both outs to low so that they don't affect the motor
-                //*p_serial << duty_cycle<<endl;
-                //*p_serial <<PMS("DUTY CYCLE")<<duty_cycle<<endl;
-                
-                ;
-                if (duty_cycle < 128)
+
+                //convert the duty cycle into a signed variable and divide by
+                int16_t power = ((int16_t)duty_cycle / 4);
+                //*p_serial << PMS("Poweer: ") << power<<PMS(". ")<<endl;
+                //*p_serial << PMS("PDuty: ") << power << PMS(". ") << endl;
+                //if (duty_cycle == 0) {duty_cycle++;}
+                if (power < 128)
                 {
                     //forwards start from high speed to go to low speed
-                    power = 255 - duty_cycle*2;
-
+                    power = 255 - power * 2;
                     motor->set_power(power);
+                    motor_power -> put(power);
                 }
-                else if (duty_cycle > 128)
+                else if (power > 128)
                 {
                     //backwards start from low speed to go to high speed
-                    power = 2*(128 - duty_cycle);
+                    power = ((128 - power) * 2);
+
                     motor->set_power(power);
-
-
-                    
-                    //*p_serial << PMS ("POT METER: ") <<  << endl;
+                    motor_power -> put(power);
                 }
-                motor_power -> put(power);
-                //*p_serial <<PMS("GET POW: ")<<(motor_power -> get())<< endl;
-                OCR3B = duty_cycle;
-                //*p_serial << PMS("Power: ")<<power<<endl;
+                //place power in the shared variable in case it need to be accessed by the task_user
+                
+                //char temp = p_serial->puts("");
+                // *p_serial << PMS("Power: ") << power << PMS(". ") << endl;
+                //*p_serial << power;
+                //OCR3B = duty_cycle;
             }
 
 
         }
-
-
-        //*p_serial << PMS ("Testing inside task")<<endl;
-        // Increment the run counter. This counter belongs to the parent class and can
-        // be printed out for debugging purposes
+        // Increment the run counter in the parent class.
         runs++;
 
         // This is a method we use to cause a task to make one run through its task
         // loop every N milliseconds and let other tasks run at other times
-        delay_from_for_ms (previousTicks, 100);
+        delay_from_for_ms (previousTicks, 10);
+        //delay_ms(5);
     }
-
-
-
 }
 

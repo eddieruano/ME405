@@ -1,4 +1,3 @@
-//======================================================================================
 /** @file adc.h
  *    This file contains a very simple A/D converter driver. The driver is hopefully
  *    thread safe in FreeRTOS due to the use of a mutex to prevent its use by multiple

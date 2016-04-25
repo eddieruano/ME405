@@ -70,21 +70,21 @@ void task_encoder::run (void)
    while (1)
    {
       // *p_serial << PMS("PORTE : ") << PORTE <<bin<< PMS("   : ") << PORTE << dec<<endl;
-      // *p_serial << PMS("PE5   : ") << (1<<PE5) <<bin<< PMS("   : ") << (1<<PE5) << dec<<endl;
+      // *p_serial << PMS("PE7   : ") << (1<<PE7) <<bin<< PMS("   : ") << (1<<PE7) << dec<<endl;
       // uint8_t temp = PORTE & (1<<PE5);
-      // *p_serial << PMS("&     : ") << temp <<bin<< PMS("   : ") << temp <<endl;
+      //*p_serial << PMS("OP    : ") << operation<<endl;
       // *p_serial << PMS("=     : ")<<(temp == (1<<PE5)) <<endl;
       // uint8_t temp2 = (temp == (1<<PE5));
       // *p_serial << temp2 << endl;
-      *p_serial << PMS ("In Encoder : ") <<encoder_pulses_per_sec->get()<< endl;
+      *p_serial << PMS ("Count : ") <<encoder_pulses_per_sec->get()<< endl;
       *p_serial << PMS ("STATE : ") <<encoder_previous_state->get()<< endl;
+      *p_serial << PMS ("PORTE : ") <<encoder_reg->get()<< endl;
 
                 //<< PMS ("Power_Signal: ") << power << dec << endl;
 
       // Increment the run counter. This counter belongs to the parent class and can
       // be printed out for debugging purposes
       runs++;
-
       // This is a method we use to cause a task to make one run through its task
       // loop every N milliseconds and let other tasks run at other times
       delay_from_for_ms (previousTicks, 1000);

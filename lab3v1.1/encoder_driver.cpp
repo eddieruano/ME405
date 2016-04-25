@@ -103,14 +103,16 @@ ISR(INT6_vect)
     // 0000 0000
     // 11011111 223 on 6 high & PE6
     // 10011111 159 on 6 low
-    // 00100000 PE5 
-    encoder_previous_state -> ISR_put((1<<PE6) == (PORTE & (1<<PE6)));
+    encoder_reg -> ISR_put(PORTE);
+    encoder_previous_state -> ISR_put(PORTE >> PE6);
     encoder_pulses_per_sec -> ISR_put(encoder_pulses_per_sec->get() + 1);
 }
 // Set up ISR for PINE7
 ISR(INT7_vect)
 {
-    encoder_previous_state -> ISR_put(~(PORTE^=(1<<PINE7)));
+    uint8_t reg = PORTE;
+    encoder_reg -> ISR_put(reg);
+    encoder_previous_state -> ISR_put(reg >> PE7);
     encoder_pulses_per_sec -> ISR_put(encoder_pulses_per_sec->get() - 1);
 }
 

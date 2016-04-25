@@ -1,10 +1,42 @@
-//*************************************************************************************
+//*****************************************************************************
 /** @file motor_driver.cpp
- *    This file contains a very simple A/D converter driver. This driver should be
+ *  @brief     This class is the motor driver class. 
  *
- *  Revisions: n/a
+ *  @details   This class creates an instance of a motor assuming caller gives 
+ *             all the correct and legal addresses and pin values, driver is
+ *             able to map a motor to one of the two H bridge modules on the 
+ *             Custom ME 405 board.
  *
- //*************************************************************************************/
+ *  @author Eddie Ruano
+ *
+ *  Revisions: @ 4/23/2016 removed bitops.h library
+ *             @ 4/16/2016 added bitops.h library for setting unsetting bits
+ *             @ 4/12/2016 main structure created
+ *  License:
+ *    This file is copyright 2016 by Eddie Ruano and released under the Lesser
+ *    GNU
+ *    Public License, version 2. It intended for educational use only, but its
+ *    use
+ *    is not limited thereto. */
+/*    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ *    IS"
+ *    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ *    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ *    PURPOSE
+ *    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ *    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ *    CONSEQUEN-
+ *    TIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ *    GOODS
+ *    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ *    HOWEVER
+ *    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ *    LIABILITY,
+ *    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
+ *    THE USE
+ *    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
+//*****************************************************************************
+
 // Include standard library header files
 #include <stdlib.h>                         
 #include <avr/io.h>
@@ -13,20 +45,27 @@
 // Include header for the driver class
 #include "motor_driver.h" 
 
-
-//-------------------------------------------------------------------------------------
-/** @brief   This is the constuctor for the motor_driver class.
- *  @details This constructor takes in several addresses and delivers them to the protected variables declared in our header file. 
- *  @param   serial_PORT_incoming This holds the address to the incoming data register 
- *  @param   diag_PORT_incoming This holds the address to the incoming data register
- *  @param   pwm_PORT_incoming This holds the address to the incoming data register
- *  @param   ocr_PORT_incoming This holds the address to the incoming ocr register
- *  @param   input_APIN_incoming This holds defined value for INA pin
- *  @param   input_BPIN_incoming This holds defined value for INB pin
- *  @param   diag_PIN_incoming This holds defined value for appropriate diag pin
- *  @param   pwm_BPIN_incoming This holds defined value for pwm pin
+/**
+ * @brief      This is the constuctor for the motor_driver class.
+ * @details    This constructor takes in several addresses and delivers them 
+ *             to the protected variables declared in our header file.
+ *
+ * @param      serial_PORT_incoming  This holds the address to the incoming data 
+ *           register 
+ * @param      input_PORT_incoming   This holds the address to the incoming 
+ *                                   data register
+ * @param      diag_PORT_incoming    This holds address port to incoming diag
+ *                                   port reg
+ * @param      pwm_PORT_incoming     This holds the address to the incoming 
+ *                                   data register
+ * @param      ocr_PORT_incoming     This holds the address to the incoming 
+ *                                   ocr register
+ * @param[in]  input_APIN_incoming   This holds defined value for INA pin
+ * @param[in]  input_BPIN_incoming   This holds defined value for INB pin
+ * @param[in]  diag_PIN_incoming     This holds defined value for appropriate 
+ *                                   diag ping
+ * @param[in]  pwm_PIN_incoming      This holds defined value for pwm pin
  */
-
 motor_driver::motor_driver (
     emstream* serial_PORT_incoming,
     volatile uint8_t* input_PORT_incoming,
@@ -93,14 +132,14 @@ motor_driver::motor_driver (
     // DBG (serial_PORT, "END PRINTING MOTOR CONSTRUCTOR." <<endl);
 }
 
-
-
-//-------------------------------------------------------------------------------------
-/** @brief   This method sets the appropriate input direction based on the incoming pwm parameter labeled power. 
- *  @param   sig int16_t the incoming signed input that tells our pwm signal going into the Output/Compare how strong the motor will be moving
- *  @return  no return
+/**
+ * @brief      This method sets the appropriate input direction based on the 
+ *             incoming pwm parameter labeled power. 
+ *
+ * @param[in]  sig   the incoming signed input that tells our pwm signal going
+ *                   into the Output/Compare how strong the motor will be
+ *                   moving
  */
-
 void motor_driver::set_power (int16_t sig)
 {
 
@@ -160,18 +199,20 @@ void motor_driver::set_power (int16_t sig)
     else
     {
         // it should never reach this condition but in case
-      DBG (serial_PORT, "Uhhhhh.. Sig problems"<<endl);
+     // DBG (serial_PORT, "Uhhhhh.. Sig problems"<<endl);
     }
     
     //DBG (serial_PORT, "input_PORT: " <<*input_PORT <<endl);
     //DBG (serial_PORT, "OCR_PORT: " <<*ocr_PORT <<endl);
 }
-//-------------------------------------------------------------------------------------
-/** @brief This method actively brakes by setting both pins high. This is stronger braking than just letting it freewheel
- *  @param brake int16_t is a signal that if true will indicate brakes
- *  @return no return
- */
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief      This method actively brakes by setting both pins high. This is 
+ *             stronger braking than just letting it freewheel
+ *
+ * @param[in]  f_brake  The f brake is a signal that will indicate brake power
+ */
 void motor_driver::brake (int16_t f_brake)
 {   
     //* SETTING THE DATA DIRECTION *//
@@ -199,15 +240,15 @@ void motor_driver::brake (int16_t f_brake)
 
 }
 
-//-------------------------------------------------------------------------------------
-/** @brief This method actively brakes by setting both pins high. This is stronger braking than just letting it freewheel
- *  @param brake int16_t is a signal that if true will indicate brakes
- *  @return no return
- */
+//-----------------------------------------------------------------------------
 
+ /**
+  * @brief      This method sets both H Drive pins low to let the motor
+  *             freewheel.
+  */
  void motor_driver::brake (void)
 { 
-  // Need to set DDR to outputs for the input port
+    // Need to set DDR to outputs for the input port
     *input_DDR |= ((1 << input_APIN) | (1 << input_BPIN));
     // Need to set the diagnostic as an (IN)
     *diag_DDR &= ~(1 << diag_PIN);
@@ -223,18 +264,25 @@ void motor_driver::brake (int16_t f_brake)
 
 }
 
-//-------------------------------------------------------------------------------------
-/** @brief   This overloaded operator prints information about a motor driver. 
- *  @details It prints out appropriate information about the motor driver being delivered in the parameter.
- *  @param   serpt Reference to a serial port to which the printout will be printed
- *  @param   a2d   Reference to the motor driver which is being accessed
- *  @return  A reference to the same serial device on which we write information.
- *           This is used to string together things to write with @c << operators
+/**
+ * @brief                     This overloaded operator prints information 
+ *                            about a motor driver. 
+ *                            
+ * @details                   It prints out appropriate information about the 
+ *                            motor driver being delivered in the parameter.
+ *                            
+ * @param      serpt          A pointer to the serial port used.
+ * @param      motdrv         A pointer to a driver object
+ *
+ * @return                    A reference to the same serial device on which
+ *                            we write information. This is used to string 
+ *                            together things to write with @c << operators
  */
+
 emstream& operator << (emstream& serpt, motor_driver& motdrv)
 {
 	// Prints info to serial
-	serpt << PMS ("Motor Driver Input: ")<<endl;
+	serpt << PMS ("Motor Driver Input: ")<<*motdrv.ocr_PORT<<endl;
 
 
 	return (serpt);

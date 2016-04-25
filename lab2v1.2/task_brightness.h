@@ -66,11 +66,11 @@ protected:
 
 public:
 	// This constructor creates a generic task of which many copies can be made
-	task_brightness (const char*, unsigned portBASE_TYPE, size_t, emstream*,motor_driver*);
+	task_brightness (const char*, unsigned portBASE_TYPE, size_t, emstream*);
 
 	// This method is called by the RTOS once to run the task loop for ever and ever.
 	void run (void);
-    motor_driver* motor;
+    //motor_driver* motor;
 };
 
 #endif // _TASK_BRIGHT_H_

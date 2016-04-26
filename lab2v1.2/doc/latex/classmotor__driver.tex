@@ -1,0 +1,213 @@
+\hypertarget{classmotor__driver}{\section{motor\-\_\-driver Class Reference}
+\label{classmotor__driver}\index{motor\-\_\-driver@{motor\-\_\-driver}}
+}
+
+
+This class will run the D\-C motor.  
+
+
+
+
+{\ttfamily \#include $<$motor\-\_\-driver.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmotor__driver_a2c184d7e66a7935c0347d72b44d37c62}{motor\-\_\-driver} (emstream $\ast$serial\-\_\-\-P\-O\-R\-T\-\_\-incoming, volatile uint8\-\_\-t $\ast$input\-\_\-\-P\-O\-R\-T\-\_\-incoming, volatile uint8\-\_\-t $\ast$diag\-\_\-\-P\-O\-R\-T\-\_\-incoming, volatile uint8\-\_\-t $\ast$pwm\-\_\-\-P\-O\-R\-T\-\_\-incoming, volatile uint16\-\_\-t $\ast$ocr\-\_\-\-P\-O\-R\-T\-\_\-incoming, uint8\-\_\-t input\-\_\-\-A\-P\-I\-N\-\_\-incoming, uint8\-\_\-t input\-\_\-\-B\-P\-I\-N\-\_\-incoming, uint8\-\_\-t diag\-\_\-\-P\-I\-N\-\_\-incoming, uint8\-\_\-t pwm\-\_\-\-P\-I\-N\-\_\-incoming)
+\begin{DoxyCompactList}\small\item\em set the public constructor and the public methods \end{DoxyCompactList}\item 
+void \hyperlink{classmotor__driver_a2bc43c500da3297a815c5958bee57f20}{set\-\_\-power} (int16\-\_\-t)
+\begin{DoxyCompactList}\small\item\em prototype for set\-\_\-power method of \hyperlink{classmotor__driver}{motor\-\_\-driver} \end{DoxyCompactList}\item 
+void \hyperlink{classmotor__driver_a0ceae2119e7bc1a03f409ca9c0cce32c}{brake} (int16\-\_\-t)
+\begin{DoxyCompactList}\small\item\em prototype for the brake method of \hyperlink{classmotor__driver}{motor\-\_\-driver} with parameter \end{DoxyCompactList}\item 
+void \hyperlink{classmotor__driver_aa21e7894053cd83968d9e6b2958c9aec}{brake} (void)
+\begin{DoxyCompactList}\small\item\em prototype for brake method w/o parameter \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmotor__driver_a960f4685dd5db6cbbe29399dbaf1a8f7}{volatile uint16\-\_\-t $\ast$ \hyperlink{classmotor__driver_a960f4685dd5db6cbbe29399dbaf1a8f7}{ocr\-\_\-\-P\-O\-R\-T}}\label{classmotor__driver_a960f4685dd5db6cbbe29399dbaf1a8f7}
+
+\begin{DoxyCompactList}\small\item\em pointer to the comp register \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmotor__driver_a98a0c18a3b4d8b61266f98437aab12a9}{emstream $\ast$ \hyperlink{classmotor__driver_a98a0c18a3b4d8b61266f98437aab12a9}{serial\-\_\-\-P\-O\-R\-T}}\label{classmotor__driver_a98a0c18a3b4d8b61266f98437aab12a9}
+
+\begin{DoxyCompactList}\small\item\em The \hyperlink{classmotor__driver}{motor\-\_\-driver} class uses this pointer to the serial port to say hello. \end{DoxyCompactList}\item 
+\hypertarget{classmotor__driver_aa9ce032000d0eb28499df3fa53255022}{volatile uint8\-\_\-t $\ast$ \hyperlink{classmotor__driver_aa9ce032000d0eb28499df3fa53255022}{input\-\_\-\-D\-D\-R}}\label{classmotor__driver_aa9ce032000d0eb28499df3fa53255022}
+
+\begin{DoxyCompactList}\small\item\em pointer to input D\-D\-R register \end{DoxyCompactList}\item 
+\hypertarget{classmotor__driver_ad821a9c32c2e296373f5273db99e3f59}{volatile uint8\-\_\-t $\ast$ \hyperlink{classmotor__driver_ad821a9c32c2e296373f5273db99e3f59}{input\-\_\-\-P\-O\-R\-T}}\label{classmotor__driver_ad821a9c32c2e296373f5273db99e3f59}
+
+\begin{DoxyCompactList}\small\item\em pointer to the data input register \end{DoxyCompactList}\item 
+\hypertarget{classmotor__driver_a6b1aa2bcd4eecada6abe2e3d11fecd88}{volatile uint8\-\_\-t $\ast$ \hyperlink{classmotor__driver_a6b1aa2bcd4eecada6abe2e3d11fecd88}{diag\-\_\-\-D\-D\-R}}\label{classmotor__driver_a6b1aa2bcd4eecada6abe2e3d11fecd88}
+
+\begin{DoxyCompactList}\small\item\em pointer to diagnostic register \end{DoxyCompactList}\item 
+\hypertarget{classmotor__driver_af0259585bf3d8d7a3cf236913255a543}{volatile uint8\-\_\-t $\ast$ \hyperlink{classmotor__driver_af0259585bf3d8d7a3cf236913255a543}{diag\-\_\-\-P\-O\-R\-T}}\label{classmotor__driver_af0259585bf3d8d7a3cf236913255a543}
+
+\begin{DoxyCompactList}\small\item\em pointer to the diag input register \end{DoxyCompactList}\item 
+\hypertarget{classmotor__driver_a1828fd490bb9fa20d9a1974db7bea08a}{volatile uint8\-\_\-t $\ast$ \hyperlink{classmotor__driver_a1828fd490bb9fa20d9a1974db7bea08a}{pwm\-\_\-\-D\-D\-R}}\label{classmotor__driver_a1828fd490bb9fa20d9a1974db7bea08a}
+
+\begin{DoxyCompactList}\small\item\em pointer to D\-D\-R pwm register \end{DoxyCompactList}\item 
+\hypertarget{classmotor__driver_ad7108a5cc11ba229ed117cb6c98adda6}{volatile uint8\-\_\-t $\ast$ \hyperlink{classmotor__driver_ad7108a5cc11ba229ed117cb6c98adda6}{pwm\-\_\-\-P\-O\-R\-T}}\label{classmotor__driver_ad7108a5cc11ba229ed117cb6c98adda6}
+
+\begin{DoxyCompactList}\small\item\em pointer to pwm port \end{DoxyCompactList}\item 
+\hypertarget{classmotor__driver_a0f3eeec4986d707cfcd5d25a6dd5fac9}{uint8\-\_\-t \hyperlink{classmotor__driver_a0f3eeec4986d707cfcd5d25a6dd5fac9}{input\-\_\-\-A\-P\-I\-N}}\label{classmotor__driver_a0f3eeec4986d707cfcd5d25a6dd5fac9}
+
+\begin{DoxyCompactList}\small\item\em pin\-A value to set the input register \end{DoxyCompactList}\item 
+\hypertarget{classmotor__driver_a079434aa37c0edbdbce3c1c04ffc0e0a}{uint8\-\_\-t \hyperlink{classmotor__driver_a079434aa37c0edbdbce3c1c04ffc0e0a}{input\-\_\-\-B\-P\-I\-N}}\label{classmotor__driver_a079434aa37c0edbdbce3c1c04ffc0e0a}
+
+\begin{DoxyCompactList}\small\item\em pin\-B value to set the input register \end{DoxyCompactList}\item 
+\hypertarget{classmotor__driver_ad97987799de2b9467ce7b01f5b291fcb}{uint8\-\_\-t \hyperlink{classmotor__driver_ad97987799de2b9467ce7b01f5b291fcb}{diag\-\_\-\-P\-I\-N}}\label{classmotor__driver_ad97987799de2b9467ce7b01f5b291fcb}
+
+\begin{DoxyCompactList}\small\item\em pin valye to set the diag register \end{DoxyCompactList}\item 
+\hypertarget{classmotor__driver_accfb1e4405787b56c89636f5a14b5762}{uint8\-\_\-t \hyperlink{classmotor__driver_accfb1e4405787b56c89636f5a14b5762}{pwm\-\_\-\-P\-I\-N}}\label{classmotor__driver_accfb1e4405787b56c89636f5a14b5762}
+
+\begin{DoxyCompactList}\small\item\em pin value to set the pwm register \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class will run the D\-C motor. 
+
+This class sets up a driver for a D\-C motor to be used with the H bridge on the custom Atmega1281 board. It sets up no private variables, and has multiple protected variables. The protected variables include 6 pointers to registers that hold the correct data for the 
+
+Definition at line 62 of file motor\-\_\-driver.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmotor__driver_a2c184d7e66a7935c0347d72b44d37c62}{\index{motor\-\_\-driver@{motor\-\_\-driver}!motor\-\_\-driver@{motor\-\_\-driver}}
+\index{motor\-\_\-driver@{motor\-\_\-driver}!motor_driver@{motor\-\_\-driver}}
+\subsubsection[{motor\-\_\-driver}]{\setlength{\rightskip}{0pt plus 5cm}motor\-\_\-driver\-::motor\-\_\-driver (
+\begin{DoxyParamCaption}
+\item[{emstream $\ast$}]{serial\-\_\-\-P\-O\-R\-T\-\_\-incoming, }
+\item[{volatile uint8\-\_\-t $\ast$}]{input\-\_\-\-P\-O\-R\-T\-\_\-incoming, }
+\item[{volatile uint8\-\_\-t $\ast$}]{diag\-\_\-\-P\-O\-R\-T\-\_\-incoming, }
+\item[{volatile uint8\-\_\-t $\ast$}]{pwm\-\_\-\-P\-O\-R\-T\-\_\-incoming, }
+\item[{volatile uint16\-\_\-t $\ast$}]{ocr\-\_\-\-P\-O\-R\-T\-\_\-incoming, }
+\item[{uint8\-\_\-t}]{input\-\_\-\-A\-P\-I\-N\-\_\-incoming, }
+\item[{uint8\-\_\-t}]{input\-\_\-\-B\-P\-I\-N\-\_\-incoming, }
+\item[{uint8\-\_\-t}]{diag\-\_\-\-P\-I\-N\-\_\-incoming, }
+\item[{uint8\-\_\-t}]{pwm\-\_\-\-P\-I\-N\-\_\-incoming}
+\end{DoxyParamCaption}
+)}}\label{classmotor__driver_a2c184d7e66a7935c0347d72b44d37c62}
+
+
+set the public constructor and the public methods 
+
+This is the constuctor for the \hyperlink{classmotor__driver}{motor\-\_\-driver} class.
+
+This constructor takes in several addresses and delivers them to the protected variables declared in our header file.
+
+
+\begin{DoxyParams}[1]{Parameters}
+ & {\em serial\-\_\-\-P\-O\-R\-T\-\_\-incoming} & This holds the address to the incoming data register \\
+\hline
+ & {\em input\-\_\-\-P\-O\-R\-T\-\_\-incoming} & This holds the address to the incoming data register \\
+\hline
+ & {\em diag\-\_\-\-P\-O\-R\-T\-\_\-incoming} & This holds address port to incoming diag port reg \\
+\hline
+ & {\em pwm\-\_\-\-P\-O\-R\-T\-\_\-incoming} & This holds the address to the incoming data register \\
+\hline
+ & {\em ocr\-\_\-\-P\-O\-R\-T\-\_\-incoming} & This holds the address to the incoming ocr register \\
+\hline
+\mbox{\tt in}  & {\em input\-\_\-\-A\-P\-I\-N\-\_\-incoming} & This holds defined value for I\-N\-A pin \\
+\hline
+\mbox{\tt in}  & {\em input\-\_\-\-B\-P\-I\-N\-\_\-incoming} & This holds defined value for I\-N\-B pin \\
+\hline
+\mbox{\tt in}  & {\em diag\-\_\-\-P\-I\-N\-\_\-incoming} & This holds defined value for appropriate diag ping \\
+\hline
+\mbox{\tt in}  & {\em pwm\-\_\-\-P\-I\-N\-\_\-incoming} & This holds defined value for pwm pin \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 69 of file motor\-\_\-driver.\-cpp.
+
+
+
+References diag\-\_\-\-D\-D\-R, diag\-\_\-\-P\-I\-N, diag\-\_\-\-P\-O\-R\-T, input\-\_\-\-A\-P\-I\-N, input\-\_\-\-B\-P\-I\-N, input\-\_\-\-D\-D\-R, input\-\_\-\-P\-O\-R\-T, ocr\-\_\-\-P\-O\-R\-T, pwm\-\_\-\-D\-D\-R, pwm\-\_\-\-P\-I\-N, pwm\-\_\-\-P\-O\-R\-T, and serial\-\_\-\-P\-O\-R\-T.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmotor__driver_a0ceae2119e7bc1a03f409ca9c0cce32c}{\index{motor\-\_\-driver@{motor\-\_\-driver}!brake@{brake}}
+\index{brake@{brake}!motor_driver@{motor\-\_\-driver}}
+\subsubsection[{brake}]{\setlength{\rightskip}{0pt plus 5cm}void motor\-\_\-driver\-::brake (
+\begin{DoxyParamCaption}
+\item[{int16\-\_\-t}]{f\-\_\-brake}
+\end{DoxyParamCaption}
+)}}\label{classmotor__driver_a0ceae2119e7bc1a03f409ca9c0cce32c}
+
+
+prototype for the brake method of \hyperlink{classmotor__driver}{motor\-\_\-driver} with parameter 
+
+This method actively brakes by setting both pins high. This is stronger braking than just letting it freewheel.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f\-\_\-brake} & The f brake is a signal that will indicate brake power \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 216 of file motor\-\_\-driver.\-cpp.
+
+
+
+References diag\-\_\-\-D\-D\-R, diag\-\_\-\-P\-I\-N, diag\-\_\-\-P\-O\-R\-T, input\-\_\-\-A\-P\-I\-N, input\-\_\-\-B\-P\-I\-N, input\-\_\-\-D\-D\-R, input\-\_\-\-P\-O\-R\-T, pwm\-\_\-\-D\-D\-R, and pwm\-\_\-\-P\-I\-N.
+
+\hypertarget{classmotor__driver_aa21e7894053cd83968d9e6b2958c9aec}{\index{motor\-\_\-driver@{motor\-\_\-driver}!brake@{brake}}
+\index{brake@{brake}!motor_driver@{motor\-\_\-driver}}
+\subsubsection[{brake}]{\setlength{\rightskip}{0pt plus 5cm}void motor\-\_\-driver\-::brake (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{classmotor__driver_aa21e7894053cd83968d9e6b2958c9aec}
+
+
+prototype for brake method w/o parameter 
+
+This method sets both H Drive pins low to let the motor freewheel. 
+
+Definition at line 249 of file motor\-\_\-driver.\-cpp.
+
+
+
+References diag\-\_\-\-D\-D\-R, diag\-\_\-\-P\-I\-N, diag\-\_\-\-P\-O\-R\-T, input\-\_\-\-A\-P\-I\-N, input\-\_\-\-B\-P\-I\-N, input\-\_\-\-D\-D\-R, input\-\_\-\-P\-O\-R\-T, pwm\-\_\-\-D\-D\-R, and pwm\-\_\-\-P\-I\-N.
+
+\hypertarget{classmotor__driver_a2bc43c500da3297a815c5958bee57f20}{\index{motor\-\_\-driver@{motor\-\_\-driver}!set\-\_\-power@{set\-\_\-power}}
+\index{set\-\_\-power@{set\-\_\-power}!motor_driver@{motor\-\_\-driver}}
+\subsubsection[{set\-\_\-power}]{\setlength{\rightskip}{0pt plus 5cm}void motor\-\_\-driver\-::set\-\_\-power (
+\begin{DoxyParamCaption}
+\item[{int16\-\_\-t}]{sig}
+\end{DoxyParamCaption}
+)}}\label{classmotor__driver_a2bc43c500da3297a815c5958bee57f20}
+
+
+prototype for set\-\_\-power method of \hyperlink{classmotor__driver}{motor\-\_\-driver} 
+
+This method sets the appropriate input direction based on the incoming pwm parameter labeled power.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em sig} & the incoming signed input that tells our pwm signal going into the Output/\-Compare how strong the motor will be moving \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 143 of file motor\-\_\-driver.\-cpp.
+
+
+
+References diag\-\_\-\-D\-D\-R, diag\-\_\-\-P\-I\-N, diag\-\_\-\-P\-O\-R\-T, input\-\_\-\-A\-P\-I\-N, input\-\_\-\-B\-P\-I\-N, input\-\_\-\-D\-D\-R, input\-\_\-\-P\-O\-R\-T, ocr\-\_\-\-P\-O\-R\-T, pwm\-\_\-\-D\-D\-R, and pwm\-\_\-\-P\-I\-N.
+
+
+
+Referenced by task\-\_\-motor\-::run().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{motor__driver_8h}{motor\-\_\-driver.\-h}\item 
+\hyperlink{motor__driver_8cpp}{motor\-\_\-driver.\-cpp}\end{DoxyCompactItemize}

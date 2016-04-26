@@ -1,0 +1,132 @@
+\hypertarget{main_8cpp}{\section{main.\-cpp File Reference}
+\label{main_8cpp}\index{main.\-cpp@{main.\-cpp}}
+}
+
+
+This is the file for the '\hyperlink{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{main()}' function. This function initialzies everything.  
+
+
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$avr/io.\-h$>$}\\*
+{\ttfamily \#include $<$avr/wdt.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}Free\-R\-T\-O\-S.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}task.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}queue.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}croutine.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}rs232int.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}time\-\_\-stamp.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}taskbase.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}textqueue.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}taskqueue.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}taskshare.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}shares.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}task\-\_\-brightness.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}task\-\_\-user.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}task\-\_\-motor.\-h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{main_8cpp_a523c5bde6173ed43b687f460b70648c1}{\#define \hyperlink{main_8cpp_a523c5bde6173ed43b687f460b70648c1}{N\-U\-L\-L\-\_\-\-M\-O\-T\-E\-R}~255}\label{main_8cpp_a523c5bde6173ed43b687f460b70648c1}
+
+\begin{DoxyCompactList}\small\item\em Set the initital motor selector to something neutral. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{main} (void)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+Text\-Queue $\ast$ \hyperlink{main_8cpp_acd99bf5d187d4809af2f460a5415e904}{p\-\_\-print\-\_\-ser\-\_\-queue}
+\item 
+Task\-Share$<$ int16\-\_\-t $>$ $\ast$ \hyperlink{main_8cpp_a94ed6a23dc3685572a19c9b35ad4d91b}{motor\-\_\-power}
+\item 
+Task\-Share$<$ uint8\-\_\-t $>$ $\ast$ \hyperlink{main_8cpp_a044692a403a6ad19401bd615cdefd5af}{motor\-\_\-directive}
+\item 
+Task\-Share$<$ uint8\-\_\-t $>$ $\ast$ \hyperlink{main_8cpp_a63b8526f83a43ed6aeb66f528aada7d6}{motor\-\_\-select}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This is the file for the '\hyperlink{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{main()}' function. This function initialzies everything. Built on top of J\-R Ridgely's architecture, this modified \hyperlink{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{main()} function initializes two motor\-\_\-driver$\ast$ objects, an A/\-D object. and various task\-Shares and tasks. Everything is initialized here and then propogated to other classes.
+
+\begin{DoxyAuthor}{Author}
+Eddie Ruano 
+
+J\-R Ridgely
+\end{DoxyAuthor}
+Revisions\-: \begin{DoxyItemize}
+\item 4/21/2016 created new motor tasks and gave them the correct pointer values. \item 4/19/2016 added new shared variables \item 09-\/30-\/2012 J\-R\-R Original file was a one-\/file demonstration with two tasks \item 10-\/05-\/2012 J\-R\-R Split into multiple files, one for each task plus a main one \item 10-\/30-\/2012 J\-R\-R A hopefully somewhat stable version with global queue pointers and the new operator used for most memory allocation \item 11-\/04-\/2012 J\-R\-R Free\-R\-T\-O\-S Swoop demo program changed to a sweet test suite \item 01-\/05-\/2012 J\-R\-R Program reconfigured as M\-E405 Lab 1 starting point \item 03-\/28-\/2014 J\-R\-R Pointers to shared variables and queues changed to references \item 01-\/04-\/2015 J\-R\-R Names of share \& queue classes changed allocated with new now License\-: This file is copyright 2012 by J\-R Ridgey and released under the Lesser G\-N\-U Public License, version 2. It intended for educational use only, but its use is not limited thereto. \end{DoxyItemize}
+
+
+Definition in file \hyperlink{main_8cpp_source}{main.\-cpp}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{\index{main.\-cpp@{main.\-cpp}!main@{main}}
+\index{main@{main}!main.cpp@{main.\-cpp}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}
+The main function sets up the R\-T\-O\-S. Some test tasks are created. Then the scheduler is started up; the scheduler runs until power is turned off or there's a reset. \begin{DoxyReturn}{Returns}
+This is a real-\/time microcontroller program which doesn't return. Ever. 
+\end{DoxyReturn}
+
+
+Definition at line 127 of file main.\-cpp.
+
+
+
+References motor\-\_\-directive, motor\-\_\-power, motor\-\_\-select, N\-U\-L\-L\-\_\-\-M\-O\-T\-E\-R, and p\-\_\-print\-\_\-ser\-\_\-queue.
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{main_8cpp_a044692a403a6ad19401bd615cdefd5af}{\index{main.\-cpp@{main.\-cpp}!motor\-\_\-directive@{motor\-\_\-directive}}
+\index{motor\-\_\-directive@{motor\-\_\-directive}!main.cpp@{main.\-cpp}}
+\subsubsection[{motor\-\_\-directive}]{\setlength{\rightskip}{0pt plus 5cm}Task\-Share$<$uint8\-\_\-t$>$$\ast$ motor\-\_\-directive}}\label{main_8cpp_a044692a403a6ad19401bd615cdefd5af}
+This declares a taskshare which indicates that this variable is a shared variable. This variable will hold the command that the user wishes the motor to do. -\/1 Indicates C\-H\-A\-N\-G\-E\-\_\-\-D\-I\-R\-E\-C\-T\-I\-O\-N 0 Indicates S\-T\-O\-P W/ brake\-\_\-power 1 Indicates S\-E\-T P\-O\-W\-E\-R 2 Indicates F\-R\-E\-E\-W\-H\-E\-E\-L 
+
+Definition at line 110 of file main.\-cpp.
+
+
+
+Referenced by main(), task\-\_\-motor\-::run(), and task\-\_\-user\-::set\-Motor().
+
+\hypertarget{main_8cpp_a94ed6a23dc3685572a19c9b35ad4d91b}{\index{main.\-cpp@{main.\-cpp}!motor\-\_\-power@{motor\-\_\-power}}
+\index{motor\-\_\-power@{motor\-\_\-power}!main.cpp@{main.\-cpp}}
+\subsubsection[{motor\-\_\-power}]{\setlength{\rightskip}{0pt plus 5cm}Task\-Share$<$int16\-\_\-t$>$$\ast$ motor\-\_\-power}}\label{main_8cpp_a94ed6a23dc3685572a19c9b35ad4d91b}
+This declares a taskshare which indicates that this variable is a shared variable. This variable will hold the duty cycle of a motor. 
+
+Definition at line 101 of file main.\-cpp.
+
+
+
+Referenced by main(), task\-\_\-motor\-::run(), task\-\_\-user\-::run(), and task\-\_\-user\-::set\-Motor().
+
+\hypertarget{main_8cpp_a63b8526f83a43ed6aeb66f528aada7d6}{\index{main.\-cpp@{main.\-cpp}!motor\-\_\-select@{motor\-\_\-select}}
+\index{motor\-\_\-select@{motor\-\_\-select}!main.cpp@{main.\-cpp}}
+\subsubsection[{motor\-\_\-select}]{\setlength{\rightskip}{0pt plus 5cm}Task\-Share$<$uint8\-\_\-t$>$$\ast$ motor\-\_\-select}}\label{main_8cpp_a63b8526f83a43ed6aeb66f528aada7d6}
+This declares a taskshare which indicates that this variable is a shared variable. This variable will hold the select for each motor. 0 Indicates Motor 0 1 Indicates Motor 1 
+
+Definition at line 117 of file main.\-cpp.
+
+
+
+Referenced by main(), task\-\_\-motor\-::run(), task\-\_\-user\-::run(), and task\-\_\-user\-::set\-Motor().
+
+\hypertarget{main_8cpp_acd99bf5d187d4809af2f460a5415e904}{\index{main.\-cpp@{main.\-cpp}!p\-\_\-print\-\_\-ser\-\_\-queue@{p\-\_\-print\-\_\-ser\-\_\-queue}}
+\index{p\-\_\-print\-\_\-ser\-\_\-queue@{p\-\_\-print\-\_\-ser\-\_\-queue}!main.cpp@{main.\-cpp}}
+\subsubsection[{p\-\_\-print\-\_\-ser\-\_\-queue}]{\setlength{\rightskip}{0pt plus 5cm}Text\-Queue$\ast$ p\-\_\-print\-\_\-ser\-\_\-queue}}\label{main_8cpp_acd99bf5d187d4809af2f460a5415e904}
+This is a print queue, descended from {\ttfamily emstream} so that things can be printed into the queue using the \char`\"{}$<$$<$\char`\"{} operator and they'll come out the other end as a stream of characters. It's used by tasks that send things to the user interface task to be printed. 
+
+Definition at line 96 of file main.\-cpp.
+
+
+
+Referenced by task\-\_\-user\-::get\-Number\-Input(), and main().
+

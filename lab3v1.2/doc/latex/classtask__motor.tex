@@ -1,0 +1,144 @@
+\hypertarget{classtask__motor}{\section{task\-\_\-motor Class Reference}
+\label{classtask__motor}\index{task\-\_\-motor@{task\-\_\-motor}}
+}
+
+
+This class is the task motor class that handles a single motor operation.  
+
+
+
+
+{\ttfamily \#include $<$task\-\_\-motor.\-h$>$}
+
+Inheritance diagram for task\-\_\-motor\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtask__motor}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtask__motor_aefd82ba00ba8755bad9fdb516719b3d5}{task\-\_\-motor} (const char $\ast$, unsigned port\-B\-A\-S\-E\-\_\-\-T\-Y\-P\-E, size\-\_\-t, emstream $\ast$, \hyperlink{classmotor__driver}{motor\-\_\-driver} $\ast$, \hyperlink{classadc}{adc} $\ast$, uint8\-\_\-t)
+\begin{DoxyCompactList}\small\item\em This constructor creates a generic task of which many copies can be made. \end{DoxyCompactList}\item 
+void \hyperlink{classtask__motor_a895a075ec470c9d5a07b8959de06aacd}{run} (void)
+\begin{DoxyCompactList}\small\item\em This method is called by the R\-T\-O\-S once to run the task loop for ever and ever. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint8\-\_\-t \hyperlink{classtask__motor_aeb4767ff390d9f8bd9f37dfcab0daa4b}{motor\-\_\-identifier}
+\begin{DoxyCompactList}\small\item\em No private variables or methods for this class. \end{DoxyCompactList}\item 
+\hypertarget{classtask__motor_aa2ed8c7d16f05cb57b11e86bdc7e646b}{\hyperlink{classmotor__driver}{motor\-\_\-driver} $\ast$ \hyperlink{classtask__motor_aa2ed8c7d16f05cb57b11e86bdc7e646b}{motor}}\label{classtask__motor_aa2ed8c7d16f05cb57b11e86bdc7e646b}
+
+\begin{DoxyCompactList}\small\item\em This holds the pointer to the motor that this task will control. \end{DoxyCompactList}\item 
+\hypertarget{classtask__motor_a388438912d463a7cb919dc6dbdcb2353}{\hyperlink{classadc}{adc} $\ast$ \hyperlink{classtask__motor_a388438912d463a7cb919dc6dbdcb2353}{p\-\_\-adc}}\label{classtask__motor_a388438912d463a7cb919dc6dbdcb2353}
+
+\begin{DoxyCompactList}\small\item\em variable pointer that points to the A/\-D Converter given by \hyperlink{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{main()} \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class is the task motor class that handles a single motor operation. 
+
+This is a task class that will control the operation of its own motor driver given to it as a pointer and initiated in the \hyperlink{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{main()} function. it lays out the logic necessary to make commands from \hyperlink{classtask__user}{task\-\_\-user} to the motor driver happen. 
+
+Definition at line 72 of file task\-\_\-motor.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classtask__motor_aefd82ba00ba8755bad9fdb516719b3d5}{\index{task\-\_\-motor@{task\-\_\-motor}!task\-\_\-motor@{task\-\_\-motor}}
+\index{task\-\_\-motor@{task\-\_\-motor}!task_motor@{task\-\_\-motor}}
+\subsubsection[{task\-\_\-motor}]{\setlength{\rightskip}{0pt plus 5cm}task\-\_\-motor\-::task\-\_\-motor (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{a\-\_\-name, }
+\item[{unsigned port\-B\-A\-S\-E\-\_\-\-T\-Y\-P\-E}]{a\-\_\-priority, }
+\item[{size\-\_\-t}]{a\-\_\-stack\-\_\-size, }
+\item[{emstream $\ast$}]{p\-\_\-ser\-\_\-dev, }
+\item[{{\bf motor\-\_\-driver} $\ast$}]{motor\-\_\-inc, }
+\item[{{\bf adc} $\ast$}]{adc\-\_\-inc, }
+\item[{uint8\-\_\-t}]{motor\-\_\-id\-\_\-inc}
+\end{DoxyParamCaption}
+)}}\label{classtask__motor_aefd82ba00ba8755bad9fdb516719b3d5}
+
+
+This constructor creates a generic task of which many copies can be made. 
+
+This constructor builds an instance of a \hyperlink{classtask__motor}{task\-\_\-motor} that will be used to control a motor unique to the task.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a\-\_\-name} & T\-A character string which will be the name of this task. \\
+\hline
+\mbox{\tt in}  & {\em a\-\_\-priority} & The priority at which this task will initially run (default\-: 0) \\
+\hline
+\mbox{\tt in}  & {\em a\-\_\-stack\-\_\-size} & The size of this task's stack in bytes (default\-: config\-M\-I\-N\-I\-M\-A\-L\-\_\-\-S\-T\-A\-C\-K\-\_\-\-S\-I\-Z\-E) \\
+\hline
+ & {\em p\-\_\-ser\-\_\-dev} & Pointer to a serial device (port, radio, S\-D card, etc.) which can be used by this task to communicate (default\-: N\-U\-L\-L) \\
+\hline
+ & {\em motor\-\_\-inc} & The motor pointer that this task is tied to, since it's only one, each motor needs a task in order to operate \\
+\hline
+ & {\em adc\-\_\-inc} & The A/\-D converter pointer that is given to the task in case of Potentiometer Mode \\
+\hline
+\mbox{\tt in}  & {\em motor\-\_\-id\-\_\-inc} & \\
+\hline
+\end{DoxyParams}
+Need a motor pointer
+
+Need an adc pointer
+
+Need a motor identifier 
+
+Definition at line 77 of file task\-\_\-motor.\-cpp.
+
+
+
+References motor, motor\-\_\-identifier, and p\-\_\-adc.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classtask__motor_a895a075ec470c9d5a07b8959de06aacd}{\index{task\-\_\-motor@{task\-\_\-motor}!run@{run}}
+\index{run@{run}!task_motor@{task\-\_\-motor}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void task\-\_\-motor\-::run (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{classtask__motor_a895a075ec470c9d5a07b8959de06aacd}
+
+
+This method is called by the R\-T\-O\-S once to run the task loop for ever and ever. 
+
+This method is called once by the R\-T\-O\-S scheduler.
+
+Each time that this method is run it initializes a tickcount and loops in an infinite for(;;) loop that calls shared variables that contain the directive, the power, and the selector for the motor that need to be affected. If the selector matches local selector assigned by the main function, then the local motor is affected which in turn affects the motor assigned to it by main. 
+
+Definition at line 109 of file task\-\_\-motor.\-cpp.
+
+
+
+References B\-R\-A\-K\-E, F\-R\-E\-E\-W\-H\-E\-E\-L, motor, motor\-\_\-directive, motor\-\_\-identifier, motor\-\_\-power, motor\-\_\-select, p\-\_\-adc, P\-O\-T\-E\-N\-T\-I\-O\-M\-E\-T\-E\-R, motor\-\_\-driver\-::set\-\_\-power(), and S\-E\-T\-P\-O\-W\-E\-R.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classtask__motor_aeb4767ff390d9f8bd9f37dfcab0daa4b}{\index{task\-\_\-motor@{task\-\_\-motor}!motor\-\_\-identifier@{motor\-\_\-identifier}}
+\index{motor\-\_\-identifier@{motor\-\_\-identifier}!task_motor@{task\-\_\-motor}}
+\subsubsection[{motor\-\_\-identifier}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t task\-\_\-motor\-::motor\-\_\-identifier\hspace{0.3cm}{\ttfamily [protected]}}}\label{classtask__motor_aeb4767ff390d9f8bd9f37dfcab0daa4b}
+
+
+No private variables or methods for this class. 
+
+Holds identifier for this class, if it matches the global motor\-\_\-select then this entire class and its motor becomes changeable. 
+
+Definition at line 78 of file task\-\_\-motor.\-h.
+
+
+
+Referenced by run(), and task\-\_\-motor().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{task__motor_8h}{task\-\_\-motor.\-h}\item 
+\hyperlink{task__motor_8cpp}{task\-\_\-motor.\-cpp}\end{DoxyCompactItemize}

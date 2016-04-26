@@ -1,0 +1,420 @@
+\hypertarget{classtask__user}{\section{task\-\_\-user Class Reference}
+\label{classtask__user}\index{task\-\_\-user@{task\-\_\-user}}
+}
+
+
+This task will interact with the user and make the motors operate based on their input.  
+
+
+
+
+{\ttfamily \#include $<$task\-\_\-user.\-h$>$}
+
+Inheritance diagram for task\-\_\-user\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtask__user}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtask__user_a3aba77563b375bb14838800608da48bc}{task\-\_\-user} (const char $\ast$, unsigned port\-B\-A\-S\-E\-\_\-\-T\-Y\-P\-E, size\-\_\-t, emstream $\ast$)
+\begin{DoxyCompactList}\small\item\em This constructor creates a user interface task object. \end{DoxyCompactList}\item 
+void \hyperlink{classtask__user_adca6429d57be25e8d411414fc8ad75af}{run} (void)
+\begin{DoxyCompactList}\small\item\em This method runs when the '\hyperlink{classtask__user}{task\-\_\-user}' is called. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classtask__user_a75475060f83bae1e44bcc8a5c34015c7}{print\-\_\-help\-\_\-message} (void)
+\begin{DoxyCompactList}\small\item\em This method displays a simple help message telling the user what to do. \end{DoxyCompactList}\item 
+void \hyperlink{classtask__user_a105bebbd9cb1031154c3dfc3662db4a0}{show\-\_\-status} (void)
+\begin{DoxyCompactList}\small\item\em This method displays information about the status of the system. \end{DoxyCompactList}\item 
+bool \hyperlink{classtask__user_aeebf78dc3a261ab26f137b9dedb4fae3}{has\-User\-Input} (void)
+\begin{DoxyCompactList}\small\item\em Method returns true if the user has typed somthing into the terminal window. \end{DoxyCompactList}\item 
+void \hyperlink{classtask__user_a6614555d84fb90fb2ae6c53a6e4ee7e6}{get\-Number\-Input} (void)
+\begin{DoxyCompactList}\small\item\em Method extracts the number entered by the user and places it into private variable 'number\-\_\-entered'. \end{DoxyCompactList}\item 
+void \hyperlink{classtask__user_a120498a0bdee78e47a42a1e6b8ee3ca9}{print\-Motor\-Menu} (void)
+\begin{DoxyCompactList}\small\item\em Prints the opening menu when the user enters the 'Main Motor Module' in case1. \end{DoxyCompactList}\item 
+void \hyperlink{classtask__user_ad7a5286a05c1782688037fd26c7e3d82}{print\-Main\-Menu} (void)
+\begin{DoxyCompactList}\small\item\em Prints the Main Menu at the beginning of the program. \end{DoxyCompactList}\item 
+void \hyperlink{classtask__user_a2866e8641ba983d7b819348a25774d47}{print\-Single\-Motor\-Options} (void)
+\begin{DoxyCompactList}\small\item\em Prints the Single Motor Menu after the user has entered from the 'Main Motor Module'. \end{DoxyCompactList}\item 
+void \hyperlink{classtask__user_affce6abe0cc4a021f490711a15234915}{print\-Dash\-Board} (void)
+\begin{DoxyCompactList}\small\item\em Prints useful information about each motor like directive, power, and direction. \end{DoxyCompactList}\item 
+void \hyperlink{classtask__user_ae247fa7d8dd68902ff4abf2c77b00fe2}{set\-Motor} (uint8\-\_\-t, int16\-\_\-t, uint8\-\_\-t)
+\begin{DoxyCompactList}\small\item\em Method that takes the motor number, motor power, and directive and sets the correct motor to that directive at the apporpriate power level. \end{DoxyCompactList}\item 
+void \hyperlink{classtask__user_a3ba42fcb41ae5292b75fe427ff26932c}{reset\-Menus} (void)
+\begin{DoxyCompactList}\small\item\em This Method resets the 'run once' lock on each print menu method so that it can be run again. \end{DoxyCompactList}\item 
+bool \hyperlink{classtask__user_a6178fb80b0e6fdebf254cc9aee6235a5}{is\-Valid\-Motor} (int16\-\_\-t)
+\begin{DoxyCompactList}\small\item\em Method checks whether the motor number entered is valid and within range ($<$2) right now. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classtask__user_aeed69ce02fadbfb4a64758535e5c958b}{bool \hyperlink{classtask__user_aeed69ce02fadbfb4a64758535e5c958b}{is\-\_\-menu\-\_\-visible}}\label{classtask__user_aeed69ce02fadbfb4a64758535e5c958b}
+
+\begin{DoxyCompactList}\small\item\em Holds true if there is a menu currently printed on the screen, false otherwise. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This task will interact with the user and make the motors operate based on their input. 
+
+Definition at line 79 of file task\-\_\-user.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classtask__user_a3aba77563b375bb14838800608da48bc}{\index{task\-\_\-user@{task\-\_\-user}!task\-\_\-user@{task\-\_\-user}}
+\index{task\-\_\-user@{task\-\_\-user}!task_user@{task\-\_\-user}}
+\subsubsection[{task\-\_\-user}]{\setlength{\rightskip}{0pt plus 5cm}task\-\_\-user\-::task\-\_\-user (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{a\-\_\-name, }
+\item[{unsigned port\-B\-A\-S\-E\-\_\-\-T\-Y\-P\-E}]{a\-\_\-priority, }
+\item[{size\-\_\-t}]{a\-\_\-stack\-\_\-size, }
+\item[{emstream $\ast$}]{p\-\_\-ser\-\_\-dev}
+\end{DoxyParamCaption}
+)}}\label{classtask__user_a3aba77563b375bb14838800608da48bc}
+
+
+This constructor creates a user interface task object. 
+
+Constructor that creates a new task to interact with the user. All incoming paramters are initialized in the parent class construtor Task\-Base.
+
+Added new initializations for private variables added in order to clean up the clutter in the main case statement in the '\hyperlink{classtask__user_adca6429d57be25e8d411414fc8ad75af}{run()}' method.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a\-\_\-name} & A character string which will be the name of this task \\
+\hline
+\mbox{\tt in}  & {\em a\-\_\-priority} & The priority at which this task will initially run (default\-: 0) \\
+\hline
+\mbox{\tt in}  & {\em a\-\_\-stack\-\_\-size} & The size of this task's stack in bytes (default\-: config\-M\-I\-N\-I\-M\-A\-L\-\_\-\-S\-T\-A\-C\-K\-\_\-\-S\-I\-Z\-E) \\
+\hline
+ & {\em p\-\_\-ser\-\_\-dev} & Pointer to a serial device (port, radio, S\-D card, etc. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 90 of file task\-\_\-user.\-cpp.
+
+
+
+References F\-R\-E\-E\-W\-H\-E\-E\-L, and is\-\_\-menu\-\_\-visible.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classtask__user_a6614555d84fb90fb2ae6c53a6e4ee7e6}{\index{task\-\_\-user@{task\-\_\-user}!get\-Number\-Input@{get\-Number\-Input}}
+\index{get\-Number\-Input@{get\-Number\-Input}!task_user@{task\-\_\-user}}
+\subsubsection[{get\-Number\-Input}]{\setlength{\rightskip}{0pt plus 5cm}void task\-\_\-user\-::get\-Number\-Input (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classtask__user_a6614555d84fb90fb2ae6c53a6e4ee7e6}
+
+
+Method extracts the number entered by the user and places it into private variable 'number\-\_\-entered'. 
+
+Method gets the number being entered by the user.
+
+This method uses a loop to constantly look for input until a return or escape symbol occurs. It then places the extracted negative or positive value in local class varible 'number\-\_\-entered'. 
+
+Definition at line 668 of file task\-\_\-user.\-cpp.
+
+
+
+References p\-\_\-print\-\_\-ser\-\_\-queue.
+
+
+
+Referenced by run().
+
+\hypertarget{classtask__user_aeebf78dc3a261ab26f137b9dedb4fae3}{\index{task\-\_\-user@{task\-\_\-user}!has\-User\-Input@{has\-User\-Input}}
+\index{has\-User\-Input@{has\-User\-Input}!task_user@{task\-\_\-user}}
+\subsubsection[{has\-User\-Input}]{\setlength{\rightskip}{0pt plus 5cm}bool task\-\_\-user\-::has\-User\-Input (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classtask__user_aeebf78dc3a261ab26f137b9dedb4fae3}
+
+
+Method returns true if the user has typed somthing into the terminal window. 
+
+Method checks if the user has made an input.
+
+\begin{DoxyReturn}{Returns}
+returns T\-R\-U\-E if the user has made an input and places that charater into the class variable 'char\-\_\-in'. Returns F\-A\-L\-S\-E otherwise. 
+\end{DoxyReturn}
+
+
+Definition at line 650 of file task\-\_\-user.\-cpp.
+
+
+
+Referenced by run().
+
+\hypertarget{classtask__user_a6178fb80b0e6fdebf254cc9aee6235a5}{\index{task\-\_\-user@{task\-\_\-user}!is\-Valid\-Motor@{is\-Valid\-Motor}}
+\index{is\-Valid\-Motor@{is\-Valid\-Motor}!task_user@{task\-\_\-user}}
+\subsubsection[{is\-Valid\-Motor}]{\setlength{\rightskip}{0pt plus 5cm}bool task\-\_\-user\-::is\-Valid\-Motor (
+\begin{DoxyParamCaption}
+\item[{int16\-\_\-t}]{motor\-\_\-number}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classtask__user_a6178fb80b0e6fdebf254cc9aee6235a5}
+
+
+Method checks whether the motor number entered is valid and within range ($<$2) right now. 
+
+Method checks if the motor selected is a valid input.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em motor\-\_\-number} & The number number entered by the user.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns T\-R\-U\-E if the motor value is valid, F\-A\-L\-S\-E otherwise 
+\end{DoxyReturn}
+
+
+Definition at line 803 of file task\-\_\-user.\-cpp.
+
+
+
+Referenced by run().
+
+\hypertarget{classtask__user_a75475060f83bae1e44bcc8a5c34015c7}{\index{task\-\_\-user@{task\-\_\-user}!print\-\_\-help\-\_\-message@{print\-\_\-help\-\_\-message}}
+\index{print\-\_\-help\-\_\-message@{print\-\_\-help\-\_\-message}!task_user@{task\-\_\-user}}
+\subsubsection[{print\-\_\-help\-\_\-message}]{\setlength{\rightskip}{0pt plus 5cm}void task\-\_\-user\-::print\-\_\-help\-\_\-message (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classtask__user_a75475060f83bae1e44bcc8a5c34015c7}
+
+
+This method displays a simple help message telling the user what to do. 
+
+This method contains the old main menu that has extra information and avaliable options. 
+
+Definition at line 632 of file task\-\_\-user.\-cpp.
+
+
+
+References P\-R\-O\-G\-R\-A\-M\-\_\-\-V\-E\-R\-S\-I\-O\-N.
+
+
+
+Referenced by run().
+
+\hypertarget{classtask__user_affce6abe0cc4a021f490711a15234915}{\index{task\-\_\-user@{task\-\_\-user}!print\-Dash\-Board@{print\-Dash\-Board}}
+\index{print\-Dash\-Board@{print\-Dash\-Board}!task_user@{task\-\_\-user}}
+\subsubsection[{print\-Dash\-Board}]{\setlength{\rightskip}{0pt plus 5cm}void task\-\_\-user\-::print\-Dash\-Board (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classtask__user_affce6abe0cc4a021f490711a15234915}
+
+
+Prints useful information about each motor like directive, power, and direction. 
+
+Method prints out useful information about both motors.
+
+Only print the menu if the is\-\_\-menu\-\_\-visible flag is false. This is so that it doesn't inifinitely print as the user is trying to input a value or trying to read it. Furthermore, it prints out 'status', 'power', \& 'direction' 
+
+Definition at line 523 of file task\-\_\-user.\-cpp.
+
+
+
+References B\-R\-A\-K\-E, F\-R\-E\-E\-W\-H\-E\-E\-L, is\-\_\-menu\-\_\-visible, P\-O\-T\-E\-N\-T\-I\-O\-M\-E\-T\-E\-R, and S\-E\-T\-P\-O\-W\-E\-R.
+
+
+
+Referenced by run().
+
+\hypertarget{classtask__user_ad7a5286a05c1782688037fd26c7e3d82}{\index{task\-\_\-user@{task\-\_\-user}!print\-Main\-Menu@{print\-Main\-Menu}}
+\index{print\-Main\-Menu@{print\-Main\-Menu}!task_user@{task\-\_\-user}}
+\subsubsection[{print\-Main\-Menu}]{\setlength{\rightskip}{0pt plus 5cm}void task\-\_\-user\-::print\-Main\-Menu (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classtask__user_ad7a5286a05c1782688037fd26c7e3d82}
+
+
+Prints the Main Menu at the beginning of the program. 
+
+Method prints out the main menu, which is the first thing the user sees.
+
+Menu is designed so that Control and testing modules are one part and all other operations like the ones included in the given version of this class are sectioned off accordingly. 
+
+Definition at line 453 of file task\-\_\-user.\-cpp.
+
+
+
+References is\-\_\-menu\-\_\-visible, and P\-R\-O\-G\-R\-A\-M\-\_\-\-V\-E\-R\-S\-I\-O\-N.
+
+
+
+Referenced by run().
+
+\hypertarget{classtask__user_a120498a0bdee78e47a42a1e6b8ee3ca9}{\index{task\-\_\-user@{task\-\_\-user}!print\-Motor\-Menu@{print\-Motor\-Menu}}
+\index{print\-Motor\-Menu@{print\-Motor\-Menu}!task_user@{task\-\_\-user}}
+\subsubsection[{print\-Motor\-Menu}]{\setlength{\rightskip}{0pt plus 5cm}void task\-\_\-user\-::print\-Motor\-Menu (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classtask__user_a120498a0bdee78e47a42a1e6b8ee3ca9}
+
+
+Prints the opening menu when the user enters the 'Main Motor Module' in case1. 
+
+Method prints out the 'Main Motor Module' menu.
+
+Only print the menu if the is\-\_\-menu\-\_\-visible flag is false. This is so that it doesn't inifinitely print as the user is trying to input a value or trying to read it. 
+
+Definition at line 478 of file task\-\_\-user.\-cpp.
+
+
+
+References is\-\_\-menu\-\_\-visible.
+
+
+
+Referenced by run().
+
+\hypertarget{classtask__user_a2866e8641ba983d7b819348a25774d47}{\index{task\-\_\-user@{task\-\_\-user}!print\-Single\-Motor\-Options@{print\-Single\-Motor\-Options}}
+\index{print\-Single\-Motor\-Options@{print\-Single\-Motor\-Options}!task_user@{task\-\_\-user}}
+\subsubsection[{print\-Single\-Motor\-Options}]{\setlength{\rightskip}{0pt plus 5cm}void task\-\_\-user\-::print\-Single\-Motor\-Options (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classtask__user_a2866e8641ba983d7b819348a25774d47}
+
+
+Prints the Single Motor Menu after the user has entered from the 'Main Motor Module'. 
+
+Method prints out the 'Single Motor Control Module' menu.
+
+Only print the menu if the is\-\_\-menu\-\_\-visible flag is false. This is so that it doesn't inifinitely print as the user is trying to input a value or trying to read it. 
+
+Definition at line 501 of file task\-\_\-user.\-cpp.
+
+
+
+References is\-\_\-menu\-\_\-visible.
+
+
+
+Referenced by run().
+
+\hypertarget{classtask__user_a3ba42fcb41ae5292b75fe427ff26932c}{\index{task\-\_\-user@{task\-\_\-user}!reset\-Menus@{reset\-Menus}}
+\index{reset\-Menus@{reset\-Menus}!task_user@{task\-\_\-user}}
+\subsubsection[{reset\-Menus}]{\setlength{\rightskip}{0pt plus 5cm}void task\-\_\-user\-::reset\-Menus (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classtask__user_a3ba42fcb41ae5292b75fe427ff26932c}
+
+
+This Method resets the 'run once' lock on each print menu method so that it can be run again. 
+
+Method resets the is\-\_\-menu\-\_\-visible flag so that another menu may be printed. 
+
+Definition at line 816 of file task\-\_\-user.\-cpp.
+
+
+
+References is\-\_\-menu\-\_\-visible.
+
+
+
+Referenced by run().
+
+\hypertarget{classtask__user_adca6429d57be25e8d411414fc8ad75af}{\index{task\-\_\-user@{task\-\_\-user}!run@{run}}
+\index{run@{run}!task_user@{task\-\_\-user}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void task\-\_\-user\-::run (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{classtask__user_adca6429d57be25e8d411414fc8ad75af}
+
+
+This method runs when the '\hyperlink{classtask__user}{task\-\_\-user}' is called. 
+
+This method is called by the R\-T\-O\-S once to run the task loop for ever and ever.
+
+This method runs inifitely when the task is called so all logic is contained in here. A for(;;) loop runs until it gets to the end where it delays for 1 ms to allow other lower level priority tasks a chance to run. 
+
+Definition at line 122 of file task\-\_\-user.\-cpp.
+
+
+
+References B\-R\-A\-K\-E, F\-R\-E\-E\-W\-H\-E\-E\-L, get\-Number\-Input(), has\-User\-Input(), is\-Valid\-Motor(), motor\-\_\-power, motor\-\_\-select, P\-O\-T\-E\-N\-T\-I\-O\-M\-E\-T\-E\-R, print\-\_\-help\-\_\-message(), print\-Dash\-Board(), print\-Main\-Menu(), print\-Motor\-Menu(), print\-Single\-Motor\-Options(), reset\-Menus(), set\-Motor(), S\-E\-T\-P\-O\-W\-E\-R, and show\-\_\-status().
+
+\hypertarget{classtask__user_ae247fa7d8dd68902ff4abf2c77b00fe2}{\index{task\-\_\-user@{task\-\_\-user}!set\-Motor@{set\-Motor}}
+\index{set\-Motor@{set\-Motor}!task_user@{task\-\_\-user}}
+\subsubsection[{set\-Motor}]{\setlength{\rightskip}{0pt plus 5cm}void task\-\_\-user\-::set\-Motor (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{motor\-\_\-id, }
+\item[{int16\-\_\-t}]{power, }
+\item[{uint8\-\_\-t}]{direct}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classtask__user_ae247fa7d8dd68902ff4abf2c77b00fe2}
+
+
+Method that takes the motor number, motor power, and directive and sets the correct motor to that directive at the apporpriate power level. 
+
+Method sets motor to the correct state as specified by user.
+
+This method sets the global registers to the correct values so that '\hyperlink{classtask__motor}{task\-\_\-motor}' can affect the correct motor. Also sets appropriate local values to store the state of this motor so that when '\hyperlink{classtask__user_affce6abe0cc4a021f490711a15234915}{print\-Dash\-Board()}' is called it can print info on each motor because the global registers can only hold info for one motor at a time.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em motor\-\_\-id} & The motor select identifier \\
+\hline
+\mbox{\tt in}  & {\em power} & The power setting specified by the user in the \hyperlink{classtask__user_adca6429d57be25e8d411414fc8ad75af}{run()} \\
+\hline
+\mbox{\tt in}  & {\em direct} & The directive, or what we want the motor to do \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 776 of file task\-\_\-user.\-cpp.
+
+
+
+References motor\-\_\-directive, motor\-\_\-power, and motor\-\_\-select.
+
+
+
+Referenced by run().
+
+\hypertarget{classtask__user_a105bebbd9cb1031154c3dfc3662db4a0}{\index{task\-\_\-user@{task\-\_\-user}!show\-\_\-status@{show\-\_\-status}}
+\index{show\-\_\-status@{show\-\_\-status}!task_user@{task\-\_\-user}}
+\subsubsection[{show\-\_\-status}]{\setlength{\rightskip}{0pt plus 5cm}void task\-\_\-user\-::show\-\_\-status (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classtask__user_a105bebbd9cb1031154c3dfc3662db4a0}
+
+
+This method displays information about the status of the system. 
+
+This method displays information about the status of the system, including the following\-: \begin{DoxyItemize}
+\item The name and version of the program \item The name, status, priority, and free stack space of each task \item Processor cycles used by each task \item Amount of heap space free and setting of R\-T\-O\-S tick timer \end{DoxyItemize}
+
+
+Definition at line 739 of file task\-\_\-user.\-cpp.
+
+
+
+References P\-R\-O\-G\-R\-A\-M\-\_\-\-V\-E\-R\-S\-I\-O\-N.
+
+
+
+Referenced by run().
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{task__user_8h}{task\-\_\-user.\-h}\item 
+\hyperlink{task__user_8cpp}{task\-\_\-user.\-cpp}\end{DoxyCompactItemize}

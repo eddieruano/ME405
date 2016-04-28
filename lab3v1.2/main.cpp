@@ -132,6 +132,9 @@ TaskShare<uint32_t>* encoder_errors;
 ///              3 for 11
 TaskShare<uint8_t>* the_state;
 
+TaskShare<uint8_t>* error_state;
+TaskShare<int32_t>* error_pos
+
 
 //=============================================================================
 /** The main function sets up the RTOS.  Some test tasks are created. Then the
@@ -169,6 +172,8 @@ int main (void)
     encoder_count = new TaskShare<int32_t> ("Encoder Pulse Count");
     count_per_sec = new TaskShare<int32_t> ("count/sec");
     encoder_errors = new TaskShare<uint32_t> ("errors");
+    error_state = new TaskShare<uint8_t> ("error_state");
+    error_pos = new TaskShare<int32_t> ("error_pos");
     the_state = new TaskShare<uint8_t> ("state");
 
     //initialize to special value so no motor is affected yet

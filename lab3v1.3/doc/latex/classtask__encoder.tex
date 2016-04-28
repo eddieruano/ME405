@@ -1,0 +1,120 @@
+\hypertarget{classtask__encoder}{\section{task\-\_\-encoder Class Reference}
+\label{classtask__encoder}\index{task\-\_\-encoder@{task\-\_\-encoder}}
+}
+
+
+this is the declaration for '\hyperlink{classtask__encoder}{task\-\_\-encoder}' which directly handles the \hyperlink{classencoder__driver}{encoder\-\_\-driver}. Only three variables are required for this class since the I\-S\-R is declared in the driver.  
+
+
+
+
+{\ttfamily \#include $<$task\-\_\-encoder.\-h$>$}
+
+Inheritance diagram for task\-\_\-encoder\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtask__encoder}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtask__encoder_ae099e34c1fdea7272e4adc5b85372869}{task\-\_\-encoder} (const char $\ast$, unsigned port\-B\-A\-S\-E\-\_\-\-T\-Y\-P\-E, size\-\_\-t, emstream $\ast$, \hyperlink{classencoder__driver}{encoder\-\_\-driver} $\ast$)
+\begin{DoxyCompactList}\small\item\em This is the constructor prototype, added the pointer for an \hyperlink{classencoder__driver}{encoder\-\_\-driver} to be passed in by main. \end{DoxyCompactList}\item 
+void \hyperlink{classtask__encoder_a8380b1f111bf5d6b4256f16e355c0afc}{run} (void)
+\begin{DoxyCompactList}\small\item\em This method is called by the R\-T\-O\-S once to run the task loop for ever and ever. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classtask__encoder_a93ba34cbfaf270161b396f276d7772d7}{\hyperlink{classencoder__driver}{encoder\-\_\-driver} $\ast$ \hyperlink{classtask__encoder_a93ba34cbfaf270161b396f276d7772d7}{p\-\_\-encoder}}\label{classtask__encoder_a93ba34cbfaf270161b396f276d7772d7}
+
+\begin{DoxyCompactList}\small\item\em This is the declaration for the local copy of the \hyperlink{classencoder__driver}{encoder\-\_\-driver} pointer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classtask__encoder_a00db1124d04019b3d945f4081310cb92}{int32\-\_\-t \hyperlink{classtask__encoder_a00db1124d04019b3d945f4081310cb92}{last\-\_\-count}}\label{classtask__encoder_a00db1124d04019b3d945f4081310cb92}
+
+\begin{DoxyCompactList}\small\item\em This variable hold the previous count of encoder ticks since the last time the task was called. \end{DoxyCompactList}\item 
+\hypertarget{classtask__encoder_a2a7938fe7c5ea145f553400ad53a2985}{int32\-\_\-t \hyperlink{classtask__encoder_a2a7938fe7c5ea145f553400ad53a2985}{count\-\_\-diff}}\label{classtask__encoder_a2a7938fe7c5ea145f553400ad53a2985}
+
+\begin{DoxyCompactList}\small\item\em This is the diffrence between the global count and the local count. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+this is the declaration for '\hyperlink{classtask__encoder}{task\-\_\-encoder}' which directly handles the \hyperlink{classencoder__driver}{encoder\-\_\-driver}. Only three variables are required for this class since the I\-S\-R is declared in the driver. 
+
+Definition at line 76 of file task\-\_\-encoder.\-h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classtask__encoder_ae099e34c1fdea7272e4adc5b85372869}{\index{task\-\_\-encoder@{task\-\_\-encoder}!task\-\_\-encoder@{task\-\_\-encoder}}
+\index{task\-\_\-encoder@{task\-\_\-encoder}!task_encoder@{task\-\_\-encoder}}
+\subsubsection[{task\-\_\-encoder}]{\setlength{\rightskip}{0pt plus 5cm}task\-\_\-encoder\-::task\-\_\-encoder (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{a\-\_\-name, }
+\item[{unsigned port\-B\-A\-S\-E\-\_\-\-T\-Y\-P\-E}]{a\-\_\-priority, }
+\item[{size\-\_\-t}]{a\-\_\-stack\-\_\-size, }
+\item[{emstream $\ast$}]{p\-\_\-ser\-\_\-dev, }
+\item[{{\bf encoder\-\_\-driver} $\ast$}]{p\-\_\-encoder\-\_\-inc}
+\end{DoxyParamCaption}
+)}}\label{classtask__encoder_ae099e34c1fdea7272e4adc5b85372869}
+
+
+This is the constructor prototype, added the pointer for an \hyperlink{classencoder__driver}{encoder\-\_\-driver} to be passed in by main. 
+
+This is the constructor for the \hyperlink{classtask__encoder}{task\-\_\-encoder} class.
+
+It initialzes all the variables given to the Task\-Base super class and then initializes the encoder pointer given and the last\-\_\-count variable.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a\-\_\-name} & T\-A character string which will be the name of this task. \\
+\hline
+\mbox{\tt in}  & {\em a\-\_\-priority} & The priority at which this task will initially run (default\-: 0) \\
+\hline
+\mbox{\tt in}  & {\em a\-\_\-stack\-\_\-size} & The size of this task's stack in bytes (default\-: config\-M\-I\-N\-I\-M\-A\-L\-\_\-\-S\-T\-A\-C\-K\-\_\-\-S\-I\-Z\-E) \\
+\hline
+ & {\em p\-\_\-ser\-\_\-dev} & Pointer to a serial device (port, radio, S\-D card, etc.) which can be used by this task to communicate (default\-: N\-U\-L\-L) \\
+\hline
+ & {\em p\-\_\-encoder\-\_\-inc} & This holds the pointer to the encoder given to this task by the main menu. \\
+\hline
+\end{DoxyParams}
+Initialize pointer passed from \hyperlink{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{main()} to local variable to work with 
+
+Definition at line 77 of file task\-\_\-encoder.\-cpp.
+
+
+
+References encoder\-\_\-count, last\-\_\-count, and p\-\_\-encoder.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classtask__encoder_a8380b1f111bf5d6b4256f16e355c0afc}{\index{task\-\_\-encoder@{task\-\_\-encoder}!run@{run}}
+\index{run@{run}!task_encoder@{task\-\_\-encoder}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void task\-\_\-encoder\-::run (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{classtask__encoder_a8380b1f111bf5d6b4256f16e355c0afc}
+
+
+This method is called by the R\-T\-O\-S once to run the task loop for ever and ever. 
+
+This method is called once by the R\-T\-O\-S scheduler.
+
+Each time that this method is run it initializes a tickcount and loops in an infinite for(;;) loop that compares the last tick count stored locally with the most current reading of encoder count which lies in the global Task\-Share variable 'encoder\-\_\-count'. It then waits 10 ms to run again and since it has the highest priority we know that it will certainly run every 10ms. This means if we multiply the difference in encoder counts (local vs. global) and use the constant time difference we can obtain an estimate of the counts per sec. 
+
+Definition at line 105 of file task\-\_\-encoder.\-cpp.
+
+
+
+References count\-\_\-per\-\_\-sec, encoder\-\_\-count, and last\-\_\-count.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{task__encoder_8h}{task\-\_\-encoder.\-h}\item 
+\hyperlink{task__encoder_8cpp}{task\-\_\-encoder.\-cpp}\end{DoxyCompactItemize}

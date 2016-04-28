@@ -1,0 +1,69 @@
+\hypertarget{classencoder__driver}{\section{encoder\-\_\-driver Class Reference}
+\label{classencoder__driver}\index{encoder\-\_\-driver@{encoder\-\_\-driver}}
+}
+
+
+This class will enable an interruputs on pins given by the \hyperlink{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{main()} function.  
+
+
+
+
+{\ttfamily \#include $<$encoder\-\_\-driver.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classencoder__driver_a9dc07f5c4a55511ea7993b83249af86d}{\hyperlink{classencoder__driver_a9dc07f5c4a55511ea7993b83249af86d}{encoder\-\_\-driver} (emstream $\ast$, volatile uint8\-\_\-t $\ast$, volatile uint8\-\_\-t $\ast$, volatile uint8\-\_\-t $\ast$, uint8\-\_\-t, uint8\-\_\-t, uint8\-\_\-t, uint8\-\_\-t, uint8\-\_\-t, uint8\-\_\-t)}\label{classencoder__driver_a9dc07f5c4a55511ea7993b83249af86d}
+
+\begin{DoxyCompactList}\small\item\em set the public constructor and the public methods \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classencoder__driver_a7dd2fe40b4c20d9741706f26b3dac173}{emstream $\ast$ \hyperlink{classencoder__driver_a7dd2fe40b4c20d9741706f26b3dac173}{serial\-\_\-\-P\-O\-R\-T}}\label{classencoder__driver_a7dd2fe40b4c20d9741706f26b3dac173}
+
+\begin{DoxyCompactList}\small\item\em N\-O M\-E\-T\-H\-O\-D\-S Y\-E\-T. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classencoder__driver_a606073463ef8697b30565bac39e059dd}{volatile uint8\-\_\-t $\ast$ \hyperlink{classencoder__driver_a606073463ef8697b30565bac39e059dd}{interrupt\-\_\-control}}\label{classencoder__driver_a606073463ef8697b30565bac39e059dd}
+
+\begin{DoxyCompactList}\small\item\em pointer to external iterrupt control register \end{DoxyCompactList}\item 
+\hypertarget{classencoder__driver_a2629f05f0f809f90069a0da3aa4c6acb}{volatile uint8\-\_\-t $\ast$ \hyperlink{classencoder__driver_a2629f05f0f809f90069a0da3aa4c6acb}{interrupt\-\_\-enable\-\_\-mask}}\label{classencoder__driver_a2629f05f0f809f90069a0da3aa4c6acb}
+
+\begin{DoxyCompactList}\small\item\em pointer to the interrupt enable register E\-I\-M\-S\-K \end{DoxyCompactList}\item 
+\hypertarget{classencoder__driver_a1ca6e426bbbca82caa52001394db4ccf}{volatile uint8\-\_\-t $\ast$ \hyperlink{classencoder__driver_a1ca6e426bbbca82caa52001394db4ccf}{encoder\-\_\-\-D\-D\-R\-\_\-\-P\-O\-R\-T}}\label{classencoder__driver_a1ca6e426bbbca82caa52001394db4ccf}
+
+\begin{DoxyCompactList}\small\item\em pointer to the data direction register of D\-D\-R\-E in this case \end{DoxyCompactList}\item 
+\hypertarget{classencoder__driver_aefddb744279afdf293e73e7a422a6d1d}{uint8\-\_\-t \hyperlink{classencoder__driver_aefddb744279afdf293e73e7a422a6d1d}{a\-\_\-directive\-\_\-pin0}}\label{classencoder__driver_aefddb744279afdf293e73e7a422a6d1d}
+
+\begin{DoxyCompactList}\small\item\em pin\-A value which is the first half of the directive for the control reg \end{DoxyCompactList}\item 
+\hypertarget{classencoder__driver_a7c03ecdcad5ccd33e91546fb7a6373ba}{uint8\-\_\-t \hyperlink{classencoder__driver_a7c03ecdcad5ccd33e91546fb7a6373ba}{b\-\_\-directive\-\_\-pin0}}\label{classencoder__driver_a7c03ecdcad5ccd33e91546fb7a6373ba}
+
+\begin{DoxyCompactList}\small\item\em pin\-B value is the first half of the second directive for the control reg \end{DoxyCompactList}\item 
+\hypertarget{classencoder__driver_a18d2e4172cb6c4814321a9208b1a1436}{uint8\-\_\-t \hyperlink{classencoder__driver_a18d2e4172cb6c4814321a9208b1a1436}{a\-\_\-interrupts\-\_\-activate}}\label{classencoder__driver_a18d2e4172cb6c4814321a9208b1a1436}
+
+\begin{DoxyCompactList}\small\item\em these values set the register to activate the correct pins to interrupts. \end{DoxyCompactList}\item 
+\hypertarget{classencoder__driver_a9429192cb939f1de21becb7153addf22}{uint8\-\_\-t \hyperlink{classencoder__driver_a9429192cb939f1de21becb7153addf22}{b\-\_\-interrupts\-\_\-activate}}\label{classencoder__driver_a9429192cb939f1de21becb7153addf22}
+
+\begin{DoxyCompactList}\small\item\em set b to also an intterupt pin \end{DoxyCompactList}\item 
+\hypertarget{classencoder__driver_a4d82ba8ef7726a31b3a3ed6c5ad56351}{uint8\-\_\-t {\bfseries a\-\_\-set\-\_\-as\-\_\-input}}\label{classencoder__driver_a4d82ba8ef7726a31b3a3ed6c5ad56351}
+
+\item 
+\hypertarget{classencoder__driver_ac66556b16a250907562deb031a84b379}{uint8\-\_\-t \hyperlink{classencoder__driver_ac66556b16a250907562deb031a84b379}{b\-\_\-set\-\_\-as\-\_\-input}}\label{classencoder__driver_ac66556b16a250907562deb031a84b379}
+
+\begin{DoxyCompactList}\small\item\em variable to set b to high or low to allow a constant high pull up or constant low pull down \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class will enable an interruputs on pins given by the \hyperlink{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{main()} function. 
+
+This class sets up the correct registers so that interrupts are enabled on the given pins in the given registers and in the given configuation. The Interrupt Service Routines happen here as well and the logic for that is explained within them. 
+
+Definition at line 64 of file encoder\-\_\-driver.\-h.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{encoder__driver_8h}{encoder\-\_\-driver.\-h}\item 
+\hyperlink{encoder__driver_8cpp}{encoder\-\_\-driver.\-cpp}\end{DoxyCompactItemize}

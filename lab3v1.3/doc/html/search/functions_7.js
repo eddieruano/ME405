@@ -1,8 +1,4 @@
 var searchData=
 [
-  ['print_5fhelp_5fmessage',['print_help_message',['../classtask__user.html#a75475060f83bae1e44bcc8a5c34015c7',1,'task_user']]],
-  ['printdashboard',['printDashBoard',['../classtask__user.html#affce6abe0cc4a021f490711a15234915',1,'task_user']]],
-  ['printmainmenu',['printMainMenu',['../classtask__user.html#ad7a5286a05c1782688037fd26c7e3d82',1,'task_user']]],
-  ['printmotormenu',['printMotorMenu',['../classtask__user.html#a120498a0bdee78e47a42a1e6b8ee3ca9',1,'task_user']]],
-  ['printsinglemotoroptions',['printSingleMotorOptions',['../classtask__user.html#a2866e8641ba983d7b819348a25774d47',1,'task_user']]]
+  ['operator_3c_3c',['operator&lt;&lt;',['../adc_8cpp.html#afb33ca9fe94765ee57079e7feb03f975',1,'operator&lt;&lt;(emstream &amp;serpt, adc &amp;a2d):&#160;adc.cpp'],['../adc_8h.html#a6e6d1e227b216fe2a1fee9b0ea52180d',1,'operator&lt;&lt;(emstream &amp;, adc &amp;):&#160;adc.cpp'],['../encoder__driver_8cpp.html#a87986fa29958758d3d017815125c0d8d',1,'operator&lt;&lt;(emstream &amp;serpt, encoder_driver &amp;encdrv):&#160;encoder_driver.cpp'],['../encoder__driver_8h.html#a838b0b3523a946192dc27e0be0947e8d',1,'operator&lt;&lt;(emstream &amp;, encoder_driver &amp;):&#160;encoder_driver.cpp'],['../motor__driver_8cpp.html#ad657010257780226a5b845103f45f996',1,'operator&lt;&lt;(emstream &amp;serpt, motor_driver &amp;motdrv):&#160;motor_driver.cpp'],['../motor__driver_8h.html#a660b47b84ed9c985bfb681036ce37d7a',1,'operator&lt;&lt;(emstream &amp;, motor_driver &amp;):&#160;motor_driver.cpp']]]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Lab 2 Controlling a Motor_Driver w/ a Task: task_motor Class Reference</title>
+<title>Lab 3 Integrating an Encoder with our Motor: task_motor Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,10 +22,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Lab 2 Controlling a Motor_Driver w/ a Task
-   &#160;<span id="projectnumber">v1.2</span>
+   <div id="projectname">Lab 3 Integrating an Encoder with our Motor
+   &#160;<span id="projectnumber">lab3v1.3</span>
    </div>
-   <div id="projectbrief">Make a task that will control motor_driver</div>
+   <div id="projectbrief">Make a driver and task that controlls an encoder</div>
   </td>
  </tr>
  </tbody>
@@ -230,9 +230,9 @@ Protected Attributes</h2></td></tr>
 <p>This method is called once by the RTOS scheduler.</p>
 <p>Each time that this method is run it initializes a tickcount and loops in an infinite for(;;) loop that calls shared variables that contain the directive, the power, and the selector for the motor that need to be affected. If the selector matches local selector assigned by the main function, then the local motor is affected which in turn affects the motor assigned to it by main. </p>
 
-<p>Definition at line <a class="el" href="task__motor_8cpp_source.html#l00109">109</a> of file <a class="el" href="task__motor_8cpp_source.html">task_motor.cpp</a>.</p>
+<p>Definition at line <a class="el" href="task__motor_8cpp_source.html#l00107">107</a> of file <a class="el" href="task__motor_8cpp_source.html">task_motor.cpp</a>.</p>
 
-<p>References <a class="el" href="task__motor_8cpp_source.html#l00048">BRAKE</a>, <a class="el" href="task__motor_8cpp_source.html#l00052">FREEWHEEL</a>, <a class="el" href="task__motor_8h_source.html#l00080">motor</a>, <a class="el" href="main_8cpp_source.html#l00110">motor_directive</a>, <a class="el" href="task__motor_8h_source.html#l00078">motor_identifier</a>, <a class="el" href="main_8cpp_source.html#l00101">motor_power</a>, <a class="el" href="main_8cpp_source.html#l00117">motor_select</a>, <a class="el" href="task__motor_8h_source.html#l00082">p_adc</a>, <a class="el" href="task__motor_8cpp_source.html#l00054">POTENTIOMETER</a>, <a class="el" href="motor__driver_8cpp_source.html#l00143">motor_driver::set_power()</a>, and <a class="el" href="task__motor_8cpp_source.html#l00050">SETPOWER</a>.</p>
+<p>References <a class="el" href="task__motor_8cpp_source.html#l00048">BRAKE</a>, <a class="el" href="task__motor_8cpp_source.html#l00052">FREEWHEEL</a>, <a class="el" href="task__motor_8h_source.html#l00080">motor</a>, <a class="el" href="main_8cpp_source.html#l00112">motor_directive</a>, <a class="el" href="task__motor_8h_source.html#l00078">motor_identifier</a>, <a class="el" href="main_8cpp_source.html#l00103">motor_power</a>, <a class="el" href="main_8cpp_source.html#l00119">motor_select</a>, <a class="el" href="task__motor_8h_source.html#l00082">p_adc</a>, <a class="el" href="task__motor_8cpp_source.html#l00054">POTENTIOMETER</a>, <a class="el" href="motor__driver_8cpp_source.html#l00143">motor_driver::set_power()</a>, and <a class="el" href="task__motor_8cpp_source.html#l00050">SETPOWER</a>.</p>
 
 </div>
 </div>
@@ -260,7 +260,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="task__motor_8h_source.html#l00078">78</a> of file <a class="el" href="task__motor_8h_source.html">task_motor.h</a>.</p>
 
-<p>Referenced by <a class="el" href="task__motor_8cpp_source.html#l00109">run()</a>, and <a class="el" href="task__motor_8cpp_source.html#l00077">task_motor()</a>.</p>
+<p>Referenced by <a class="el" href="task__motor_8cpp_source.html#l00107">run()</a>, and <a class="el" href="task__motor_8cpp_source.html#l00077">task_motor()</a>.</p>
 
 </div>
 </div>
@@ -271,7 +271,7 @@ Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 25 2016 14:53:26 for Lab 2 Controlling a Motor_Driver w/ a Task by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 28 2016 11:43:00 for Lab 3 Integrating an Encoder with our Motor by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -1,0 +1,31 @@
+\hypertarget{task__brightness_8h}{\section{task\-\_\-brightness.\-h File Reference}
+\label{task__brightness_8h}\index{task\-\_\-brightness.\-h@{task\-\_\-brightness.\-h}}
+}
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$avr/io.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}Free\-R\-T\-O\-S.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}task.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}queue.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}taskbase.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}time\-\_\-stamp.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}taskqueue.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}taskshare.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}rs232int.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}adc.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}motor\-\_\-driver.\-h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classtask__brightness}{task\-\_\-brightness}
+\begin{DoxyCompactList}\small\item\em This task controls the brightness of an L\-E\-D based on input from an A/\-D converter that also drives 2 motors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file contains the header for a task class that controls the brightness of an L\-E\-D using a voltage measured from the A/\-D as input. The fun part\-: the brightness that is being controlled can be on another A\-V\-R computer, with signals being sent and received via wireless transceivers.
+
+Revisions\-: \begin{DoxyItemize}
+\item 09-\/30-\/2012 J\-R\-R Original file was a one-\/file demonstration with two tasks \item 10-\/05-\/2012 J\-R\-R Split into multiple files, one for each task \item 10-\/25-\/2012 J\-R\-R Changed to a more fully C++ version with class task\-\_\-sender \item 10-\/27-\/2012 J\-R\-R Altered from data sending task into L\-E\-D blinking class \item 11-\/04-\/2012 J\-R\-R Altered again into the multi-\/task monstrosity \item 12-\/13-\/2012 J\-R\-R Yet again transmogrified; now it controls L\-E\-D brightness\end{DoxyItemize}
+License\-: This file is copyright 2012 by J\-R Ridgely and released under the Lesser G\-N\-U Public License, version 2. It intended for educational use only, but its use is not limited thereto. 
+
+Definition in file \hyperlink{task__brightness_8h_source}{task\-\_\-brightness.\-h}.
+

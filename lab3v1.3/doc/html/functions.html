@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Lab 2 Controlling a Motor_Driver w/ a Task: Class Members</title>
+<title>Lab 3 Integrating an Encoder with our Motor: Class Members</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,10 +22,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Lab 2 Controlling a Motor_Driver w/ a Task
-   &#160;<span id="projectnumber">v1.2</span>
+   <div id="projectname">Lab 3 Integrating an Encoder with our Motor
+   &#160;<span id="projectnumber">lab3v1.3</span>
    </div>
-   <div id="projectbrief">Make a task that will control motor_driver</div>
+   <div id="projectbrief">Make a driver and task that controlls an encoder</div>
   </td>
  </tr>
  </tbody>
@@ -77,10 +77,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="#index_a"><span>a</span></a></li>
       <li><a href="#index_b"><span>b</span></a></li>
+      <li><a href="#index_c"><span>c</span></a></li>
       <li><a href="#index_d"><span>d</span></a></li>
+      <li><a href="#index_e"><span>e</span></a></li>
       <li><a href="#index_g"><span>g</span></a></li>
       <li><a href="#index_h"><span>h</span></a></li>
       <li><a href="#index_i"><span>i</span></a></li>
+      <li><a href="#index_l"><span>l</span></a></li>
       <li><a href="#index_m"><span>m</span></a></li>
       <li><a href="#index_o"><span>o</span></a></li>
       <li><a href="#index_p"><span>p</span></a></li>
@@ -108,6 +111,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="textblock">Here is a list of all documented class members with links to the class documentation for each member:</div>
 
 <h3><a class="anchor" id="index_a"></a>- a -</h3><ul>
+<li>a_directive_pin0
+: <a class="el" href="classencoder__driver.html#aefddb744279afdf293e73e7a422a6d1d">encoder_driver</a>
+</li>
+<li>a_interrupts_activate
+: <a class="el" href="classencoder__driver.html#a18d2e4172cb6c4814321a9208b1a1436">encoder_driver</a>
+</li>
 <li>adc()
 : <a class="el" href="classadc.html#af3b8262c08f5fc5ae325a20622883424">adc</a>
 </li>
@@ -115,8 +124,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_b"></a>- b -</h3><ul>
+<li>b_directive_pin0
+: <a class="el" href="classencoder__driver.html#a7c03ecdcad5ccd33e91546fb7a6373ba">encoder_driver</a>
+</li>
+<li>b_interrupts_activate
+: <a class="el" href="classencoder__driver.html#a9429192cb939f1de21becb7153addf22">encoder_driver</a>
+</li>
+<li>b_set_as_input
+: <a class="el" href="classencoder__driver.html#ac66556b16a250907562deb031a84b379">encoder_driver</a>
+</li>
 <li>brake()
 : <a class="el" href="classmotor__driver.html#a0ceae2119e7bc1a03f409ca9c0cce32c">motor_driver</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
+<li>count_diff
+: <a class="el" href="classtask__encoder.html#a2a7938fe7c5ea145f553400ad53a2985">task_encoder</a>
 </li>
 </ul>
 
@@ -130,6 +155,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>diag_PORT
 : <a class="el" href="classmotor__driver.html#af0259585bf3d8d7a3cf236913255a543">motor_driver</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_e"></a>- e -</h3><ul>
+<li>encoder_DDR_PORT
+: <a class="el" href="classencoder__driver.html#a1ca6e426bbbca82caa52001394db4ccf">encoder_driver</a>
+</li>
+<li>encoder_driver()
+: <a class="el" href="classencoder__driver.html#a9dc07f5c4a55511ea7993b83249af86d">encoder_driver</a>
 </li>
 </ul>
 
@@ -161,11 +196,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>input_PORT
 : <a class="el" href="classmotor__driver.html#ad821a9c32c2e296373f5273db99e3f59">motor_driver</a>
 </li>
+<li>interrupt_control
+: <a class="el" href="classencoder__driver.html#a606073463ef8697b30565bac39e059dd">encoder_driver</a>
+</li>
+<li>interrupt_enable_mask
+: <a class="el" href="classencoder__driver.html#a2629f05f0f809f90069a0da3aa4c6acb">encoder_driver</a>
+</li>
 <li>is_menu_visible
 : <a class="el" href="classtask__user.html#aeed69ce02fadbfb4a64758535e5c958b">task_user</a>
 </li>
 <li>isValidMotor()
 : <a class="el" href="classtask__user.html#a6178fb80b0e6fdebf254cc9aee6235a5">task_user</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_l"></a>- l -</h3><ul>
+<li>last_count
+: <a class="el" href="classtask__encoder.html#a00db1124d04019b3d945f4081310cb92">task_encoder</a>
 </li>
 </ul>
 
@@ -194,11 +242,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>p_adc
 : <a class="el" href="classtask__motor.html#a388438912d463a7cb919dc6dbdcb2353">task_motor</a>
 </li>
+<li>p_encoder
+: <a class="el" href="classtask__encoder.html#a93ba34cbfaf270161b396f276d7772d7">task_encoder</a>
+</li>
 <li>print_help_message()
 : <a class="el" href="classtask__user.html#a75475060f83bae1e44bcc8a5c34015c7">task_user</a>
 </li>
 <li>printDashBoard()
 : <a class="el" href="classtask__user.html#affce6abe0cc4a021f490711a15234915">task_user</a>
+</li>
+<li>printEncoderModuleOptions()
+: <a class="el" href="classtask__user.html#a1a6e59f4124af9494daeb2f1639918d0">task_user</a>
 </li>
 <li>printMainMenu()
 : <a class="el" href="classtask__user.html#ad7a5286a05c1782688037fd26c7e3d82">task_user</a>
@@ -236,6 +290,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>run()
 : <a class="el" href="classtask__brightness.html#a615beac07a99f0856f048a46fd9a3898">task_brightness</a>
+, <a class="el" href="classtask__encoder.html#a8380b1f111bf5d6b4256f16e355c0afc">task_encoder</a>
 , <a class="el" href="classtask__motor.html#a895a075ec470c9d5a07b8959de06aacd">task_motor</a>
 , <a class="el" href="classtask__user.html#adca6429d57be25e8d411414fc8ad75af">task_user</a>
 </li>
@@ -244,7 +299,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
 <li>serial_PORT
-: <a class="el" href="classmotor__driver.html#a98a0c18a3b4d8b61266f98437aab12a9">motor_driver</a>
+: <a class="el" href="classencoder__driver.html#a7dd2fe40b4c20d9741706f26b3dac173">encoder_driver</a>
+, <a class="el" href="classmotor__driver.html#a98a0c18a3b4d8b61266f98437aab12a9">motor_driver</a>
 </li>
 <li>set_power()
 : <a class="el" href="classmotor__driver.html#a2bc43c500da3297a815c5958bee57f20">motor_driver</a>
@@ -262,6 +318,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>task_brightness()
 : <a class="el" href="classtask__brightness.html#a5802baf3a0c9fe53ccbce8966d1fad47">task_brightness</a>
 </li>
+<li>task_encoder()
+: <a class="el" href="classtask__encoder.html#ae099e34c1fdea7272e4adc5b85372869">task_encoder</a>
+</li>
 <li>task_motor()
 : <a class="el" href="classtask__motor.html#aefd82ba00ba8755bad9fdb516719b3d5">task_motor</a>
 </li>
@@ -272,7 +331,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 25 2016 14:53:27 for Lab 2 Controlling a Motor_Driver w/ a Task by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 28 2016 11:43:00 for Lab 3 Integrating an Encoder with our Motor by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

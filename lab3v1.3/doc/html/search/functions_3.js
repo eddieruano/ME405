@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hasuserinput',['hasUserInput',['../classtask__user.html#aeebf78dc3a261ab26f137b9dedb4fae3',1,'task_user']]]
+  ['getnumberinput',['getNumberInput',['../classtask__user.html#a6614555d84fb90fb2ae6c53a6e4ee7e6',1,'task_user']]]
 ];

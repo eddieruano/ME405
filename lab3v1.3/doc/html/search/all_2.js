@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['diag_5fddr',['diag_DDR',['../classmotor__driver.html#a6b1aa2bcd4eecada6abe2e3d11fecd88',1,'motor_driver']]],
-  ['diag_5fpin',['diag_PIN',['../classmotor__driver.html#ad97987799de2b9467ce7b01f5b291fcb',1,'motor_driver']]],
-  ['diag_5fport',['diag_PORT',['../classmotor__driver.html#af0259585bf3d8d7a3cf236913255a543',1,'motor_driver']]]
+  ['count_5fdiff',['count_diff',['../classtask__encoder.html#a2a7938fe7c5ea145f553400ad53a2985',1,'task_encoder']]],
+  ['count_5fper_5fsec',['count_per_sec',['../main_8cpp.html#af0088e70e22b6558ac19573b5e82b913',1,'count_per_sec():&#160;main.cpp'],['../shares_8h.html#af0088e70e22b6558ac19573b5e82b913',1,'count_per_sec():&#160;main.cpp']]]
 ];

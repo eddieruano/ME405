@@ -182,7 +182,8 @@ void task_user::run (void)
                     transition_to(3);
                     break;
                 // The 't' command asks what time it is right now
-                case ('t'):
+                    
+                case ('b'):
                     *p_serial << (a_time.set_to_now ()) << endl;
                     break;
 
@@ -374,6 +375,8 @@ void task_user::run (void)
                                 << endl;
 
                         break;
+                   
+
                     case ('p'):
                         *p_serial
                                 << endl << PMS("->Selected: ")
@@ -465,9 +468,14 @@ void task_user::run (void)
                     case ('r'):
 
                         *p_serial << PMS("Encoder Count: ") << encoder_count -> get() << endl;
-                        *p_serial << PMS("Encoder Count / sec: ") << count_per_sec -> get() << endl;
+                        *p_serial << PMS("Encoder Count / ms: ") << count_per_sec -> get() << endl;
+                        double rev_sec;
+                        rev_sec = ((double)(count_per_sec-> get()))*1000/1800;
+                        *p_serial << PMS("Rev/Sec: ")<< rev_sec<<endl;
                         *p_serial << PMS("Error Count: ") << encoder_errors -> get() << endl;
                         *p_serial << PMS("State: ") << the_state -> get() << endl;
+                        *p_serial << PMS("ERROR State: ") << error_state -> get() << endl;
+                        *p_serial << PMS("ERROR Position: ") << error_pos -> get() << endl;
                         *p_serial << endl << PMS("\t\t-> press 'r' to refresh ")<<endl<<endl;
                         break;
                     default:

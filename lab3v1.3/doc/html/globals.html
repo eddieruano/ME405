@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Lab 2 Controlling a Motor_Driver w/ a Task: File Members</title>
+<title>Lab 3 Integrating an Encoder with our Motor: File Members</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,10 +22,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Lab 2 Controlling a Motor_Driver w/ a Task
-   &#160;<span id="projectnumber">v1.2</span>
+   <div id="projectname">Lab 3 Integrating an Encoder with our Motor
+   &#160;<span id="projectnumber">lab3v1.3</span>
    </div>
-   <div id="projectbrief">Make a task that will control motor_driver</div>
+   <div id="projectbrief">Make a driver and task that controlls an encoder</div>
   </td>
  </tr>
  </tbody>
@@ -73,6 +73,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="globals_defs.html"><span>Macros</span></a></li>
     </ul>
   </div>
+  <div id="navrow4" class="tabs3">
+    <ul class="tablist">
+      <li><a href="#index_b"><span>b</span></a></li>
+      <li><a href="#index_c"><span>c</span></a></li>
+      <li><a href="#index_e"><span>e</span></a></li>
+      <li><a href="#index_f"><span>f</span></a></li>
+      <li><a href="#index_i"><span>i</span></a></li>
+      <li><a href="#index_m"><span>m</span></a></li>
+      <li><a href="#index_n"><span>n</span></a></li>
+      <li><a href="#index_o"><span>o</span></a></li>
+      <li><a href="#index_p"><span>p</span></a></li>
+      <li><a href="#index_s"><span>s</span></a></li>
+      <li class="current"><a href="#index_t"><span>t</span></a></li>
+    </ul>
+  </div>
 </div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -89,15 +104,52 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 
 <div class="contents">
-<div class="textblock">Here is a list of all documented file members with links to the documentation:</div><ul>
+<div class="textblock">Here is a list of all documented file members with links to the documentation:</div>
+
+<h3><a class="anchor" id="index_b"></a>- b -</h3><ul>
 <li>BRAKE
 : <a class="el" href="task__motor_8cpp.html#af78f6af13b9c032bf9d48ef40aa7e683">task_motor.cpp</a>
 , <a class="el" href="task__user_8cpp.html#af78f6af13b9c032bf9d48ef40aa7e683">task_user.cpp</a>
 </li>
+</ul>
+
+
+<h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
+<li>count_per_sec
+: <a class="el" href="main_8cpp.html#af0088e70e22b6558ac19573b5e82b913">main.cpp</a>
+, <a class="el" href="shares_8h.html#af0088e70e22b6558ac19573b5e82b913">shares.h</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_e"></a>- e -</h3><ul>
+<li>encoder_count
+: <a class="el" href="main_8cpp.html#a23620c74793eea7c070bd9799260bef4">main.cpp</a>
+, <a class="el" href="shares_8h.html#a23620c74793eea7c070bd9799260bef4">shares.h</a>
+</li>
+<li>encoder_errors
+: <a class="el" href="main_8cpp.html#a63cd170cc36d308a1e7e0a93272749d0">main.cpp</a>
+, <a class="el" href="shares_8h.html#a63cd170cc36d308a1e7e0a93272749d0">shares.h</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_f"></a>- f -</h3><ul>
 <li>FREEWHEEL
 : <a class="el" href="task__motor_8cpp.html#af9291ffc58d55b50465db4eb26e5b02d">task_motor.cpp</a>
 , <a class="el" href="task__user_8cpp.html#af9291ffc58d55b50465db4eb26e5b02d">task_user.cpp</a>
 </li>
+</ul>
+
+
+<h3><a class="anchor" id="index_i"></a>- i -</h3><ul>
+<li>ISR()
+: <a class="el" href="encoder__driver_8cpp.html#a28be307ba14efb36d0965f4be9c19b62">encoder_driver.cpp</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
 <li>main()
 : <a class="el" href="main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe">main.cpp</a>
 </li>
@@ -106,36 +158,68 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="shares_8h.html#a044692a403a6ad19401bd615cdefd5af">shares.h</a>
 </li>
 <li>motor_power
-: <a class="el" href="main_8cpp.html#a94ed6a23dc3685572a19c9b35ad4d91b">main.cpp</a>
-, <a class="el" href="shares_8h.html#a94ed6a23dc3685572a19c9b35ad4d91b">shares.h</a>
+: <a class="el" href="shares_8h.html#a94ed6a23dc3685572a19c9b35ad4d91b">shares.h</a>
+, <a class="el" href="main_8cpp.html#a94ed6a23dc3685572a19c9b35ad4d91b">main.cpp</a>
 </li>
 <li>motor_select
 : <a class="el" href="main_8cpp.html#a63b8526f83a43ed6aeb66f528aada7d6">main.cpp</a>
 , <a class="el" href="shares_8h.html#a63b8526f83a43ed6aeb66f528aada7d6">shares.h</a>
 </li>
+</ul>
+
+
+<h3><a class="anchor" id="index_n"></a>- n -</h3><ul>
 <li>NULL_MOTER
 : <a class="el" href="main_8cpp.html#a523c5bde6173ed43b687f460b70648c1">main.cpp</a>
 </li>
+</ul>
+
+
+<h3><a class="anchor" id="index_o"></a>- o -</h3><ul>
 <li>operator&lt;&lt;()
 : <a class="el" href="adc_8cpp.html#afb33ca9fe94765ee57079e7feb03f975">adc.cpp</a>
-, <a class="el" href="adc_8h.html#a6e6d1e227b216fe2a1fee9b0ea52180d">adc.h</a>
-, <a class="el" href="motor__driver_8cpp.html#ad657010257780226a5b845103f45f996">motor_driver.cpp</a>
 , <a class="el" href="motor__driver_8h.html#a660b47b84ed9c985bfb681036ce37d7a">motor_driver.h</a>
+, <a class="el" href="motor__driver_8cpp.html#ad657010257780226a5b845103f45f996">motor_driver.cpp</a>
+, <a class="el" href="encoder__driver_8h.html#a838b0b3523a946192dc27e0be0947e8d">encoder_driver.h</a>
+, <a class="el" href="encoder__driver_8cpp.html#a87986fa29958758d3d017815125c0d8d">encoder_driver.cpp</a>
+, <a class="el" href="adc_8h.html#a6e6d1e227b216fe2a1fee9b0ea52180d">adc.h</a>
 </li>
+</ul>
+
+
+<h3><a class="anchor" id="index_p"></a>- p -</h3><ul>
 <li>p_print_ser_queue
 : <a class="el" href="main_8cpp.html#acd99bf5d187d4809af2f460a5415e904">main.cpp</a>
 , <a class="el" href="shares_8h.html#acd99bf5d187d4809af2f460a5415e904">shares.h</a>
 </li>
 <li>POTENTIOMETER
-: <a class="el" href="task__motor_8cpp.html#a3e8e611e983546f51c69c43342fda6f2">task_motor.cpp</a>
-, <a class="el" href="task__user_8cpp.html#a3e8e611e983546f51c69c43342fda6f2">task_user.cpp</a>
+: <a class="el" href="task__user_8cpp.html#a3e8e611e983546f51c69c43342fda6f2">task_user.cpp</a>
+, <a class="el" href="task__motor_8cpp.html#a3e8e611e983546f51c69c43342fda6f2">task_motor.cpp</a>
 </li>
 <li>PROGRAM_VERSION
 : <a class="el" href="task__user_8h.html#a2f10abd650e471fae2d7e8c63d41206a">task_user.h</a>
 </li>
+</ul>
+
+
+<h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
 <li>SETPOWER
 : <a class="el" href="task__motor_8cpp.html#add1d508d51340e49c96b0385ae4ad7d2">task_motor.cpp</a>
 , <a class="el" href="task__user_8cpp.html#add1d508d51340e49c96b0385ae4ad7d2">task_user.cpp</a>
+</li>
+<li>SHIFT_PE6
+: <a class="el" href="encoder__driver_8cpp.html#a0d35304aa63a16be77271ffca02908df">encoder_driver.cpp</a>
+</li>
+<li>SHIFT_PE7
+: <a class="el" href="encoder__driver_8cpp.html#afb50f1c19688fdb4421712df2d8d73c7">encoder_driver.cpp</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
+<li>the_state
+: <a class="el" href="main_8cpp.html#a92401a9c7f428bd6ccadcb4fd8923209">main.cpp</a>
+, <a class="el" href="shares_8h.html#a92401a9c7f428bd6ccadcb4fd8923209">shares.h</a>
 </li>
 <li>ticks_to_delay
 : <a class="el" href="task__user_8cpp.html#a608f2ff6213a79bd1f25a29544aeaba5">task_user.cpp</a>
@@ -144,7 +228,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 25 2016 14:53:27 for Lab 2 Controlling a Motor_Driver w/ a Task by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 28 2016 11:43:00 for Lab 3 Integrating an Encoder with our Motor by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

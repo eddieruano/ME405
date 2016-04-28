@@ -91,6 +91,9 @@ extern TaskShare<uint32_t>* encoder_errors;
 ///              3 for 11
 extern TaskShare<uint8_t>* the_state;
 
+extern TaskShare<uint8_t>* error_state;
+extern TaskShare<int32_t>* error_pos;
+
 
 
 #endif // _SHARES_H_

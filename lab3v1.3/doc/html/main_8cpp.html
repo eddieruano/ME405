@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Lab 2 Controlling a Motor_Driver w/ a Task: main.cpp File Reference</title>
+<title>Lab 3 Integrating an Encoder with our Motor: main.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,10 +22,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Lab 2 Controlling a Motor_Driver w/ a Task
-   &#160;<span id="projectnumber">v1.2</span>
+   <div id="projectname">Lab 3 Integrating an Encoder with our Motor
+   &#160;<span id="projectnumber">lab3v1.3</span>
    </div>
-   <div id="projectbrief">Make a task that will control motor_driver</div>
+   <div id="projectbrief">Make a driver and task that controlls an encoder</div>
   </td>
  </tr>
  </tbody>
@@ -110,6 +110,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &quot;<a class="el" href="task__brightness_8h_source.html">task_brightness.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="task__user_8h_source.html">task_user.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="task__motor_8h_source.html">task_motor.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="task__encoder_8h_source.html">task_encoder.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="encoder__driver_8h_source.html">encoder_driver.h</a>&quot;</code><br/>
 </div>
 <p><a href="main_8cpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -135,6 +137,20 @@ Variables</h2></td></tr>
 <tr class="separator:a044692a403a6ad19401bd615cdefd5af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a63b8526f83a43ed6aeb66f528aada7d6"><td class="memItemLeft" align="right" valign="top">TaskShare&lt; uint8_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a63b8526f83a43ed6aeb66f528aada7d6">motor_select</a></td></tr>
 <tr class="separator:a63b8526f83a43ed6aeb66f528aada7d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23620c74793eea7c070bd9799260bef4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a23620c74793eea7c070bd9799260bef4"></a>
+TaskShare&lt; int32_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a23620c74793eea7c070bd9799260bef4">encoder_count</a></td></tr>
+<tr class="memdesc:a23620c74793eea7c070bd9799260bef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This variable holds the encoder count and is positive or negative relative to the rotation of the counts accumulated either ClockWise(+), or CounterClockWise (-) <br/></td></tr>
+<tr class="separator:a23620c74793eea7c070bd9799260bef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0088e70e22b6558ac19573b5e82b913"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0088e70e22b6558ac19573b5e82b913"></a>
+TaskShare&lt; int32_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#af0088e70e22b6558ac19573b5e82b913">count_per_sec</a></td></tr>
+<tr class="memdesc:af0088e70e22b6558ac19573b5e82b913"><td class="mdescLeft">&#160;</td><td class="mdescRight">This variable holds the ticks per seconds so that other tasks like <a class="el" href="classtask__user.html" title="This task will interact with the user and make the motors operate based on their input. ">task_user</a> may access it. <br/></td></tr>
+<tr class="separator:af0088e70e22b6558ac19573b5e82b913"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63cd170cc36d308a1e7e0a93272749d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a63cd170cc36d308a1e7e0a93272749d0"></a>
+TaskShare&lt; uint32_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a63cd170cc36d308a1e7e0a93272749d0">encoder_errors</a></td></tr>
+<tr class="memdesc:a63cd170cc36d308a1e7e0a93272749d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">This holds the total number of errors detected by the ISR when setting the counts. <br/></td></tr>
+<tr class="separator:a63cd170cc36d308a1e7e0a93272749d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92401a9c7f428bd6ccadcb4fd8923209"><td class="memItemLeft" align="right" valign="top">TaskShare&lt; uint8_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a92401a9c7f428bd6ccadcb4fd8923209">the_state</a></td></tr>
+<tr class="separator:a92401a9c7f428bd6ccadcb4fd8923209"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This is the file for the '<a class="el" href="main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe">main()</a>' function. This function initialzies everything. </p>
@@ -173,9 +189,9 @@ JR Ridgely</dd></dl>
 <p>The main function sets up the RTOS. Some test tasks are created. Then the scheduler is started up; the scheduler runs until power is turned off or there's a reset. </p>
 <dl class="section return"><dt>Returns</dt><dd>This is a real-time microcontroller program which doesn't return. Ever. </dd></dl>
 
-<p>Definition at line <a class="el" href="main_8cpp_source.html#l00127">127</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Definition at line <a class="el" href="main_8cpp_source.html#l00146">146</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 
-<p>References <a class="el" href="main_8cpp_source.html#l00110">motor_directive</a>, <a class="el" href="main_8cpp_source.html#l00101">motor_power</a>, <a class="el" href="main_8cpp_source.html#l00117">motor_select</a>, <a class="el" href="main_8cpp_source.html#l00080">NULL_MOTER</a>, and <a class="el" href="main_8cpp_source.html#l00096">p_print_ser_queue</a>.</p>
+<p>References <a class="el" href="main_8cpp_source.html#l00125">count_per_sec</a>, <a class="el" href="main_8cpp_source.html#l00123">encoder_count</a>, <a class="el" href="main_8cpp_source.html#l00127">encoder_errors</a>, <a class="el" href="main_8cpp_source.html#l00112">motor_directive</a>, <a class="el" href="main_8cpp_source.html#l00103">motor_power</a>, <a class="el" href="main_8cpp_source.html#l00119">motor_select</a>, <a class="el" href="main_8cpp_source.html#l00082">NULL_MOTER</a>, <a class="el" href="main_8cpp_source.html#l00098">p_print_ser_queue</a>, and <a class="el" href="main_8cpp_source.html#l00133">the_state</a>.</p>
 
 </div>
 </div>
@@ -191,9 +207,9 @@ JR Ridgely</dd></dl>
 </div><div class="memdoc">
 <p>This declares a taskshare which indicates that this variable is a shared variable. This variable will hold the command that the user wishes the motor to do. -1 Indicates CHANGE_DIRECTION 0 Indicates STOP W/ brake_power 1 Indicates SET POWER 2 Indicates FREEWHEEL </p>
 
-<p>Definition at line <a class="el" href="main_8cpp_source.html#l00110">110</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Definition at line <a class="el" href="main_8cpp_source.html#l00112">112</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="main_8cpp_source.html#l00127">main()</a>, <a class="el" href="task__motor_8cpp_source.html#l00109">task_motor::run()</a>, and <a class="el" href="task__user_8cpp_source.html#l00776">task_user::setMotor()</a>.</p>
+<p>Referenced by <a class="el" href="main_8cpp_source.html#l00146">main()</a>, <a class="el" href="task__motor_8cpp_source.html#l00107">task_motor::run()</a>, and <a class="el" href="task__user_8cpp_source.html#l00842">task_user::setMotor()</a>.</p>
 
 </div>
 </div>
@@ -208,9 +224,9 @@ JR Ridgely</dd></dl>
 </div><div class="memdoc">
 <p>This declares a taskshare which indicates that this variable is a shared variable. This variable will hold the duty cycle of a motor. </p>
 
-<p>Definition at line <a class="el" href="main_8cpp_source.html#l00101">101</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Definition at line <a class="el" href="main_8cpp_source.html#l00103">103</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="main_8cpp_source.html#l00127">main()</a>, <a class="el" href="task__motor_8cpp_source.html#l00109">task_motor::run()</a>, <a class="el" href="task__user_8cpp_source.html#l00122">task_user::run()</a>, and <a class="el" href="task__user_8cpp_source.html#l00776">task_user::setMotor()</a>.</p>
+<p>Referenced by <a class="el" href="main_8cpp_source.html#l00146">main()</a>, <a class="el" href="task__motor_8cpp_source.html#l00107">task_motor::run()</a>, <a class="el" href="task__user_8cpp_source.html#l00125">task_user::run()</a>, and <a class="el" href="task__user_8cpp_source.html#l00842">task_user::setMotor()</a>.</p>
 
 </div>
 </div>
@@ -225,9 +241,9 @@ JR Ridgely</dd></dl>
 </div><div class="memdoc">
 <p>This declares a taskshare which indicates that this variable is a shared variable. This variable will hold the select for each motor. 0 Indicates Motor 0 1 Indicates Motor 1 </p>
 
-<p>Definition at line <a class="el" href="main_8cpp_source.html#l00117">117</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Definition at line <a class="el" href="main_8cpp_source.html#l00119">119</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="main_8cpp_source.html#l00127">main()</a>, <a class="el" href="task__motor_8cpp_source.html#l00109">task_motor::run()</a>, <a class="el" href="task__user_8cpp_source.html#l00122">task_user::run()</a>, and <a class="el" href="task__user_8cpp_source.html#l00776">task_user::setMotor()</a>.</p>
+<p>Referenced by <a class="el" href="main_8cpp_source.html#l00146">main()</a>, <a class="el" href="task__motor_8cpp_source.html#l00107">task_motor::run()</a>, <a class="el" href="task__user_8cpp_source.html#l00125">task_user::run()</a>, and <a class="el" href="task__user_8cpp_source.html#l00842">task_user::setMotor()</a>.</p>
 
 </div>
 </div>
@@ -242,16 +258,33 @@ JR Ridgely</dd></dl>
 </div><div class="memdoc">
 <p>This is a print queue, descended from <code>emstream</code> so that things can be printed into the queue using the "&lt;&lt;" operator and they'll come out the other end as a stream of characters. It's used by tasks that send things to the user interface task to be printed. </p>
 
-<p>Definition at line <a class="el" href="main_8cpp_source.html#l00096">96</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Definition at line <a class="el" href="main_8cpp_source.html#l00098">98</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="task__user_8cpp_source.html#l00668">task_user::getNumberInput()</a>, and <a class="el" href="main_8cpp_source.html#l00127">main()</a>.</p>
+<p>Referenced by <a class="el" href="task__user_8cpp_source.html#l00734">task_user::getNumberInput()</a>, and <a class="el" href="main_8cpp_source.html#l00146">main()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a92401a9c7f428bd6ccadcb4fd8923209"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskShare&lt;uint8_t&gt;* the_state</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Holds the previous state of the last interrupt called Holds either 0 for 00 1 for 01 2 for 10 3 for 11 </p>
+
+<p>Definition at line <a class="el" href="main_8cpp_source.html#l00133">133</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="encoder__driver_8cpp_source.html#l00132">ISR()</a>, <a class="el" href="main_8cpp_source.html#l00146">main()</a>, and <a class="el" href="task__user_8cpp_source.html#l00125">task_user::run()</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 25 2016 14:53:26 for Lab 2 Controlling a Motor_Driver w/ a Task by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 28 2016 11:42:59 for Lab 3 Integrating an Encoder with our Motor by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

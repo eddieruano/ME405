@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['read_5fonce',['read_once',['../classadc.html#a2190a59696a7093e1ea605e998ccf97e',1,'adc']]],
-  ['read_5foversampled',['read_oversampled',['../classadc.html#a58f1030fe64d3dea4ccd8a2687dd6fce',1,'adc']]],
-  ['resetmenus',['resetMenus',['../classtask__user.html#a3ba42fcb41ae5292b75fe427ff26932c',1,'task_user']]],
-  ['run',['run',['../classtask__brightness.html#a615beac07a99f0856f048a46fd9a3898',1,'task_brightness::run()'],['../classtask__motor.html#a895a075ec470c9d5a07b8959de06aacd',1,'task_motor::run()'],['../classtask__user.html#adca6429d57be25e8d411414fc8ad75af',1,'task_user::run()']]]
+  ['print_5fhelp_5fmessage',['print_help_message',['../classtask__user.html#a75475060f83bae1e44bcc8a5c34015c7',1,'task_user']]],
+  ['printdashboard',['printDashBoard',['../classtask__user.html#affce6abe0cc4a021f490711a15234915',1,'task_user']]],
+  ['printencodermoduleoptions',['printEncoderModuleOptions',['../classtask__user.html#a1a6e59f4124af9494daeb2f1639918d0',1,'task_user']]],
+  ['printmainmenu',['printMainMenu',['../classtask__user.html#ad7a5286a05c1782688037fd26c7e3d82',1,'task_user']]],
+  ['printmotormenu',['printMotorMenu',['../classtask__user.html#a120498a0bdee78e47a42a1e6b8ee3ca9',1,'task_user']]],
+  ['printsinglemotoroptions',['printSingleMotorOptions',['../classtask__user.html#a2866e8641ba983d7b819348a25774d47',1,'task_user']]]
 ];

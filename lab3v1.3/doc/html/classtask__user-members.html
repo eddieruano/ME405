@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Lab 2 Controlling a Motor_Driver w/ a Task: Member List</title>
+<title>Lab 3 Integrating an Encoder with our Motor: Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,10 +22,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Lab 2 Controlling a Motor_Driver w/ a Task
-   &#160;<span id="projectnumber">v1.2</span>
+   <div id="projectname">Lab 3 Integrating an Encoder with our Motor
+   &#160;<span id="projectnumber">lab3v1.3</span>
    </div>
-   <div id="projectbrief">Make a task that will control motor_driver</div>
+   <div id="projectbrief">Make a driver and task that controlls an encoder</div>
   </td>
  </tr>
  </tbody>
@@ -95,18 +95,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <tr><td class="entry"><a class="el" href="classtask__user.html#a6178fb80b0e6fdebf254cc9aee6235a5">isValidMotor</a>(int16_t)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classtask__user.html#a75475060f83bae1e44bcc8a5c34015c7">print_help_message</a>(void)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr><td class="entry"><a class="el" href="classtask__user.html#affce6abe0cc4a021f490711a15234915">printDashBoard</a>(void)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classtask__user.html#ad7a5286a05c1782688037fd26c7e3d82">printMainMenu</a>(void)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classtask__user.html#a120498a0bdee78e47a42a1e6b8ee3ca9">printMotorMenu</a>(void)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classtask__user.html#a2866e8641ba983d7b819348a25774d47">printSingleMotorOptions</a>(void)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classtask__user.html#a3ba42fcb41ae5292b75fe427ff26932c">resetMenus</a>(void)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classtask__user.html#adca6429d57be25e8d411414fc8ad75af">run</a>(void)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classtask__user.html#ae247fa7d8dd68902ff4abf2c77b00fe2">setMotor</a>(uint8_t, int16_t, uint8_t)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classtask__user.html#a105bebbd9cb1031154c3dfc3662db4a0">show_status</a>(void)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classtask__user.html#a3aba77563b375bb14838800608da48bc">task_user</a>(const char *, unsigned portBASE_TYPE, size_t, emstream *)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classtask__user.html#a1a6e59f4124af9494daeb2f1639918d0">printEncoderModuleOptions</a>(void)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classtask__user.html#ad7a5286a05c1782688037fd26c7e3d82">printMainMenu</a>(void)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classtask__user.html#a120498a0bdee78e47a42a1e6b8ee3ca9">printMotorMenu</a>(void)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classtask__user.html#a2866e8641ba983d7b819348a25774d47">printSingleMotorOptions</a>(void)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classtask__user.html#a3ba42fcb41ae5292b75fe427ff26932c">resetMenus</a>(void)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classtask__user.html#adca6429d57be25e8d411414fc8ad75af">run</a>(void)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classtask__user.html#ae247fa7d8dd68902ff4abf2c77b00fe2">setMotor</a>(uint8_t, int16_t, uint8_t)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classtask__user.html#a105bebbd9cb1031154c3dfc3662db4a0">show_status</a>(void)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classtask__user.html#a3aba77563b375bb14838800608da48bc">task_user</a>(const char *, unsigned portBASE_TYPE, size_t, emstream *)</td><td class="entry"><a class="el" href="classtask__user.html">task_user</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 25 2016 14:53:27 for Lab 2 Controlling a Motor_Driver w/ a Task by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 28 2016 11:43:00 for Lab 3 Integrating an Encoder with our Motor by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

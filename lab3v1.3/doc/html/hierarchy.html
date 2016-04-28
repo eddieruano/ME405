@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Lab 2 Controlling a Motor_Driver w/ a Task: Class Hierarchy</title>
+<title>Lab 3 Integrating an Encoder with our Motor: Class Hierarchy</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,10 +22,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Lab 2 Controlling a Motor_Driver w/ a Task
-   &#160;<span id="projectnumber">v1.2</span>
+   <div id="projectname">Lab 3 Integrating an Encoder with our Motor
+   &#160;<span id="projectnumber">lab3v1.3</span>
    </div>
-   <div id="projectbrief">Make a task that will control motor_driver</div>
+   <div id="projectbrief">Make a driver and task that controlls an encoder</div>
   </td>
  </tr>
  </tbody>
@@ -89,17 +89,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="textblock">This inheritance list is sorted roughly, but not completely, alphabetically:</div><div class="directory">
 <div class="levels">[detail level <span onclick="javascript:toggleLevel(1);">1</span><span onclick="javascript:toggleLevel(2);">2</span>]</div><table class="directory">
 <tr id="row_0_" class="even"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classadc.html" target="_self">adc</a></td><td class="desc">This class <b>will</b> run the A/D converter on an AVR processor </td></tr>
-<tr id="row_1_"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classmotor__driver.html" target="_self">motor_driver</a></td><td class="desc">This class will run the DC motor </td></tr>
-<tr id="row_2_" class="even"><td class="entry"><img id="arr_2_" src="ftv2mlastnode.png" alt="\" width="16" height="22" onclick="toggleFolder('2_')"/><img src="ftv2cl.png" alt="C" width="24" height="22" /><b>TaskBase</b></td><td class="desc"></td></tr>
-<tr id="row_2_0_"><td class="entry"><img src="ftv2blank.png" alt="&#160;" width="16" height="22" /><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classtask__brightness.html" target="_self">task_brightness</a></td><td class="desc">This task controls the brightness of an LED based on input from an A/D converter that also drives 2 motors </td></tr>
-<tr id="row_2_1_" class="even"><td class="entry"><img src="ftv2blank.png" alt="&#160;" width="16" height="22" /><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classtask__motor.html" target="_self">task_motor</a></td><td class="desc">This class is the task motor class that handles a single motor operation </td></tr>
-<tr id="row_2_2_"><td class="entry"><img src="ftv2blank.png" alt="&#160;" width="16" height="22" /><img src="ftv2lastnode.png" alt="\" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classtask__user.html" target="_self">task_user</a></td><td class="desc">This task will interact with the user and make the motors operate based on their input </td></tr>
+<tr id="row_1_"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classencoder__driver.html" target="_self">encoder_driver</a></td><td class="desc">This class will enable an interruputs on pins given by the <a class="el" href="main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe">main()</a> function </td></tr>
+<tr id="row_2_" class="even"><td class="entry"><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classmotor__driver.html" target="_self">motor_driver</a></td><td class="desc">This class will run the DC motor </td></tr>
+<tr id="row_3_"><td class="entry"><img id="arr_3_" src="ftv2mlastnode.png" alt="\" width="16" height="22" onclick="toggleFolder('3_')"/><img src="ftv2cl.png" alt="C" width="24" height="22" /><b>TaskBase</b></td><td class="desc"></td></tr>
+<tr id="row_3_0_" class="even"><td class="entry"><img src="ftv2blank.png" alt="&#160;" width="16" height="22" /><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classtask__brightness.html" target="_self">task_brightness</a></td><td class="desc">This task controls the brightness of an LED based on input from an A/D converter that also drives 2 motors </td></tr>
+<tr id="row_3_1_"><td class="entry"><img src="ftv2blank.png" alt="&#160;" width="16" height="22" /><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classtask__encoder.html" target="_self">task_encoder</a></td><td class="desc">This is the declaration for '<a class="el" href="classtask__encoder.html" title="this is the declaration for &#39;task_encoder&#39; which directly handles the encoder_driver. Only three variables are required for this class since the ISR is declared in the driver. ">task_encoder</a>' which directly handles the <a class="el" href="classencoder__driver.html" title="This class will enable an interruputs on pins given by the main() function. ">encoder_driver</a>. Only three variables are required for this class since the ISR is declared in the driver </td></tr>
+<tr id="row_3_2_" class="even"><td class="entry"><img src="ftv2blank.png" alt="&#160;" width="16" height="22" /><img src="ftv2node.png" alt="o" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classtask__motor.html" target="_self">task_motor</a></td><td class="desc">This class is the task motor class that handles a single motor operation </td></tr>
+<tr id="row_3_3_"><td class="entry"><img src="ftv2blank.png" alt="&#160;" width="16" height="22" /><img src="ftv2lastnode.png" alt="\" width="16" height="22" /><img src="ftv2cl.png" alt="C" width="24" height="22" /><a class="el" href="classtask__user.html" target="_self">task_user</a></td><td class="desc">This task will interact with the user and make the motors operate based on their input </td></tr>
 </table>
 </div><!-- directory -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 25 2016 14:53:27 for Lab 2 Controlling a Motor_Driver w/ a Task by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 28 2016 11:43:00 for Lab 3 Integrating an Encoder with our Motor by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

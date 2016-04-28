@@ -468,6 +468,8 @@ void task_user::run (void)
                         *p_serial << PMS("Encoder Count / sec: ") << count_per_sec -> get() << endl;
                         *p_serial << PMS("Error Count: ") << encoder_errors -> get() << endl;
                         *p_serial << PMS("State: ") << the_state -> get() << endl;
+                        *p_serial << PMS("ERROR State: ") << error_state -> get() << endl;
+                        *p_serial << PMS("ERROR Count: ") << error_pos -> get() << endl;
                         *p_serial << endl << PMS("\t\t-> press 'r' to refresh ")<<endl<<endl;
                         break;
                     default:

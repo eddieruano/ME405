@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Lab 2 Controlling a Motor_Driver w/ a Task: Class Members - Variables</title>
+<title>Lab 3 Integrating an Encoder with our Motor: Class Members - Variables</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,10 +22,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Lab 2 Controlling a Motor_Driver w/ a Task
-   &#160;<span id="projectnumber">v1.2</span>
+   <div id="projectname">Lab 3 Integrating an Encoder with our Motor
+   &#160;<span id="projectnumber">lab3v1.3</span>
    </div>
-   <div id="projectbrief">Make a task that will control motor_driver</div>
+   <div id="projectbrief">Make a driver and task that controlls an encoder</div>
   </td>
  </tr>
  </tbody>
@@ -90,6 +90,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="contents">
 &#160;<ul>
+<li>a_directive_pin0
+: <a class="el" href="classencoder__driver.html#aefddb744279afdf293e73e7a422a6d1d">encoder_driver</a>
+</li>
+<li>a_interrupts_activate
+: <a class="el" href="classencoder__driver.html#a18d2e4172cb6c4814321a9208b1a1436">encoder_driver</a>
+</li>
+<li>b_directive_pin0
+: <a class="el" href="classencoder__driver.html#a7c03ecdcad5ccd33e91546fb7a6373ba">encoder_driver</a>
+</li>
+<li>b_interrupts_activate
+: <a class="el" href="classencoder__driver.html#a9429192cb939f1de21becb7153addf22">encoder_driver</a>
+</li>
+<li>b_set_as_input
+: <a class="el" href="classencoder__driver.html#ac66556b16a250907562deb031a84b379">encoder_driver</a>
+</li>
+<li>count_diff
+: <a class="el" href="classtask__encoder.html#a2a7938fe7c5ea145f553400ad53a2985">task_encoder</a>
+</li>
 <li>diag_DDR
 : <a class="el" href="classmotor__driver.html#a6b1aa2bcd4eecada6abe2e3d11fecd88">motor_driver</a>
 </li>
@@ -98,6 +116,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>diag_PORT
 : <a class="el" href="classmotor__driver.html#af0259585bf3d8d7a3cf236913255a543">motor_driver</a>
+</li>
+<li>encoder_DDR_PORT
+: <a class="el" href="classencoder__driver.html#a1ca6e426bbbca82caa52001394db4ccf">encoder_driver</a>
 </li>
 <li>input_APIN
 : <a class="el" href="classmotor__driver.html#a0f3eeec4986d707cfcd5d25a6dd5fac9">motor_driver</a>
@@ -111,8 +132,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>input_PORT
 : <a class="el" href="classmotor__driver.html#ad821a9c32c2e296373f5273db99e3f59">motor_driver</a>
 </li>
+<li>interrupt_control
+: <a class="el" href="classencoder__driver.html#a606073463ef8697b30565bac39e059dd">encoder_driver</a>
+</li>
+<li>interrupt_enable_mask
+: <a class="el" href="classencoder__driver.html#a2629f05f0f809f90069a0da3aa4c6acb">encoder_driver</a>
+</li>
 <li>is_menu_visible
 : <a class="el" href="classtask__user.html#aeed69ce02fadbfb4a64758535e5c958b">task_user</a>
+</li>
+<li>last_count
+: <a class="el" href="classtask__encoder.html#a00db1124d04019b3d945f4081310cb92">task_encoder</a>
 </li>
 <li>motor
 : <a class="el" href="classtask__motor.html#aa2ed8c7d16f05cb57b11e86bdc7e646b">task_motor</a>
@@ -125,6 +155,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>p_adc
 : <a class="el" href="classtask__motor.html#a388438912d463a7cb919dc6dbdcb2353">task_motor</a>
+</li>
+<li>p_encoder
+: <a class="el" href="classtask__encoder.html#a93ba34cbfaf270161b396f276d7772d7">task_encoder</a>
 </li>
 <li>ptr_to_serial
 : <a class="el" href="classadc.html#a14680b48b723bf1adddd2741ebb18a3e">adc</a>
@@ -139,13 +172,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="classmotor__driver.html#ad7108a5cc11ba229ed117cb6c98adda6">motor_driver</a>
 </li>
 <li>serial_PORT
-: <a class="el" href="classmotor__driver.html#a98a0c18a3b4d8b61266f98437aab12a9">motor_driver</a>
+: <a class="el" href="classencoder__driver.html#a7dd2fe40b4c20d9741706f26b3dac173">encoder_driver</a>
+, <a class="el" href="classmotor__driver.html#a98a0c18a3b4d8b61266f98437aab12a9">motor_driver</a>
 </li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 25 2016 14:53:27 for Lab 2 Controlling a Motor_Driver w/ a Task by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 28 2016 11:43:00 for Lab 3 Integrating an Encoder with our Motor by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

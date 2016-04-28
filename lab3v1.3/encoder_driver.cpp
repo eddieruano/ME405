@@ -61,8 +61,10 @@
 //#include "bitops.
 
 // Set the define constants
-#define SHIFT_PE6 64                        // 1 shifted left by 6 (64)
-#define SHIFT_PE7 128                        // 1 shifted left by 6 (64)
+/// 1 shifted left by 6 (64)
+#define SHIFT_PE6 64 
+/// 1 shifted left by 6 (64)                       
+#define SHIFT_PE7 128                        
 
 //-----------------------------------------------------------------------------
 encoder_driver::encoder_driver (
@@ -115,15 +117,26 @@ encoder_driver::encoder_driver (
 }
 
 
-// Set up ISR for PINE6
+/**
+ * @brief      This ISR triggers when a rising or falling edge of a wave is 
+ *             detected on pin E6.
+ *
+ * @details    This ISR checks to see if a condition is true, if both waves
+ *              are at high then we can arbitrarily call that clockwise or 
+ *              countercw and deduce logic from there as long as we are 
+ *              consistent in ISR7.
+ *
+ * @param[in]  INT&_vect  a constant value mask that tells this ISR that the 
+ *                        pin it need to look out for is pin E6
+ */
 ISR(INT6_vect)
 {
     //ainterrupts -> put(ainterrupts->get()+1);
     uint8_t last_state = the_state-> ISR_get();
 
-    uint8_t pin_a = ((PINE & (1 << PE6)) >> 6);
+    uint8_t pin_a = ((PINE & (SHIFT_PE6)) >> 6);
     //if(pin_a == 64){pin_a = 1;}else{pin_a = 0;}
-    uint8_t pin_b = ((PINE & (1 << PE7)) >> 7);
+    uint8_t pin_b = ((PINE & (SHIFT_PE7)) >> 7);
     //if(pin_b == 128){pin_b = 1;}else{pin_b = 0;}
     uint8_t this_state = (pin_a * 2) + pin_b;
     //check to see if both square waves have equal outputs
@@ -133,12 +146,17 @@ ISR(INT6_vect)
         encoder_count -> ISR_put((encoder_count -> ISR_get()) - 1);
         if (this_state == 0 && last_state != 2)
         {
+
             encoder_errors -> ISR_put(encoder_errors->ISR_get() + 1);
+            //error_state -> ISR_put(this_state);
+            //error_pos -> ISR_put(encoder_count -> get());
 
         }
         else if (this_state == 3 && last_state != 1)
         {
             encoder_errors -> ISR_put(encoder_errors->ISR_get() + 1);
+            //error_state -> ISR_put(this_state);
+            //error_pos -> ISR_put(encoder_count -> get());
         }
     }
     else
@@ -147,22 +165,38 @@ ISR(INT6_vect)
         if (this_state == 2 && last_state != 0)
         {
             encoder_errors -> ISR_put(encoder_errors->ISR_get() + 1);
+            //e//rror_state -> ISR_put(this_state);
+            // error_pos -> ISR_put(encoder_count -> get());
         }
         else if (this_state == 1 && last_state != 3)
         {
             encoder_errors -> ISR_put(encoder_errors->ISR_get() + 1);
+            // error_state -> ISR_put(this_state);
+            // error_pos -> ISR_put(encoder_count -> get());
         }
     }
 
     the_state -> ISR_put(this_state);
 }
-// Set up ISR for PINE7
+
+/**
+ * @brief       This ISR triggers when a rising or falling edge of a wave is 
+ *              detected on pin E7.
+ *
+ * @details     This ISR checks to see if a condition is true, if both waves
+ *              are at high then we can arbitrarily call that clockwise or 
+ *              countercw and deduce logic from there as long as we are 
+ *              consistent in ISR7.
+ *
+ * @param[in]  INT&_vect  a constant value mask that tells this ISR that the 
+ *                        pin it need to look out for is pin E7
+ */
 ISR(INT7_vect)
 {
     uint8_t last_state = the_state-> ISR_get();
-    uint8_t pin_a = ((PINE & (1 << PE6)) >> 6);
+    uint8_t pin_a = ((PINE & (SHIFT_PE6)) >> 6);
     //if(pin_a == 64){pin_a = 1;}else{pin_a = 0;}
-    uint8_t pin_b = ((PINE & (1 << PE7)) >> 7);
+    uint8_t pin_b = ((PINE & (SHIFT_PE7)) >> 7);
     //if(pin_b == 128){pin_b = 1;}else{pin_b = 0;}
     uint8_t this_state = (pin_a * 2) + pin_b;
     if (pin_a != pin_b)
@@ -171,10 +205,14 @@ ISR(INT7_vect)
         if (this_state == 1 && last_state != 0)
         {
             encoder_errors -> ISR_put(encoder_errors->ISR_get() + 1);
+            // error_state -> ISR_put(this_state);
+            // error_pos -> ISR_put(encoder_count -> get());
         }
         else if (this_state == 2 && last_state != 3)
         {
             encoder_errors -> ISR_put(encoder_errors->ISR_get() + 1);
+            // error_state -> ISR_put(this_state);
+            // error_pos -> ISR_put(encoder_count -> get());
         }
 
     }
@@ -184,10 +222,14 @@ ISR(INT7_vect)
         if (this_state == 3 && last_state != 2)
         {
             encoder_errors -> ISR_put(encoder_errors->ISR_get() + 1);
+            // error_state -> ISR_put(this_state);
+            // error_pos -> ISR_put(encoder_count -> get());
         }
         else if (this_state == 0 && last_state != 1)
         {
             encoder_errors -> ISR_put(encoder_errors->ISR_get() + 1);
+            // error_state -> ISR_put(this_state);
+            // error_pos -> ISR_put(encoder_count -> get());
         }
 
     }

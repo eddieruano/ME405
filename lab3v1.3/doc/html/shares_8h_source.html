@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Lab 2 Controlling a Motor_Driver w/ a Task: shares.h Source File</title>
+<title>Lab 3 Integrating an Encoder with our Motor: shares.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,10 +22,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Lab 2 Controlling a Motor_Driver w/ a Task
-   &#160;<span id="projectnumber">v1.2</span>
+   <div id="projectname">Lab 3 Integrating an Encoder with our Motor
+   &#160;<span id="projectnumber">lab3v1.3</span>
    </div>
-   <div id="projectbrief">Make a task that will control motor_driver</div>
+   <div id="projectbrief">Make a driver and task that controlls an encoder</div>
   </td>
  </tr>
  </tbody>
@@ -164,15 +164,37 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment"></span><span class="keyword">extern</span> TaskShare&lt;uint8_t&gt;* <a class="code" href="shares_8h.html#a63b8526f83a43ed6aeb66f528aada7d6">motor_select</a>;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif // _SHARES_H_</span></div>
-<div class="ttc" id="shares_8h_html_a044692a403a6ad19401bd615cdefd5af"><div class="ttname"><a href="shares_8h.html#a044692a403a6ad19401bd615cdefd5af">motor_directive</a></div><div class="ttdeci">TaskShare&lt; uint8_t &gt; * motor_directive</div><div class="ttdef"><b>Definition:</b> <a href="main_8cpp_source.html#l00110">main.cpp:110</a></div></div>
-<div class="ttc" id="shares_8h_html_a94ed6a23dc3685572a19c9b35ad4d91b"><div class="ttname"><a href="shares_8h.html#a94ed6a23dc3685572a19c9b35ad4d91b">motor_power</a></div><div class="ttdeci">TaskShare&lt; int16_t &gt; * motor_power</div><div class="ttdef"><b>Definition:</b> <a href="main_8cpp_source.html#l00101">main.cpp:101</a></div></div>
-<div class="ttc" id="shares_8h_html_a63b8526f83a43ed6aeb66f528aada7d6"><div class="ttname"><a href="shares_8h.html#a63b8526f83a43ed6aeb66f528aada7d6">motor_select</a></div><div class="ttdeci">TaskShare&lt; uint8_t &gt; * motor_select</div><div class="ttdef"><b>Definition:</b> <a href="main_8cpp_source.html#l00117">main.cpp:117</a></div></div>
-<div class="ttc" id="shares_8h_html_acd99bf5d187d4809af2f460a5415e904"><div class="ttname"><a href="shares_8h.html#acd99bf5d187d4809af2f460a5415e904">p_print_ser_queue</a></div><div class="ttdeci">TextQueue * p_print_ser_queue</div><div class="ttdef"><b>Definition:</b> <a href="main_8cpp_source.html#l00096">main.cpp:96</a></div></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment">/// This variable holds the encoder count and is positive or negative relative to the rotation of the counts accumulated either ClockWise(+), or CounterClockWise (-)</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment"></span><span class="keyword">extern</span> TaskShare&lt;int32_t&gt;* <a class="code" href="shares_8h.html#a23620c74793eea7c070bd9799260bef4">encoder_count</a>;<span class="comment"></span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="comment">/// This variable holds the ticks per seconds so that other tasks like task_user may access it.</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="comment"></span><span class="keyword">extern</span> TaskShare&lt;int32_t&gt;* <a class="code" href="shares_8h.html#af0088e70e22b6558ac19573b5e82b913">count_per_sec</a>;<span class="comment"></span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment">/// This holds the total number of errors detected by the ISR when setting the counts</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment"></span><span class="keyword">extern</span> TaskShare&lt;uint32_t&gt;* <a class="code" href="shares_8h.html#a63cd170cc36d308a1e7e0a93272749d0">encoder_errors</a>;<span class="comment"></span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">/// Holds the previous state of the last interrupt called</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">/// Holds either 0 for 00</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="comment">///              1 for 01</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">///              2 for 10</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">///              3 for 11</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment"></span><span class="keyword">extern</span> TaskShare&lt;uint8_t&gt;* <a class="code" href="shares_8h.html#a92401a9c7f428bd6ccadcb4fd8923209">the_state</a>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">#endif // _SHARES_H_</span></div>
+<div class="ttc" id="shares_8h_html_a63cd170cc36d308a1e7e0a93272749d0"><div class="ttname"><a href="shares_8h.html#a63cd170cc36d308a1e7e0a93272749d0">encoder_errors</a></div><div class="ttdeci">TaskShare&lt; uint32_t &gt; * encoder_errors</div><div class="ttdoc">This holds the total number of errors detected by the ISR when setting the counts. </div><div class="ttdef"><b>Definition:</b> <a href="main_8cpp_source.html#l00127">main.cpp:127</a></div></div>
+<div class="ttc" id="shares_8h_html_af0088e70e22b6558ac19573b5e82b913"><div class="ttname"><a href="shares_8h.html#af0088e70e22b6558ac19573b5e82b913">count_per_sec</a></div><div class="ttdeci">TaskShare&lt; int32_t &gt; * count_per_sec</div><div class="ttdoc">This variable holds the ticks per seconds so that other tasks like task_user may access it...</div><div class="ttdef"><b>Definition:</b> <a href="main_8cpp_source.html#l00125">main.cpp:125</a></div></div>
+<div class="ttc" id="shares_8h_html_a23620c74793eea7c070bd9799260bef4"><div class="ttname"><a href="shares_8h.html#a23620c74793eea7c070bd9799260bef4">encoder_count</a></div><div class="ttdeci">TaskShare&lt; int32_t &gt; * encoder_count</div><div class="ttdoc">This variable holds the encoder count and is positive or negative relative to the rotation of the cou...</div><div class="ttdef"><b>Definition:</b> <a href="main_8cpp_source.html#l00123">main.cpp:123</a></div></div>
+<div class="ttc" id="shares_8h_html_a044692a403a6ad19401bd615cdefd5af"><div class="ttname"><a href="shares_8h.html#a044692a403a6ad19401bd615cdefd5af">motor_directive</a></div><div class="ttdeci">TaskShare&lt; uint8_t &gt; * motor_directive</div><div class="ttdef"><b>Definition:</b> <a href="main_8cpp_source.html#l00112">main.cpp:112</a></div></div>
+<div class="ttc" id="shares_8h_html_a92401a9c7f428bd6ccadcb4fd8923209"><div class="ttname"><a href="shares_8h.html#a92401a9c7f428bd6ccadcb4fd8923209">the_state</a></div><div class="ttdeci">TaskShare&lt; uint8_t &gt; * the_state</div><div class="ttdef"><b>Definition:</b> <a href="main_8cpp_source.html#l00133">main.cpp:133</a></div></div>
+<div class="ttc" id="shares_8h_html_a94ed6a23dc3685572a19c9b35ad4d91b"><div class="ttname"><a href="shares_8h.html#a94ed6a23dc3685572a19c9b35ad4d91b">motor_power</a></div><div class="ttdeci">TaskShare&lt; int16_t &gt; * motor_power</div><div class="ttdef"><b>Definition:</b> <a href="main_8cpp_source.html#l00103">main.cpp:103</a></div></div>
+<div class="ttc" id="shares_8h_html_a63b8526f83a43ed6aeb66f528aada7d6"><div class="ttname"><a href="shares_8h.html#a63b8526f83a43ed6aeb66f528aada7d6">motor_select</a></div><div class="ttdeci">TaskShare&lt; uint8_t &gt; * motor_select</div><div class="ttdef"><b>Definition:</b> <a href="main_8cpp_source.html#l00119">main.cpp:119</a></div></div>
+<div class="ttc" id="shares_8h_html_acd99bf5d187d4809af2f460a5415e904"><div class="ttname"><a href="shares_8h.html#acd99bf5d187d4809af2f460a5415e904">p_print_ser_queue</a></div><div class="ttdeci">TextQueue * p_print_ser_queue</div><div class="ttdef"><b>Definition:</b> <a href="main_8cpp_source.html#l00098">main.cpp:98</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 25 2016 14:53:26 for Lab 2 Controlling a Motor_Driver w/ a Task by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 28 2016 11:42:59 for Lab 3 Integrating an Encoder with our Motor by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

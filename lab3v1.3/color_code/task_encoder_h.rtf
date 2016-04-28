@@ -1,0 +1,308 @@
+{\rtf1\ansi\deff3\adeflang1025
+{\fonttbl{\f0\froman\fprq2\fcharset0 Times New Roman;}{\f1\froman\fprq2\fcharset2 Symbol;}{\f2\fswiss\fprq2\fcharset0 Arial;}{\f3\froman\fprq2\fcharset0 Liberation Serif{\*\falt Times New Roman};}{\f4\fswiss\fprq2\fcharset0 Liberation Sans{\*\falt Arial};}{\f5\froman\fprq0\fcharset128 0;}{\f6\fnil\fprq2\fcharset0 Droid Sans Fallback;}{\f7\fnil\fprq2\fcharset0 FreeSans;}{\f8\fswiss\fprq0\fcharset128 FreeSans;}}
+{\colortbl;\red0\green0\blue0;\red64\green128\blue128;\red188\green122\blue0;\red102\green102\blue102;\red160\green160\blue0;\red176\green0\blue64;\red0\green128\blue0;\red0\green0\blue255;\red128\green128\blue128;}
+{\stylesheet{\s0\snext0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033 Normal;}
+{\s15\sbasedon0\snext16\sb240\sa120\keepn\dbch\af6\dbch\af7\afs28\loch\f4\fs28 Heading;}
+{\s16\sbasedon0\snext16\sl288\slmult1\sb0\sa140 Text Body;}
+{\s17\sbasedon16\snext17\sl288\slmult1\sb0\sa140\dbch\af8 List;}
+{\s18\sbasedon0\snext18\sb120\sa120\noline\i\dbch\af8\afs24\ai\fs24 Caption;}
+{\s19\sbasedon0\snext19\noline\dbch\af8 Index;}
+}{\info{\creatim\yr0\mo0\dy0\hr0\min0}{\revtim\yr0\mo0\dy0\hr0\min0}{\printim\yr0\mo0\dy0\hr0\min0}{\comment LibreOffice}{\vern67241986}}\deftab720
+\viewscale83
+{\*\pgdsctbl
+{\pgdsc0\pgdscuse451\pgwsxn12240\pghsxn15840\marglsxn1440\margrsxn1440\margtsxn1440\margbsxn1440\pgdscnxt0 Default Style;}}
+\formshade{\*\pgdscno0}\paperh15840\paperw12240\margl1440\margr1440\margt1440\margb1440\sectd\sbknone\sectunlocked1\pgndec\pgwsxn12240\pghsxn15840\marglsxn1440\margrsxn1440\margtsxn1440\margbsxn1440\ftnbj\ftnstart1\ftnrstcont\ftnnar\aenddoc\aftnrstcont\aftnstart1\aftnnrlc
+\pgndec\pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+//*****************************************************************************}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+/** @file task_encoder.h}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*  @brief     This is the header file for the 'task_encoder' class which }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*             handles the 'encoder_driver' class.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*  @details   This class declares all the prototypes for all variables and}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*             methods required in task_encoder.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*  @author Eddie Ruano}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*  @author JR Ridgely}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*  Revisions: @li 4/28/2016 FIXED MASSIVE BUG IN ISR}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*             @li 4/26/2016 started ISR code alogorithm used is a half wave }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*             checker}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*             @li 09-30-2012 JRR Original file was a one-file demonstration}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*             with two tasks}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*             @li 10-05-2012 JRR Split into multiple files, one for each task}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*             @li 10-25-2012 JRR Changed to a more fully C++ version with}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*             class task_user}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*             @li 11-04-2012 JRR Modified from the data acquisition example}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*             to the test suite}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*             @li 01-04-2014 JRR Changed base class names to TaskBase,}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*             TaskShare, etc.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*  License:}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    This file is copyright 2012 by JR Ridgey and released under the Lesser}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    GNU}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    Public License, version 2. It intended for educational use only, but its}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    use}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    is not limited thereto. */}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+/*    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    IS"}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    PURPOSE}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    CONSEQUEN-}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    TIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    GOODS}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    HOWEVER}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    LIABILITY,}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    THE USE}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+//****************************************************************************}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs22\rtlch \ltrch\loch\fs22\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+// This define prevents this .h file from being included multiple times in a .cpp file}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs22\rtlch \ltrch\loch\fs22\loch\f5
+#ifndef _task_encoder_H_}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs22\rtlch \ltrch\loch\fs22\loch\f5
+#define _task_encoder_H_}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs22\rtlch \ltrch\loch\fs22\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs22\rtlch \ltrch\loch\fs22\loch\f5
+#include <stdlib.h>                         }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+// Prototype declarations for I/O functions}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs22\rtlch \ltrch\loch\fs22\loch\f5
+#include <avr/io.h>                         }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+// Header for special function registers}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs22\rtlch \ltrch\loch\fs22\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs22\rtlch \ltrch\loch\fs22\loch\f5
+#include "FreeRTOS.h"                       }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+// Primary header for FreeRTOS}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs22\rtlch \ltrch\loch\fs22\loch\f5
+#include "task.h"                           }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+// Header for FreeRTOS task functions}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs22\rtlch \ltrch\loch\fs22\loch\f5
+#include "queue.h"                          }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+// FreeRTOS inter-task communication queues}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs22\rtlch \ltrch\loch\fs22\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs22\rtlch \ltrch\loch\fs22\loch\f5
+#include "taskbase.h"                       }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+// ME405/507 base task class}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs22\rtlch \ltrch\loch\fs22\loch\f5
+#include "time_stamp.h"                     }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+// Class to implement a microsecond timer}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs22\rtlch \ltrch\loch\fs22\loch\f5
+#include "taskqueue.h"                      }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+// Header of wrapper for FreeRTOS queues}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs22\rtlch \ltrch\loch\fs22\loch\f5
+#include "taskshare.h"                      }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+// Header for thread-safe shared data}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs22\rtlch \ltrch\loch\fs22\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs22\rtlch \ltrch\loch\fs22\loch\f5
+#include "rs232int.h"                       }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+// ME405/507 library for serial comm.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs22\rtlch \ltrch\loch\fs22\loch\f5
+#include "adc.h"                            }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+// Header for A/D converter driver class}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs22\rtlch \ltrch\loch\fs22\loch\f5
+#include "motor_driver.h"                   }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+// Header for Generic Motor driver}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs22\rtlch \ltrch\loch\fs22\loch\f5
+#include "encoder_driver.h"                 }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+// Header for the Encoder Driver}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs22\rtlch \ltrch\loch\fs22\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+/**}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+* @brief      this is the declaration for 'task_encoder' which directly }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*             handles the encoder_driver. Only three variables are required }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*             for this class since the ISR is declared in the driver.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs22\rtlch \ltrch\fs22\loch\f5
+ }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*/}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs22\rtlch \ltrch\loch\fs22\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs22\rtlch \ltrch\loch\fs22\loch\f5
+class task_encoder }{\cf4\afs22\rtlch \ltrch\loch\fs22\loch\f5
+:}{\afs22\rtlch \ltrch\loch\fs22\loch\f5
+ public TaskBase}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs22\rtlch \ltrch\loch\fs22\loch\f5
+\{}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf5\afs22\rtlch \ltrch\loch\fs22\loch\f5
+private:}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs22\rtlch \ltrch\loch\fs22\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf5\afs22\rtlch \ltrch\loch\fs22\loch\f5
+protected:}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs22\rtlch \ltrch\fs22\loch\f5
+    }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+/// This variable hold the previous count of encoder ticks since the last time the task was called.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs22\rtlch \ltrch\fs22\loch\f5
+    }{\cf6\afs22\rtlch \ltrch\loch\fs22\loch\f5
+int32_t}{\afs22\rtlch \ltrch\loch\fs22\loch\f5
+ last_count;}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs22\rtlch \ltrch\fs22\loch\f5
+    }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+/// This is the diffrence between the global count and the local count}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs22\rtlch \ltrch\fs22\loch\f5
+    }{\cf6\afs22\rtlch \ltrch\loch\fs22\loch\f5
+int32_t}{\afs22\rtlch \ltrch\loch\fs22\loch\f5
+ count_diff;}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs22\rtlch \ltrch\fs22\loch\f5
+    }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs22\rtlch \ltrch\loch\fs22\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf5\afs22\rtlch \ltrch\loch\fs22\loch\f5
+public:}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs22\rtlch \ltrch\fs22\loch\f5
+    }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+///This is the constructor prototype, added the pointer for an encoder_driver to be passed in by main.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs22\rtlch \ltrch\fs22\loch\f5
+    }{\afs22\rtlch \ltrch\loch\fs22\loch\f5
+task_encoder (}{\cf7\b\afs22\rtlch \ltrch\loch\fs22\loch\f5
+const}{\afs22\rtlch \ltrch\loch\fs22\loch\f5
+ }{\cf6\afs22\rtlch \ltrch\loch\fs22\loch\f5
+char}{\cf4\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*}{\afs22\rtlch \ltrch\loch\fs22\loch\f5
+, }{\cf6\afs22\rtlch \ltrch\loch\fs22\loch\f5
+unsigned}{\afs22\rtlch \ltrch\loch\fs22\loch\f5
+ portBASE_TYPE, }{\cf6\afs22\rtlch \ltrch\loch\fs22\loch\f5
+size_t}{\afs22\rtlch \ltrch\loch\fs22\loch\f5
+, emstream}{\cf4\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*}{\afs22\rtlch \ltrch\loch\fs22\loch\f5
+, encoder_driver}{\cf4\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*}{\afs22\rtlch \ltrch\loch\fs22\loch\f5
+);}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs22\rtlch \ltrch\loch\fs22\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs22\rtlch \ltrch\fs22\loch\f5
+    }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+/// This method is called by the RTOS once to run the task loop for ever and ever.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs22\rtlch \ltrch\fs22\loch\f5
+    }{\cf6\afs22\rtlch \ltrch\loch\fs22\loch\f5
+void}{\afs22\rtlch \ltrch\loch\fs22\loch\f5
+ }{\cf8\afs22\rtlch \ltrch\loch\fs22\loch\f5
+run}{\afs22\rtlch \ltrch\loch\fs22\loch\f5
+ (}{\cf6\afs22\rtlch \ltrch\loch\fs22\loch\f5
+void}{\afs22\rtlch \ltrch\loch\fs22\loch\f5
+);}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs22\rtlch \ltrch\fs22\loch\f5
+    }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+/// This is the declaration for the local copy of the encoder_driver pointer.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs22\rtlch \ltrch\fs22\loch\f5
+    }{\afs22\rtlch \ltrch\loch\fs22\loch\f5
+encoder_driver}{\cf4\afs22\rtlch \ltrch\loch\fs22\loch\f5
+*}{\afs22\rtlch \ltrch\loch\fs22\loch\f5
+ p_encoder;}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs22\rtlch \ltrch\fs22\loch\f5
+    }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs22\rtlch \ltrch\fs22\loch\f5
+    }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs22\rtlch \ltrch\loch\fs22\loch\f5
+\};}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs22\rtlch \ltrch\loch\fs22\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs22\rtlch \ltrch\loch\fs22\loch\f5
+#endif }{\cf2\i\afs22\rtlch \ltrch\loch\fs22\loch\f5
+// _task_encoder_H_}
+\par }

@@ -9,7 +9,7 @@
  *
  *  @author Eddie Ruano
  *
- *  Revisions: @ 4/23/2016 removed bitops.h library
+ *  Revisions: @ 4/27/2016 finished fixing bug in ISR
  *             @ 4/16/2016 added bitops.h library for setting unsetting bits
  *             @ 4/12/2016 main structure created
  *  License:
@@ -60,14 +60,11 @@
 // Include our Bit Operation Library
 //#include "bitops.
 
-
 // Set the define constants
 #define SHIFT_PE6 64                        // 1 shifted left by 6 (64)
 #define SHIFT_PE7 128                        // 1 shifted left by 6 (64)
 
 //-----------------------------------------------------------------------------
-
-
 encoder_driver::encoder_driver (
     //enable interrupts
 
@@ -84,8 +81,6 @@ encoder_driver::encoder_driver (
     uint8_t b_set_as_input_inc
 )
 {
-
-
     sei();
     //** SET REGISTER POINTERS **//
     serial_PORT = serial_PORT_incoming;
@@ -123,82 +118,30 @@ encoder_driver::encoder_driver (
 // Set up ISR for PINE6
 ISR(INT6_vect)
 {
-    //ainterrupts -> put(ainterrupts->get()+1);
-    uint8_t last_state = the_state-> ISR_get();
-
-    uint8_t pin_a = ((PINE & (1 << PE6)) >> 6);
-    //if(pin_a == 64){pin_a = 1;}else{pin_a = 0;}
-    uint8_t pin_b = ((PINE & (1 << PE7)) >> 7);
-    //if(pin_b == 128){pin_b = 1;}else{pin_b = 0;}
-    uint8_t this_state = (pin_a * 2) + pin_b;
     //check to see if both square waves have equal outputs
     //this only occurs when B is leading A and the encoder is going CCW
-    if (pin_a == pin_b)
+    if ((PINE & (1 << PE6)) == (PINE & (1 << PE7)))
     {
         encoder_count -> ISR_put((encoder_count -> ISR_get()) - 1);
-        if (this_state == 0 && last_state != 2)
-        {
-            encoder_errors -> ISR_put(encoder_errors->ISR_get() + 1);
-
-        }
-        else if (this_state == 3 && last_state != 1)
-        {
-            encoder_errors -> ISR_put(encoder_errors->ISR_get() + 1);
-        }
     }
     else
     {
         encoder_count -> ISR_put((encoder_count -> ISR_get()) + 1);
-        if (this_state == 2 && last_state != 0)
-        {
-            encoder_errors -> ISR_put(encoder_errors->ISR_get() + 1);
-        }
-        else if (this_state == 1 && last_state != 3)
-        {
-            encoder_errors -> ISR_put(encoder_errors->ISR_get() + 1);
-        }
     }
 
-    the_state -> ISR_put(this_state);
+    //the_state -> ISR_put(this_state);
 }
 // Set up ISR for PINE7
 ISR(INT7_vect)
 {
-    uint8_t last_state = the_state-> ISR_get();
-    uint8_t pin_a = ((PINE & (1 << PE6)) >> 6);
-    //if(pin_a == 64){pin_a = 1;}else{pin_a = 0;}
-    uint8_t pin_b = ((PINE & (1 << PE7)) >> 7);
-    //if(pin_b == 128){pin_b = 1;}else{pin_b = 0;}
-    uint8_t this_state = (pin_a * 2) + pin_b;
-    if (pin_a != pin_b)
+    if ((PINE & (1 << PE6)) != (PINE & (1 << PE7)))
     {
         encoder_count -> ISR_put((encoder_count -> ISR_get()) - 1);
-        if (this_state == 1 && last_state != 0)
-        {
-            encoder_errors -> ISR_put(encoder_errors->ISR_get() + 1);
-        }
-        else if (this_state == 2 && last_state != 3)
-        {
-            encoder_errors -> ISR_put(encoder_errors->ISR_get() + 1);
-        }
-
     }
     else
     {
         encoder_count -> ISR_put((encoder_count -> ISR_get()) + 1);
-        if (this_state == 3 && last_state != 2)
-        {
-            encoder_errors -> ISR_put(encoder_errors->ISR_get() + 1);
-        }
-        else if (this_state == 0 && last_state != 1)
-        {
-            encoder_errors -> ISR_put(encoder_errors->ISR_get() + 1);
-        }
-
     }
-    //binterrupts -> put(binterrupts->get()+1);
-    //encoder_reg -> ISR_put(PORTE);
-    the_state -> ISR_put(this_state);
 }
 
 

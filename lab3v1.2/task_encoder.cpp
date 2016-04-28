@@ -1,27 +1,77 @@
-/* ---------------------------------------------------------------------------
-** This software is in the public domain, furnished "as is", without technical
-** support, and with no warranty, express or implied, as to its usefulness for
-** any purpose.
-**
-** task_encoder.cpp
-** Description: This is the task_encoder class.
-**
-** Author: Eddie Ruano
-** Date:   April 15, 2015
-** -------------------------------------------------------------------------*/
-
+//*****************************************************************************
+/** @file task_encoder.cpp
+ *  @brief     This is the file for the 'task_encoder' class which handles the 
+ *             encoder_driver class.
+ *
+ *  @details   This class is given a pointer to an 'encoder_driver' class 
+ *             which then handles the initialization of all the registers. It 
+ *             holds the highest priority since the encoder has valuable 
+ *             information which we cannot miss. it runs every 10 ms, and 
+ *             calculates how many ticks have elapsed, giving us a per second 
+ *             reading.
+ *
+ *  @author Eddie Ruano
+ *  @author JR Ridgely
+ *
+ *  Revisions: @li 4/28/2016 FIXED MASSIVE BUG IN ISR
+ *             @li 4/26/2016 started ISR code alogorithm used is a half wave 
+ *             checker
+ *             @li 09-30-2012 JRR Original file was a one-file demonstration
+ *             with two tasks
+ *             @li 10-05-2012 JRR Split into multiple files, one for each task
+ *             @li 10-25-2012 JRR Changed to a more fully C++ version with
+ *             class task_user
+ *             @li 11-04-2012 JRR Modified from the data acquisition example
+ *             to the test suite
+ *             @li 01-04-2014 JRR Changed base class names to TaskBase,
+ *             TaskShare, etc.
+ *  License:
+ *    This file is copyright 2012 by JR Ridgey and released under the Lesser
+ *    GNU
+ *    Public License, version 2. It intended for educational use only, but its
+ *    use
+ *    is not limited thereto. */
+/*    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ *    IS"
+ *    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ *    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ *    PURPOSE
+ *    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ *    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ *    CONSEQUEN-
+ *    TIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ *    GOODS
+ *    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ *    HOWEVER
+ *    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ *    LIABILITY,
+ *    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
+ *    THE USE
+ *    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
+//****************************************************************************
 #include "textqueue.h"                    // Header for text queue class
 #include "task_encoder.h"                   // Header for this task
 #include "shares.h"                       // Shared inter-task communications
 #include "time_stamp.h"
 
 
-
-/** This constructor creates a task which controls the brightness of an LED using input from an A/D converter. The main job of this constructor is to call the constructor of parent class (\c frt_task ); the parent's constructor the work.
-   @param a_name A character string which will be the name of this task
-   @param a_priority The priority at which this task will initially run (default: 0)
-   @param a_stack_size The size of this task's stack in bytes (default: configMINIMAL_STACK_SIZE)
-   @param p_ser_dev Pointer to a serial device (port, radio, SD card, etc.) which can be used by this task to communicate (default: NULL)
+/**
+ * @brief      This is the constructor for the task_encoder class. 
+ * @details    It initialzes all the variables given to the TaskBase super
+ *             class and then initializes the encoder pointer given and the 
+ *             last_count variable.
+ *
+ * @param[in]  a_name         TA character string which will be the name of
+ *                            this task.
+ * @param[in]  a_priority     The priority at which this task will initially
+ *                            run (default: 0)
+ * @param[in]  a_stack_size   The size of this task's stack in bytes
+ *                            (default: configMINIMAL_STACK_SIZE)
+ * @param      p_ser_dev      Pointer to a serial device (port, radio, SD
+ *                            card, etc.) which can be used by this task to
+ *                            communicate (default: NULL)
+ * @param      p_encoder_inc  This holds the pointer to the encoder given to 
+ *                            this task by the main menu.
  */
 
 task_encoder::task_encoder (
@@ -32,84 +82,38 @@ task_encoder::task_encoder (
    encoder_driver* p_encoder_inc
 ): TaskBase (a_name, a_priority, a_stack_size, p_ser_dev)
 {
+   /// Initialize pointer passed from main() to local variable to work with
    p_encoder = p_encoder_inc;
    last_count = encoder_count ->get();
 }
 
 
-//-------------------------------------------------------------------------------------
-/** @ brief This method is called once by the RTOS scheduler.
-   @ details Each time around the while (1) loop, it reads the A/D converter and uses the result to control the brightness of an LED. It also uses the input from the adc object to control the speed and direction of any motor driver object declared.
+/**
+ * @brief      This method is called once by the RTOS scheduler.
+ * 
+ * @details    Each time that this method is run it initializes a tickcount and
+ *             loops in an infinite for(;;) loop that compares the last tick 
+ *             count stored locally with the most current reading of encoder 
+ *             count which lies in the global TaskShare variable 
+ *             'encoder_count'. It then waits 10 ms to run again and since it 
+ *             has the highest priority we know that it will certainly run 
+ *             every 10ms. This means if we multiply the difference in encoder
+ *             counts (local vs. global) and use the constant time difference 
+ *             we can obtain an estimate of the counts per sec.
  */
 
 void task_encoder::run (void)
 {
    // Make a variable which will hold times to use for precise task scheduling
    TickType_t previousTicks = xTaskGetTickCount ();
-   //TickType_t previousTicks = xTaskGetTickCount ();
-
-   // uint32_t seconds;
-   // int32_t count_per_sec_;
-
-    
-
-   
-   
-
-   // Configure counter/timer 1 as a PWM for Motor Drivers.
-   // COM1A1/COM1B1 to set to non inverting mode.
-   // WGM10 to set to Fast PWM mode (only half ughhhhh)
-   //TCCR1A |= (1 << WGM10) | (1 << COM1A1) | (1 << COM1B1);
-   // This is the second Timer/Counter Register
-   // WGM12 (other half of Fast PWM)
-   // CS11 Sets the presacler to 8 (010)
-   //TCCR1B |= (1 << WGM12) | (1 << CS11);
-
-   // Create an analog to digital converter driver object and a variable in which to
-   // store its output. The variable p_my_adc only exists within this run() method,
-   // so the A/D converter cannot be used from any other function or method
-   //adc* p_adc = new adc (p_serial);
-
-   //**  CREATE THE MOTOR DRIVERS  **//
-
-   // create a pointer to a motor driver object and pass it addresses to PORTC, PORTB, OC1B and Pin Values for PC0, PC2, and PB6 as the PWM
-   //motor_driver* p_motor1 = new motor_driver(p_serial, &PORTC, &PORTC, &PORTB, &OCR1B, PC0, PC1, PC2, PB6);
-
-   // create a pointer to a motor driver object and pass it addresses to PORTD, PORTB, OC1A and Pin Values for PD5, PD7, and PB5 as the PWM
-   //motor_driver* p_motor2 = new motor_driver(p_serial, &PORTD, &PORTD, &PORTB, &OCR1A, PD5, PD6, PD7, PB5);
 
    // The loop to contunially run the motors
    while (1)
    {
-      // *p_serial << PMS("PORTE : ") << PORTE <<bin<< PMS("   : ") << PORTE << dec<<endl;
-      // *p_serial << PMS("PE7   : ") << (1<<PE7) <<bin<< PMS("   : ") << (1<<PE7) << dec<<endl;
-      // uint8_t temp = PORTE & (1<<PE5);
-      //*p_serial << PMS("OP    : ") << operation<<endl;
-      // *p_serial << PMS("=     : ")<<(temp == (1<<PE5)) <<endl;
-      // uint8_t temp2 = (temp == (1<<PE5));
-      // *p_serial << temp2 << endl;
-      // 
-      
-
-      //the_current_time.set_to_now();
-
-      //time_stamp time_difference = the_current_time - the_first_time;
-
-      //seconds = (int32_t)(time_difference.get_seconds());
-      count_diff = ((encoder_count -> get())- last_count);
+      //Subtract the last reading from this most current reading and multiply by 100 to obtain a per second reading.
+      count_per_sec -> put((encoder_count -> get() - last_count) * 100);
+      // set the last count to the most current count to save it
       last_count = encoder_count -> get();
-      //count_per_sec_ = ((encoder_count -> get()) - (last_count)) / seconds;
-
-      *p_serial << PMS("Count/Sec: ")<< dec<<count_diff*100<<endl;
-
-      *p_serial << PMS ("Encoder Count: ") <<dec<<encoder_count->get()<< endl;
-      //*p_serial << PMS ("PORTE: ") <<bin<<PINE<< endl;
-
-
-      //*p_serial << PMS ("STATE : ") <<encoder_previous_state->get()<< endl;
-      //*p_serial << PMS ("PORTE : ") <<encoder_reg->get()<< endl;
-
-                //<< PMS ("Power_Signal: ") << power << dec << endl;
 
       // Increment the run counter. This counter belongs to the parent class and can
       // be printed out for debugging purposes

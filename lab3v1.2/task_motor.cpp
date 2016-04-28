@@ -94,8 +94,6 @@ task_motor::task_motor (const char* a_name,
     motor_identifier = motor_id_inc;
 }
 
-
-
 /**
  * @brief      This method is called once by the RTOS scheduler.
  * @details    Each time that this method is run it initializes a tickcount and

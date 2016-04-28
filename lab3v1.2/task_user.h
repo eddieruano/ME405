@@ -69,7 +69,7 @@
 
 /// This macro defines a string that identifies the name and version of this
 /// program.
-#define PROGRAM_VERSION PMS ("ME405 Lab 2 Motor Driver Interface")
+#define PROGRAM_VERSION PMS ("ME405 Lab 3 Encoder Driver Integration")
 
 /**
  * @brief      This task will interact with the user and make the motors
@@ -85,6 +85,7 @@ private:
     int16_t number_entered;
     /// This holds a boolean variable that holds a whether case1 will go into the main motor module if TRUE or the single motor module if FALSE
     bool in_main_motor_module;
+    bool in_encoder_module;
     /// 
     int16_t local_motor1_power;
     /// This holds the local power variable for motor 2 in order to be able to display all info in printDashBoard()
@@ -122,6 +123,8 @@ protected:
     bool is_menu_visible;
     /// Method checks whether the motor number entered is valid and within range (<2) right now.
     bool isValidMotor(int16_t);
+    /// Method prints the menu for the Encoder control module
+    void printEncoderModuleOptions(void);
 
 public:
     /// This constructor creates a user interface task object

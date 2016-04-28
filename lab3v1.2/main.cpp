@@ -119,12 +119,18 @@ TaskShare<uint8_t>* motor_directive;
 TaskShare<uint8_t>* motor_select;
 
 
+/// This variable holds the encoder count and is positive or negative relative to the rotation of the counts accumulated either ClockWise(+), or CounterClockWise (-)
 TaskShare<int32_t>* encoder_count;
-TaskShare<uint8_t>* encoder_previous_state; 
-
-TaskShare<uint8_t>* encoder_reg; 
-TaskShare<time_stamp>* previous_state_time;
+/// This variable holds the ticks per seconds so that other tasks like task_user may access it.
 TaskShare<int32_t>* count_per_sec;
+/// This holds the total number of errors detected by the ISR when setting the counts
+TaskShare<uint32_t>* encoder_errors;
+/// Holds the previous state of the last interrupt called
+/// Holds either 0 for 00
+///              1 for 01
+///              2 for 10
+///              3 for 11
+TaskShare<uint8_t>* the_state;
 
 
 //=============================================================================
@@ -140,6 +146,7 @@ int main (void)
     // sometimes the watchdog timer may have been left on...and it tends to stay on
     MCUSR = 0;
     wdt_disable ();
+    // time_stamp the_time_now;
 
     // Configure a serial port which can be used by a task to print debugging infor-
     // mation, or to allow user interaction, or for whatever use is appropriate.  The
@@ -147,7 +154,7 @@ int main (void)
     // the task scheduler has been started by the function vTaskStartScheduler()
     rs232* p_ser_port = new rs232 (9600, 1);
     // print this identifier line.
-    *p_ser_port << clrscr << PMS ("ME405 Lab 2 Motor Controller Program") << endl;
+    *p_ser_port << clrscr << PMS ("ME405 Lab 3 Encoder Controller Program") << endl;
 
     //initialize the A/D converter for potentiometer control
     adc* p_main_adc = new adc (p_ser_port);
@@ -157,15 +164,12 @@ int main (void)
     motor_directive = new TaskShare<uint8_t> ("Motor Directive");
     motor_power = new TaskShare<int16_t> ("Motor Power");
     motor_select = new TaskShare<uint8_t> ("Motor Select");
-    // encoder vars
-    encoder_previous_state = new TaskShare<uint8_t> ("encoder previous state");
-    encoder_reg = new TaskShare<uint8_t> ("encoder reg");
 
+    // start encoder variables 
     encoder_count = new TaskShare<int32_t> ("Encoder Pulse Count");
-
-    previous_state_time = new TaskShare<time_stamp> ("Encoder Previous Time");
     count_per_sec = new TaskShare<int32_t> ("count/sec");
-    count_per_sec = 0;
+    encoder_errors = new TaskShare<uint32_t> ("errors");
+    the_state = new TaskShare<uint8_t> ("state");
 
     //initialize to special value so no motor is affected yet
     motor_select -> put(NULL_MOTER);
@@ -173,12 +177,8 @@ int main (void)
     //initilaize two different motor driver pointers to pass into two tasks
     motor_driver* p_motor1 = new motor_driver(p_ser_port, &PORTC, &PORTC, &PORTB, &OCR1B, PC0, PC1, PC2, PB6);
 
-    motor_driver* p_motor2 = new motor_driver(p_ser_port, &PORTD, &PORTD, &PORTB, &OCR1A, PD5, PD6, PD7, PB5);
+    // motor_driver* p_motor2 = new motor_driver(p_ser_port, &PORTD, &PORTD, &PORTB, &OCR1A, PD5, PD6, PD7, PB5);
 
-    // initialize some shares
-    encoder_count -> put(0);
-
-    motor_select -> put(255);
     // make instance of encoder
     encoder_driver* p_encoder1 = new encoder_driver(p_ser_port, &EICRB, &EIMSK, &DDRE, ISC60, ISC70, INT6, INT7, PE6, PE7);
     // The user interface is at low priority; it could have been run in the idle task
@@ -189,9 +189,10 @@ int main (void)
 
     new task_motor ("Motor1", task_priority (2), 280, p_ser_port, p_motor1, p_main_adc, 1);
 
-    new task_motor ("Motor2", task_priority (2), 280, p_ser_port, p_motor2, p_main_adc, 2);
+        // new task_motor ("Motor2", task_priority (3), 280, p_ser_port, p_motor2, p_main_adc, 2);
 
-    new task_encoder ("Encoder1", task_priority(3), 280, p_ser_port, p_encoder1);
+    //start encoder and give the highest priority
+    new task_encoder ("Encoder1", task_priority(5), 280, p_ser_port, p_encoder1);
 
 
     // Here's where the RTOS scheduler is started up. It should never exit as long as

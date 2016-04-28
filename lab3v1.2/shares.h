@@ -78,13 +78,19 @@ extern TaskShare<uint8_t>* motor_select;
 
 
 
+/// This variable holds the encoder count and is positive or negative relative to the rotation of the counts accumulated either ClockWise(+), or CounterClockWise (-)
 extern TaskShare<int32_t>* encoder_count;
-extern TaskShare<uint8_t>* encoder_previous_state;
-extern TaskShare<uint8_t>* port_reg;
-
-
-extern TaskShare<time_stamp>* previous_state_time;
+/// This variable holds the ticks per seconds so that other tasks like task_user may access it.
 extern TaskShare<int32_t>* count_per_sec;
+/// This holds the total number of errors detected by the ISR when setting the counts
+extern TaskShare<uint32_t>* encoder_errors;
+/// Holds the previous state of the last interrupt called
+/// Holds either 0 for 00
+///              1 for 01
+///              2 for 10
+///              3 for 11
+extern TaskShare<uint8_t>* the_state;
+
 
 
 #endif // _SHARES_H_

@@ -13,7 +13,9 @@
  *  @author Eddie Ruano
  *  @author JR Ridgely
  *
- *  Revisions: @li 4/23/2016 added a bunch of helper methods to make testing
+ *  Revisions: @li 4/26/2016 ERR added a new module for testing of the encoder
+ *             task
+ *             @li 4/23/2016 added a bunch of helper methods to make testing
  *             easier in the future
  *             @li 4/21/2016 overhauled entire case structure
  *             @li 09-30-2012 JRR Original file was a one-file demonstration
@@ -97,6 +99,7 @@ task_user::task_user (const char* a_name,
 
     //Set the menu visible variable or FLAG to false so main menu may print
     is_menu_visible = false;
+    in_encoder_module = false;
     //Set the in main motor flag to false because we start in main menu
     in_main_motor_module = false;
     //Set both motor directives to freewheel because no command has been given
@@ -157,6 +160,26 @@ void task_user::run (void)
                     in_main_motor_module = true;
                     // go to case 1 over all
                     transition_to(1);
+                    break;
+                // Enter encoder test module
+                case ('e'):
+                    *p_serial << PMS("->Selected: ") << char_in;
+                    *p_serial
+                            << endl
+                            << endl
+                            << PMS ("\t->Switching to Encoder Module..")
+                            << endl
+                            << PMS ("\t->Clearing Registers and Menus..")
+                            << endl
+                            << PMS ("\t->Intializing Encoder..")
+                            << endl;
+
+                    // Reset the visible menu flag
+                    resetMenus();
+                    // Sets the variable to true so it doesn't go into single module yet
+                    in_encoder_module = true;
+                    // go to case 1 over all
+                    transition_to(3);
                     break;
                 // The 't' command asks what time it is right now
                 case ('t'):
@@ -225,9 +248,9 @@ void task_user::run (void)
                               << endl
                               << PMS("\t->Releasing Motors..") << endl
                               << PMS("\t->Resetting AVR..") << endl;
-                    wdt_enable (WDTO_120MS);
-                    for (;;);
-                    break;
+                    //wdt_enable (WDTO_120MS);
+                    //for (;;);
+                    //break;
                     //release motors
                     //motor_select->put(1);
 
@@ -235,10 +258,13 @@ void task_user::run (void)
                     //
                     // no longer in this module, leaving
                     in_main_motor_module = false;
-                    //reset menu flag
-                    resetMenus();
-                    // set the transition & wait for break
                     transition_to(0);
+                    resetMenus();
+                    break;
+                    //reset menu flag
+                    //resetMenus();
+                    // set the transition & wait for break
+                    //transition_to(0);
 
                 }
                 // if the number entered is valid
@@ -417,6 +443,37 @@ void task_user::run (void)
             break;
         //for use later [3,4]
         case (3):
+            if (in_encoder_module)
+            {
+                printEncoderModuleOptions();
+                if (hasUserInput())
+                    switch (char_in)
+                    {
+                    case ('q'):
+                        *p_serial << PMS("->Selected: ") << char_in << endl
+                                  << endl
+                                  << endl
+                                  << PMS("\t->Returning to Mission Control.. ")
+                                  << endl
+                                  << PMS("\t->Releasing Encoder..") << endl;
+                        transition_to(0);
+                        in_main_motor_module = true;
+                        in_encoder_module = false;
+                        resetMenus();
+
+                        break;
+                    case ('r'):
+
+                        *p_serial << PMS("Encoder Count: ") << encoder_count -> get() << endl;
+                        *p_serial << PMS("Encoder Count / sec: ") << count_per_sec -> get() << endl;
+                        *p_serial << PMS("Error Count: ") << encoder_errors -> get() << endl;
+                        *p_serial << PMS("State: ") << the_state -> get() << endl;
+                        *p_serial << endl << PMS("\t\t-> press 'r' to refresh ")<<endl<<endl;
+                        break;
+                    default:
+                        break;
+                    }
+            }
             break;
         case (4):
             break;
@@ -439,8 +496,8 @@ void task_user::run (void)
         // run the loop again. This gives lower priority tasks a chance to run
         delay_ms (1);
     }
-}
 
+}
 
 /**
  * @brief      Method prints out the main menu, which is the first thing the
@@ -460,9 +517,10 @@ void task_user::printMainMenu (void)
                 << PROGRAM_VERSION << endl << endl << PMS("\t\t\t    ") << PMS (__DATE__) << endl
                 << PMS ("|\t\t    Mission Control Program v1.0    \t\t|") << endl
                 << PMS ("|---------------------------------------------------------------|") << endl
-                << PMS ("|\t\t 'm'     Enter Motor Control Module \t\t|") << endl
-                << PMS ("|\t\t 'h'     Display all options        \t\t|") << endl
-                << PMS ("|\t\t 'Ctl-C' Reset AVR                  \t\t|") << endl;
+                << PMS ("|\t\t 'm'     Enter Motor Control Module   \t\t|") << endl
+                << PMS ("|\t\t 'e'     Enter Encoder Control Module \t\t|") << endl
+                << PMS ("|\t\t 'h'     Display all options          \t\t|") << endl
+                << PMS ("|\t\t 'Ctl-C' Reset AVR                    \t\t|") << endl;
 
         is_menu_visible = true;
     }
@@ -816,4 +874,23 @@ bool task_user::isValidMotor(int16_t motor_number)
 void task_user::resetMenus(void)
 {
     is_menu_visible = false;
+}
+
+/**
+ * @brief      Method prints out the 'Encoder Control Module' menu
+ *
+ * @details    Only print the menu if the is_menu_visible flag is false. This
+ *             is so that it doesn't inifinitely print as the user is trying
+ *             to input a value or trying to read it.
+ */
+void task_user::printEncoderModuleOptions(void)
+{
+    if (is_menu_visible == false)
+    {   *p_serial << endl;
+        *p_serial << PMS ("|\t\t        Encoder Control Module          \t\t|") << endl;
+        *p_serial << PMS ("|---------------------------------------------------------------|") << endl;
+        *p_serial << PMS ("|\t\t 'r'    Refresh the data                \t\t|") << endl;
+        *p_serial << PMS ("|\t\t 'q'    quit to main menu               \t\t|") << endl;
+        is_menu_visible = true;
+    }
 }

@@ -112,8 +112,6 @@ void task_encoder::run (void)
    {
       //Subtract the last reading from this most current reading and multiply by 100 to obtain a per second reading.
       count_per_sec -> put((encoder_count -> get() - last_count));
-      //rev/sec -> put(()*1000)
-
       // set the last count to the most current count to save it
       last_count = encoder_count -> get();
 

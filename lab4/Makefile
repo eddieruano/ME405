@@ -26,11 +26,11 @@
 
 # The name of the program you're building, usually the file which contains main(). 
 # The name without its extension (.c or .cpp or whatever) must be given here. 
-PROJECT_NAME = Lab2 Task Motor Installed
+PROJECT_NAME = lab4
 
 # A list of the source (.c, .cc, .cpp) files in the project. Files in library 
 # subdirectories do not go in this list; they're included automatically
-SOURCES = main.cpp task_user.cpp task_motor.cpp adc.cpp motor_driver.cpp encoder_driver.cpp task_encoder.cpp
+SOURCES = main.cpp task_user.cpp task_motor.cpp task_encoder.cpp
 
 # Clock frequency of the CPU, in Hz. This number should be an unsigned long integer.
 # For example, 16 MHz would be represented as 16000000UL. 
@@ -139,12 +139,14 @@ else ifeq ($(MCU), atmega1284p)
   LFUSE = 0xEF
 endif
 
+# Need to update where we are making 
+#THISLABLOCATION = $(PROJECT_NAME)
 # We need a name for the root directory under which all our project files are found
 PROJROOT = ..
 
 # Location of the root of the library part of the directory tree
 LIBROOT = lib
-
+CUSTOMLIBROOT = $(PROJECT_NAME)
 # An automatically created and maintained subdirectory in which compiled files will go
 BUILDDIR = build
 
@@ -155,10 +157,10 @@ LIB_FILE = $(BUILDDIR)/lib_me405.a
 # A list of directories in which source files (*.cpp, *.c) and headers (.h) for the
 # library are kept
 LIB_DIRS = freertos frtcpp misc serial
-
+CUSTOMLIB_DIRS = headers drivers
 # Create a list of relative path names by which the library directories can be found
-LIB_FULL = $(addprefix $(PROJROOT)/$(LIBROOT)/, $(LIB_DIRS))
-
+LIB_FULL := $(addprefix $(PROJROOT)/$(CUSTOMLIBROOT)/, $(CUSTOMLIB_DIRS)) $(addprefix $(PROJROOT)/$(LIBROOT)/, $(LIB_DIRS)) 
+$(info $$LIB_FULL is [${LIB_FULL}])
 # Make a list of include directories, putting -I in front of each for the compiler
 LIB_INC  = $(addprefix "-I", $(LIB_FULL))
 
@@ -179,6 +181,7 @@ LIB_OBJS = $(subst $(PROJROOT), $(BUILDDIR), $(LIB_TEMP))
 vpath %.cpp $(LIB_FULL)
 vpath %.c $(LIB_FULL)
 vpath %.S $(LIB_FULL)
+
 
 #--------------------------------------------------------------------------------------
 # Give some short names to the ELF, HEX, and BIN format output files

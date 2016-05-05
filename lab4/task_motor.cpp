@@ -123,10 +123,7 @@ void task_motor::run (void)
         // creates local variable to reduce the number of calls to
         // 'motor_directive'
         uint8_t LOCAL_motor_directive = motor_directive -> get();
-        // if(2000 < (encoder_count -> get()))
-        // {
-        //     LOCAL_motor_directive = FREEWHEEL;
-        // }
+
         //begin logic checks
         if (motor_identifier == motor_select -> get())
         {

@@ -9,9 +9,13 @@ build/main.o: main.cpp ../lib/freertos/FreeRTOS.h \
  ../lib/frtcpp/taskbase.h ../lib/frtcpp/time_stamp.h \
  ../lib/misc/mechutil.h ../lib/frtcpp/textqueue.h \
  ../lib/frtcpp/baseshare.h ../lib/frtcpp/taskqueue.h \
- ../lib/frtcpp/taskshare.h shares.h task_brightness.h adc.h \
- ../lib/freertos/semphr.h ../lib/freertos/queue.h motor_driver.h \
- task_user.h task_motor.h task_encoder.h encoder_driver.h
+ ../lib/frtcpp/taskshare.h ../lab4/headers/shares.h \
+ ../lab4/headers/task_brightness.h ../lab4/headers/adc.h \
+ ../lib/freertos/semphr.h ../lib/freertos/queue.h \
+ ../lab4/headers/motor_driver.h ../lab4/headers/task_user.h \
+ ../lab4/headers/shares.h ../lab4/headers/task_motor.h \
+ ../lab4/headers/task_encoder.h ../lab4/headers/encoder_driver.h \
+ ../lab4/headers/encoder_driver.h
 
 ../lib/freertos/FreeRTOS.h:
 
@@ -57,22 +61,26 @@ build/main.o: main.cpp ../lib/freertos/FreeRTOS.h \
 
 ../lib/frtcpp/taskshare.h:
 
-shares.h:
+../lab4/headers/shares.h:
 
-task_brightness.h:
+../lab4/headers/task_brightness.h:
 
-adc.h:
+../lab4/headers/adc.h:
 
 ../lib/freertos/semphr.h:
 
 ../lib/freertos/queue.h:
 
-motor_driver.h:
+../lab4/headers/motor_driver.h:
 
-task_user.h:
+../lab4/headers/task_user.h:
 
-task_motor.h:
+../lab4/headers/shares.h:
 
-task_encoder.h:
+../lab4/headers/task_motor.h:
 
-encoder_driver.h:
+../lab4/headers/task_encoder.h:
+
+../lab4/headers/encoder_driver.h:
+
+../lab4/headers/encoder_driver.h:

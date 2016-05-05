@@ -70,20 +70,31 @@ uint16_t hctl::read ()
 	//result init
 	uint16_t Encoder_count = 0;
         volatile uint8_t* data_PIN = data_PORT-2; // the PIN register is always the PORT register - 2 addresses
-
+        
 	*sel_PORT &= ~(1 << sel_pin);             // write a 0 to the byte selection (high byte...)
 	*oe_PORT  &= ~(1 << oe_pin);              // drop !OE low to latch the bus
 	Encoder_count = *data_PIN;                // the input value register is the port register -2 addresses
+	highbits = *data_PIN;
 	Encoder_count = (Encoder_count << 8);     // move the data to the high byte of the result
         
 	*sel_PORT |= (1 << sel_pin);              // move on to the low byte (high input...)
 	Encoder_count |= *data_PIN;               // read in the low byte, combine the two bytes
-	
+	lowbits = *data_PIN;
 	*oe_PORT |= (1 << oe_pin);                // release the bus
 
 	return Encoder_count;
 }
 
+
+uint8_t hctl::get_low (void)
+{
+    return lowbits;
+}
+
+uint8_t hctl::get_high (void)
+{
+    return highbits;
+}
 //-------------------------------------------------------------------------------------
 /** \brief   This overloaded operator "prints the HCTL." 
  *  \details This prints out the bus pins being used.

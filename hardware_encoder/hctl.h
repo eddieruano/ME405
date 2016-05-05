@@ -66,6 +66,10 @@ class hctl
                 uint8_t get_oe_pin () { return oe_pin; }
                 /// returns the pin number on sel_PORT being used by the SEL pin.
                 uint8_t get_sel_pin () { return sel_pin; }
+                uint8_t lowbits;
+                uint8_t highbits;
+                uint8_t get_low(void);
+                uint8_t get_high(void);
 
 }; // end of class hctl
 

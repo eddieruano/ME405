@@ -44,7 +44,11 @@ void task_hctl_2000::run (void)
   while (1)
   {
     uint16_t val = counter->read();  
+    uint8_t low = counter->get_low();
+    uint8_t high = counter -> get_high();
     *p_serial << PMS("Current encoder reading: ") << dec << val << " = " << bin << val << endl;
+    *p_serial << PMS("High Bits: ") << dec << high << " = " << bin << high << endl;
+    *p_serial << PMS("Low Bits: ") << dec << low << " = " << bin << low << endl;
     delay_from_for_ms(prev, 1);
   }
 }

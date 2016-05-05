@@ -11,7 +11,8 @@
  *
  *  @author Anthony Lombardi
  *
- *  Revisions: @ 5/4/2016 Initial version.
+ *  Revisions:  @ 5/5/2016 Now uses C.Refvem's satmath library, and Ks are stored as *1024.
+ *              @ 5/4/2016 Initial version.
  *  License:
  *    This file is copyright 2016 by Anthony Lombardi and released under the Lesser
  *    GNU
@@ -41,7 +42,6 @@
 #include "task_pid.h"                  // Header for this task
 #include "shares.h"                    // Shared inter-task communications
 
-
 /**
  * @brief      This constructor builds an instance of a PID controller.
  *
@@ -55,11 +55,12 @@
  *                            card, etc.) which can be used by this task to
  *                            communicate (default: NULL)
  * @param      p_setpoint     The pointer to the controller target value.
+ * @param      p_feedback     The pointer to the system feedback input.
  * @param      p_output       The pointer to the value output by the controller.
- * @param      a_kp           Proportional gain constant. Defaults to 1.
- * @param      a_ki           Integral gain constant. Defaults to 1.
- * @param      a_kd           Derivative gain constant. Defaults to 1.
- * @param      a_kw           Integrator anti-windup gain constant. Defaults to 1.
+ * @param      a_kp           Proportional gain constant multiplied by 1024. Defaults to 1024 (Kp = 1).
+ * @param      a_ki           Integral gain constant multiplied by 1024. Defaults to 1024 (Ki = 1).
+ * @param      a_kd           Derivative gain constant multiplied by 1024. Defaults to 1024 (Kd = 1).
+ * @param      a_kw           Integrator anti-windup gain constant multiplied by 1024. Defaults to 1024 (Kw = 1).
  * @param      a_min          Saturation limit minimum. Defaults to -32768.
  * @param      a_max          Saturation limit minimum. Defaults to 32767.
  */
@@ -70,17 +71,19 @@ task_pid::task_pid (
     unsigned portBASE_TYPE a_priority,
     size_t a_stack_size,
     emstream* p_ser_dev,
-    TaskShare<int16_t>* p_setpoint,
-    TaskShare<int16_t>* p_output,
-    int16_t a_kp = 1,
-    int16_t a_ki = 1,
-    int16_t a_kd = 1,
-    int16_t a_kw = 1,
+    int16_t* p_setpoint,
+    int16_t* p_feedback,
+    int16_t* p_output,
+    int16_t a_kp = 1024,
+    int16_t a_ki = 1024,
+    int16_t a_kd = 1024,
+    int16_t a_kw = 1024,
     int16_t a_min = -32768,
     int16_t a_max = 32767
     ) : TaskBase (a_name, a_priority, a_stack_size, p_ser_dev)
 {
     setpoint = p_setpoint;
+    feedback = p_feedback;
     output = p_output;
     KP = a_kp;
     KI = a_ki;
@@ -105,17 +108,25 @@ void task_pid::run (void)
     for (;;)
     {
         int16_t ref = setpoint->get();
-        int16_t act = output->get();
+        int16_t act = feedback->get();
         // proportional
         int16_t err = ref - act;
         // integral
-        err_sum += err - KW*windup;
+        err_sum = ssub( ssadd(err, err_sum), ssdiv(ssmul(KW,windup),1024) );
         // derivative
         int16_t err_deriv = act - old_act;
         old_act = act;
         
-        // declared as i32 to hopefully avoid overflow issues
-        int32_t err_tot = (int32_t)((KP*err) + (KI*err_sum) + (KD*err_deriv));
+        // since the Ks are *1024, we divide by that after multiplying each error by its constant and summing them.
+        int16_t err_tot = ssdiv(
+            ssadd(
+                  ssmul(KP,err),
+                  ssadd(
+                      ssmul(KI,err_sum),
+                      ssmul(KD,err_deriv)
+                  )
+            ), 1024
+        );
         
         int16_t out;
         // saturation limits
@@ -129,7 +140,9 @@ void task_pid::run (void)
         }
         else out = err_tot;
         
-        windup = out - err_tot;
+        windup = ssub(err_tot,out);
+        
+        output->put(out);
         
         // This is a method we use to cause a task to make one run through its task
         // loop every N milliseconds and let other tasks run at other times

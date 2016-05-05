@@ -33,7 +33,8 @@
  *  @endverbatim
  *  @author Anthony Lombardi
  *
- *  Revisions: @ 5/4/2016 Initial version.
+ *  Revisions:  @ 5/5/2016 Now uses C.Refvem's satmath library, and Ks are stored as *1024.
+                @ 5/4/2016 Initial version.
  *  License:
  *    This file is copyright 2016 by Anthony Lombardi and released under the Lesser 
  *    GNU
@@ -76,7 +77,7 @@
 #include "taskshare.h"                      // Header for thread-safe shared data
 
 #include "rs232int.h"                       // ME405/507 library for serial comm.
-
+#include "satmath.h"                        // Simple saturated math library.
 
 //-----------------------------------------------------------------------------
 /**
@@ -93,8 +94,10 @@ class task_pid : public TaskBase
 private:
     /// No private variables or methods for this class
 protected:
-    /// Stores a pointer to the setpoint shared variable for the control loop
+    /// Stores a pointer to the shared variable storing the setpoint for the control loop
     int16_t* setpoint;
+    /// Stores a pointer to the shared variable storing the system feedback input
+    int16_t* feedback;
     /// Stores a pointer to the shared variable that serves as the loop output
     int16_t* output;
     /// stores the previous loop's actual value, for derivative control
@@ -103,13 +106,13 @@ protected:
     int16_t err_sum;
     /// counters the integral when saturation is hit
     int16_t windup;
-    /// proportional constant
+    /// proportional constant, stored as 1024x KP for increased accuracy.
     int16_t KP;
-    /// integral constant
+    /// integral constant, stored as 1024x KI for increased accuracy.
     int16_t KI;
-    /// derivative constant
+    /// derivative constant, stored as 1024x KD for increased accuracy.
     int16_t KD;
-    /// windup constant
+    /// windup constant, stored as 1024x KW for increased accuracy.
     int16_t KW;
     /// saturation floor
     int16_t min;
@@ -117,7 +120,7 @@ protected:
     int16_t max;
 
 public:
-    /// This constructor takes the default task argument set, plus two pointers (setpoint and output) and all the control loop constants to be used.
+    /// This constructor takes the default task argument set, plus two pointers (setpoint and output), all the control loop constants (multiplied by 1024) to be used, and two saturation limits.
     task_pid::task_pid (const char*,unsigned portBASE_TYPE,size_t,emstream* p_ser_dev,
     int16_t*,
     int16_t* p_output,

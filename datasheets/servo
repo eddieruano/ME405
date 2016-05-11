@@ -1,0 +1,27 @@
+shifter servo:
+	low resolution requirements
+	2 steady states: low gear and high gear
+
+steering servo:
+	high resolution requirements
+	continuous states: (turn angles) <<, <, ^, >, >>
+
+Available port/pins:
+	B7	| <-T/C0: 8b, Output Compare A
+		| <-T/C1: 16b, Output Compare C
+	C0-C5	| no T/C
+	D4	| ->T/C1: 16b, Input Capture Trigger (ICP ...?!)
+	E	| <>T/C3: 16b, 7:ICP 5:OC3C 4:OC3B 3:OC3A
+	F	| no T/C
+
+* E 3-5 sound like the best choice, since we can configure the waves separately for A,B,C.
+* B7 could work for one servo, but we have two.
+* D doesn't work because it's input capture only, on the pin that's exposed.
+* C and F have no timer connections, so they're out.
+  > Besides, F is the ADC.
+
+We may be able to reuse/copy the motor driver, just set up phase-correct PWM on E and set the duty cycles / timer values.
+
+I *was* writing a software PWM driver, but I talked with Charlie and it's just not worth it.
+  For one thing, making it a task wouldn't work because we need sub-millisecond accuracy.
+  For another, that's a lot of timer interrupts just to hold two servo positions.

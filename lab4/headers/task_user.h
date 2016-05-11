@@ -69,7 +69,7 @@
 
 /// This macro defines a string that identifies the name and version of this
 /// program.
-#define PROGRAM_VERSION PMS ("ME405 Lab 3 Encoder Driver Integration")
+#define PROGRAM_VERSION PMS ("ME405 Lab 4 Driver Integration")
 
 /**
  * @brief      This task will interact with the user and make the motors

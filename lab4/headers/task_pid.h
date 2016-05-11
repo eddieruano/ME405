@@ -33,8 +33,8 @@
  *  @endverbatim
  *  @author Anthony Lombardi
  *
- *  Revisions:  @ 5/5/2016 Now uses C.Refvem's satmath library, and Ks are stored as *1024.
-                @ 5/4/2016 Initial version.
+ *  Revisions:  @li @ 5/5/2016 Now uses C.Refvem's satmath library, and Ks are stored as *1024.
+                @li @ 5/4/2016 Initial version.
  *  License:
  *    This file is copyright 2016 by Anthony Lombardi and released under the Lesser 
  *    GNU
@@ -95,11 +95,11 @@ private:
     /// No private variables or methods for this class
 protected:
     /// Stores a pointer to the shared variable storing the setpoint for the control loop
-    int16_t* setpoint;
+    TaskShare<int16_t>* setpoint;
     /// Stores a pointer to the shared variable storing the system feedback input
-    int16_t* feedback;
+    TaskShare<int32_t>* feedback;
     /// Stores a pointer to the shared variable that serves as the loop output
-    int16_t* output;
+    TaskShare<int16_t>* output;
     /// stores the previous loop's actual value, for derivative control
     int16_t old_act;
     /// stores the cumulative error, for integral control
@@ -115,21 +115,22 @@ protected:
     /// windup constant, stored as 1024x KW for increased accuracy.
     int16_t KW;
     /// saturation floor
-    int16_t min;
+    int16_t MIN;
     /// saturation ceiling
-    int16_t max;
+    int16_t MAX;
 
 public:
     /// This constructor takes the default task argument set, plus two pointers (setpoint and output), all the control loop constants (multiplied by 1024) to be used, and two saturation limits.
-    task_pid::task_pid (const char*,unsigned portBASE_TYPE,size_t,emstream* p_ser_dev,
-    int16_t*,
-    int16_t* p_output,
-    int16_t a_kp,
-    int16_t a_ki,
-    int16_t a_kd,
-    int16_t a_kw,
-    int16_t a_min,
-    int16_t a_max
+    task_pid (const char*, unsigned portBASE_TYPE, size_t, emstream*,
+    TaskShare<int16_t>*, // p_setpoint,
+    TaskShare<int32_t>*, // p_feedback,
+    TaskShare<int16_t>*, // p_output,
+    int16_t = 1024,      // a_kp,
+    int16_t = 1024,      // a_ki,
+    int16_t = 1024,      // a_kd,
+    int16_t = 1024,      // a_kw,
+    int16_t = -32768,    // a_min,
+    int16_t = 32767      //a_max
     );
 
     /// This method is called by the RTOS once to run the task loop forever and ever.

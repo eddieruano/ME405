@@ -73,8 +73,9 @@
 #include "task_brightness.h"                // Header for the data acquisition task
 #include "task_user.h"                      // Header for user interface task
 #include "task_motor.h"                     // Header for motor_driver task
-#include "task_encoder.h"
-#include "encoder_driver.h"
+#include "task_hctl_2000.h"
+#include "hctl.h"
+#include "task_pid.h"
 
 
 // Set all defines
@@ -97,6 +98,9 @@
  */
 TextQueue* p_print_ser_queue;
 
+/// This declares a taskshare which indicates that this variable is a shared
+/// variable. This variable stores the setpoint for the PID motor controller.
+TaskShare<int16_t>* motor_setpoint;
 
 /// This declares a taskshare which indicates that this variable is a shared
 /// variable. This variable will hold the duty cycle of a motor.
@@ -157,7 +161,7 @@ int main (void)
     // the task scheduler has been started by the function vTaskStartScheduler()
     rs232* p_ser_port = new rs232 (9600, 1);
     // print this identifier line.
-    *p_ser_port << clrscr << PMS ("ME405 Lab 3 Encoder Controller Program") << endl;
+    *p_ser_port << clrscr << PMS ("ME405 Lab 4 Controller Program") << endl;
 
     //initialize the A/D converter for potentiometer control
     adc* p_main_adc = new adc (p_ser_port);
@@ -185,7 +189,7 @@ int main (void)
     // motor_driver* p_motor2 = new motor_driver(p_ser_port, &PORTD, &PORTD, &PORTB, &OCR1A, PD5, PD6, PD7, PB5);
 
     // make instance of encoder
-    encoder_driver* p_encoder1 = new encoder_driver(p_ser_port, &EICRB, &EIMSK, &DDRE, ISC60, ISC70, INT6, INT7, PE6, PE7);
+    //encoder_driver* p_encoder1 = new encoder_driver(p_ser_port, &EICRB, &EIMSK, &DDRE, ISC60, ISC70, INT6, INT7, PE6, PE7);
     // The user interface is at low priority; it could have been run in the idle task
     // but it is desired to exercise the RTOS more thoroughly in this test program
     new task_user ("UserInt", task_priority (1), 260, p_ser_port);
@@ -193,11 +197,18 @@ int main (void)
     // Create tasks to control motors, given individual p_motors
 
     new task_motor ("Motor1", task_priority (2), 280, p_ser_port, p_motor1, p_main_adc, 1);
-
-        // new task_motor ("Motor2", task_priority (3), 280, p_ser_port, p_motor2, p_main_adc, 2);
+    //new task_motor ("Motor2", task_priority (3), 280, p_ser_port, p_motor2, p_main_adc, 2);
 
     //start encoder and give the highest priority
-    new task_encoder ("Encoder1", task_priority(5), 280, p_ser_port, p_encoder1);
+    hctl* p_counter = new hctl(p_ser_port, &PORTA, &PORTC, PC7, &PORTC, PC6);
+    
+    new task_hctl_2000 ("counter",  task_priority(5), 280, p_ser_port, p_counter);
+    //new task_encoder ("Encoder1", task_priority(5), 280, p_ser_port, p_encoder1);
+    
+    // create a new PID manager for the motor, with K values of:
+    // Proportional = 1, Integral = 0, Derivative = 0, Windup = 0
+    // And the default saturation limits
+    new task_pid ("PID", task_priority(4), 280, p_ser_port, motor_setpoint, encoder_count, motor_power, 1024,0,0,0);
 
 
     // Here's where the RTOS scheduler is started up. It should never exit as long as

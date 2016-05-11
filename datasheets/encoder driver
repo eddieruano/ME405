@@ -1,0 +1,28 @@
+           _____
+      D0--|     |--5V
+     CLK--|     |--D1
+LSB/!MSB--|     |--D2
+     !OE--|     |--D3
+  5V--R1--|     |--D4
+     CHB--|     |--D5
+     CHA--|     |--D6
+     GND--|_____|--D7
+
+to read chip:
+  drive SEL low           // select high byte
+  drive !OE low           // latch data to bus
+  lsb = [D0:D3]           // read high byte- top 4 bits are always 0
+  drive !OE high          // unlock data buffers
+  drive SEL high          // select low byte
+  drive !OE low           // latch data to bus
+  msb = [D0:D7]           // read low byte
+  drive !OE high          // unlock data buffers
+  return (msb << 8) & lsb // MSB:LSB is 16b count
+
+Pins req'd:
+  1x bus latch    -> !OE
+  1x byte select  -> SEL
+  8x inputs       -> D0-D7
+
+Other:
+  X0-52 10MHz osc -> CLK

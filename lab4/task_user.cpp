@@ -838,7 +838,8 @@ void task_user::setMotor(uint8_t motor_id, int16_t power, uint8_t direct)
     //place in global taskshares
     motor_select -> put(motor_id);
     motor_directive ->put(direct);
-    motor_power->put(power);
+    motor_setpoint ->put(power);
+    //motor_power->put(power);
     //work with local vars
     if (motor_id == 1)
     {

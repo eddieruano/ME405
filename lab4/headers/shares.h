@@ -60,6 +60,10 @@
 // This queue allows tasks to send characters to the user interface task for display.
 extern TextQueue* p_print_ser_queue;
 
+/// This declares a taskshare which indicates that this variable is a shared
+/// variable. This variable stores the setpoint for the PID motor controller.
+extern TaskShare<int16_t>* motor_setpoint;
+
 /// This declares a taskshare which indicates that this variable is a shared 
 /// variable. This variable will hold the duty cycle of a motor. 
 extern TaskShare<int16_t>* motor_power;

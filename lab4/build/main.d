@@ -14,8 +14,9 @@ build/main.o: main.cpp ../lib/freertos/FreeRTOS.h \
  ../lib/freertos/semphr.h ../lib/freertos/queue.h \
  ../lab4/headers/motor_driver.h ../lab4/headers/task_user.h \
  ../lab4/headers/shares.h ../lab4/headers/task_motor.h \
- ../lab4/headers/task_encoder.h ../lab4/headers/encoder_driver.h \
- ../lab4/headers/encoder_driver.h
+ ../lab4/headers/task_hctl_2000.h ../lab4/headers/hctl.h \
+ ../lab4/headers/hctl.h ../lab4/headers/task_pid.h \
+ ../lab4/headers/satmath.h
 
 ../lib/freertos/FreeRTOS.h:
 
@@ -79,8 +80,12 @@ build/main.o: main.cpp ../lib/freertos/FreeRTOS.h \
 
 ../lab4/headers/task_motor.h:
 
-../lab4/headers/task_encoder.h:
+../lab4/headers/task_hctl_2000.h:
 
-../lab4/headers/encoder_driver.h:
+../lab4/headers/hctl.h:
 
-../lab4/headers/encoder_driver.h:
+../lab4/headers/hctl.h:
+
+../lab4/headers/task_pid.h:
+
+../lab4/headers/satmath.h:

@@ -11,8 +11,8 @@
  *
  *  @author Anthony Lombardi
  *
- *  Revisions:  @ 5/5/2016 Now uses C.Refvem's satmath library, and Ks are stored as *1024.
- *              @ 5/4/2016 Initial version.
+ *  Revisions:  @li @ 5/5/2016 Now uses C.Refvem's satmath library, and Ks are stored as *1024.
+ *              @li @ 5/4/2016 Initial version.
  *  License:
  *    This file is copyright 2016 by Anthony Lombardi and released under the Lesser
  *    GNU
@@ -41,6 +41,7 @@
 #include "textqueue.h"                 // Header for text queue class
 #include "task_pid.h"                  // Header for this task
 #include "shares.h"                    // Shared inter-task communications
+#include "task_pid.h"
 
 /**
  * @brief      This constructor builds an instance of a PID controller.
@@ -64,22 +65,21 @@
  * @param      a_min          Saturation limit minimum. Defaults to -32768.
  * @param      a_max          Saturation limit minimum. Defaults to 32767.
  */
-}
 
 task_pid::task_pid (
     const char* a_name,
     unsigned portBASE_TYPE a_priority,
     size_t a_stack_size,
     emstream* p_ser_dev,
-    int16_t* p_setpoint,
-    int16_t* p_feedback,
-    int16_t* p_output,
-    int16_t a_kp = 1024,
-    int16_t a_ki = 1024,
-    int16_t a_kd = 1024,
-    int16_t a_kw = 1024,
-    int16_t a_min = -32768,
-    int16_t a_max = 32767
+    TaskShare<int16_t>* p_setpoint,
+    TaskShare<int32_t>* p_feedback,
+    TaskShare<int16_t>* p_output,
+    int16_t a_kp,
+    int16_t a_ki,
+    int16_t a_kd,
+    int16_t a_kw,
+    int16_t a_min,
+    int16_t a_max
     ) : TaskBase (a_name, a_priority, a_stack_size, p_ser_dev)
 {
     setpoint = p_setpoint;
@@ -112,7 +112,7 @@ void task_pid::run (void)
         // proportional
         int16_t err = ref - act;
         // integral
-        err_sum = ssub( ssadd(err, err_sum), ssdiv(ssmul(KW,windup),1024) );
+        err_sum = sssub( ssadd(err, err_sum), ssdiv(ssmul(KW,windup),1024) );
         // derivative
         int16_t err_deriv = act - old_act;
         old_act = act;
@@ -130,17 +130,17 @@ void task_pid::run (void)
         
         int16_t out;
         // saturation limits
-        if (err_tot > max)
+        if (err_tot > MAX)
         {
-            out = max;
+            out = MAX;
         }
-        else if (err_tot < min)
+        else if (err_tot < MIN)
         {
-            out = min;
+            out = MIN;
         }
         else out = err_tot;
         
-        windup = ssub(err_tot,out);
+        windup = sssub(err_tot,out);
         
         output->put(out);
         

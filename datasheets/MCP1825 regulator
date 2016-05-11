@@ -1,0 +1,26 @@
+         6
+        ___
+   ____[___]____
+  |             |
+  |   MCP1825   |
+  |    (top)    |
+  |_____________|
+   |  |  |  |  |
+   1  2  3  4  5
+      |CI|CO|
+
+   ____       |
+1. SHDN       | Shutdown Output - turns off output voltage when low
+              |
+2. Vin        | Input voltage
+              |
+3. GND        | Ground line, shared with the tab.
+              |
+4. Vout       | Output voltage
+              |
+5. PWRGD      | open-drain output that indicates when LDO output is within ~92% of nominal regulation value.
+              |
+6. GND (tab)  | Same ground as the pin.
+
+CO = 1 - 22 uF
+CI = 1 - 4.7 uF

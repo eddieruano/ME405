@@ -26,10 +26,11 @@
 #define SATMATH_H
 
 // If you dont want to use C++11 then you made need to uncomment these lines
-//#define INT16_MIN (int16_t) 0x8000
-//#define INT16_MAX (int16_t) 0x7FFF
-//#define INT32_MIN (int32_t) 0x80000000
-//#define INT32_MAX (int32_t) 0x7FFFFFFF
+#define INT16_MIN (int16_t) 0x8000
+#define INT16_MAX (int16_t) 0x7FFF
+#define INT32_MIN (int32_t) 0x80000000
+#define INT32_MAX (int32_t) 0x7FFFFFFF
+// */
 
 // Some handy macros to shorten the function names
 /** \brief Shorthand to make accessing namespace easier

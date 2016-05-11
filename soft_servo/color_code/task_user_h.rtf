@@ -1,0 +1,477 @@
+{\rtf1\ansi\deff3\adeflang1025
+{\fonttbl{\f0\froman\fprq2\fcharset0 Times New Roman;}{\f1\froman\fprq2\fcharset2 Symbol;}{\f2\fswiss\fprq2\fcharset0 Arial;}{\f3\froman\fprq2\fcharset0 Liberation Serif{\*\falt Times New Roman};}{\f4\fswiss\fprq2\fcharset0 Liberation Sans{\*\falt Arial};}{\f5\froman\fprq0\fcharset128 0;}{\f6\fnil\fprq2\fcharset0 Droid Sans Fallback;}{\f7\fnil\fprq2\fcharset0 FreeSans;}{\f8\fswiss\fprq0\fcharset128 FreeSans;}}
+{\colortbl;\red0\green0\blue0;\red64\green128\blue128;\red188\green122\blue0;\red102\green102\blue102;\red160\green160\blue0;\red176\green0\blue64;\red0\green0\blue255;\red0\green128\blue0;\red128\green128\blue128;}
+{\stylesheet{\s0\snext0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033 Normal;}
+{\s15\sbasedon0\snext16\sb240\sa120\keepn\dbch\af6\dbch\af7\afs28\loch\f4\fs28 Heading;}
+{\s16\sbasedon0\snext16\sl288\slmult1\sb0\sa140 Text Body;}
+{\s17\sbasedon16\snext17\sl288\slmult1\sb0\sa140\dbch\af8 List;}
+{\s18\sbasedon0\snext18\sb120\sa120\noline\i\dbch\af8\afs24\ai\fs24 Caption;}
+{\s19\sbasedon0\snext19\noline\dbch\af8 Index;}
+}{\info{\creatim\yr0\mo0\dy0\hr0\min0}{\revtim\yr0\mo0\dy0\hr0\min0}{\printim\yr0\mo0\dy0\hr0\min0}{\comment LibreOffice}{\vern67241986}}\deftab720
+\viewscale100
+{\*\pgdsctbl
+{\pgdsc0\pgdscuse451\pgwsxn12240\pghsxn15840\marglsxn1440\margrsxn1440\margtsxn1440\margbsxn1440\pgdscnxt0 Default Style;}
+{\pgdsc1\pgdscuse451\pgndec\pgwsxn12240\pghsxn15840\marglsxn1134\margrsxn1134\margtsxn1134\margbsxn1134\pgdscnxt0 First Page;}
+{\pgdsc2\pgdscuse451\pgndec\pgwsxn12240\pghsxn15840\marglsxn1134\margrsxn1134\margtsxn1134\margbsxn1134\pgdscnxt2 Index;}}
+\formshade{\*\pgdscno0}\paperh15840\paperw12240\margl1440\margr1440\margt1440\margb1440\sectd\sbknone\sectunlocked1\pgndec\pgwsxn12240\pghsxn15840\marglsxn1440\margrsxn1440\margtsxn1440\margbsxn1440\ftnbj\ftnstart1\ftnrstcont\ftnnar\aenddoc\aftnrstcont\aftnstart1\aftnnrlc
+\pgndec\pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+//*****************************************************************************}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/** @file task_user.h}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*  @brief     This is the header file for the 'task_user' class. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*  @details   Built on top of JR Ridgely's architecture, this header lays out}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*             all the protoypes and local variables used in the 'task_user'}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*             class. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*  @author Eddie Ruano}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*  @author JR Ridgely}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*  Revisions: @li 4/20/2016 added main structure}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*             @li 4/22/2016 added pointers and correct logic}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*             @li 09-30-2012 JRR Original file was a one-file demonstration }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*             with two tasks}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*             @li 10-05-2012 JRR Split into multiple files, one for each task}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*             @li 10-25-2012 JRR Changed to a more fully C++ version with }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*             class task_user}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*             @li 11-04-2012 JRR Modified from the data acquisition example }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*             to the test suite}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*             @li 01-04-2014 JRR Changed base class names to TaskBase, }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*             TaskShare, etc.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*  License:}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    This file is copyright 2016 by Eddie Ruano and released under the Lesser }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    GNU}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    Public License, version 2. It intended for educational use only, but its }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    use}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    is not limited thereto. */}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/*    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    IS"}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    PURPOSE}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    CONSEQUEN-}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    TIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    GOODS}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    HOWEVER}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    LIABILITY,}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    THE USE}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+//****************************************************************************}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs18\rtlch \ltrch\loch\fs18\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+// This define prevents this .h file from being included multiple times in a .cpp file}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs18\rtlch \ltrch\loch\fs18\loch\f5
+#ifndef _TASK_USER_H_}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs18\rtlch \ltrch\loch\fs18\loch\f5
+#define _TASK_USER_H_}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs18\rtlch \ltrch\loch\fs18\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs18\rtlch \ltrch\loch\fs18\loch\f5
+#include <stdlib.h>                         }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+// Prototype declarations for I/O functions}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs18\rtlch \ltrch\loch\fs18\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs18\rtlch \ltrch\loch\fs18\loch\f5
+#include "FreeRTOS.h"                       }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+// Primary header for FreeRTOS}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs18\rtlch \ltrch\loch\fs18\loch\f5
+#include "task.h"                           }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+// Header for FreeRTOS task functions}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs18\rtlch \ltrch\loch\fs18\loch\f5
+#include "queue.h"                          }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+// FreeRTOS inter-task communication queues}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs18\rtlch \ltrch\loch\fs18\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs18\rtlch \ltrch\loch\fs18\loch\f5
+#include "rs232int.h"                       }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+// ME405/507 library for serial comm.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs18\rtlch \ltrch\loch\fs18\loch\f5
+#include "adc.h"                            }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+// Header for A/D converter class driver}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs18\rtlch \ltrch\loch\fs18\loch\f5
+#include "motor_driver.h"}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs18\rtlch \ltrch\loch\fs18\loch\f5
+#include "time_stamp.h"                     }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+// Class to implement a microsecond timer}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs18\rtlch \ltrch\loch\fs18\loch\f5
+#include "taskbase.h"                       }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+// Header for ME405/507 base task class}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs18\rtlch \ltrch\loch\fs18\loch\f5
+#include "taskqueue.h"                      }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+// Header of wrapper for FreeRTOS queues}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs18\rtlch \ltrch\loch\fs18\loch\f5
+#include "textqueue.h"                      }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+// Header for a "<<" queue class}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs18\rtlch \ltrch\loch\fs18\loch\f5
+#include "taskshare.h"                      }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+// Header for thread-safe shared data}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs18\rtlch \ltrch\loch\fs18\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs18\rtlch \ltrch\loch\fs18\loch\f5
+#include "shares.h"                         }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+// Global ('extern') queue declarations}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs18\rtlch \ltrch\loch\fs18\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs18\rtlch \ltrch\loch\fs18\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// This macro defines a string that identifies the name and version of this}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// program.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs18\rtlch \ltrch\loch\fs18\loch\f5
+#define PROGRAM_VERSION PMS ("ME405 Lab 2 Motor Driver Interface")}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs18\rtlch \ltrch\loch\fs18\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/**}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+* @brief      This task will interact with the user and make the motors}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*             operate based on their input. Added some methods so make the}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*             printing of information more streamlined.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+ }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*/}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs18\rtlch \ltrch\loch\fs18\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+class task_user }{\cf4\afs18\rtlch \ltrch\loch\fs18\loch\f5
+:}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ public TaskBase}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+\{}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf5\afs18\rtlch \ltrch\loch\fs18\loch\f5
+private:}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// This holds the character entered by the user in a class variable in order to allow its availability to all methods in the class.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+char}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ char_in;        }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// This holds the number entered by the user and makes it avaliable to all methods in the class.                 }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+int16_t}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ number_entered;}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// This holds a boolean variable that holds a whether case1 will go into the main motor module if TRUE or the single motor module if FALSE}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+bool}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ in_main_motor_module;}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+int16_t}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ local_motor1_power;}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// This holds the local power variable for motor 2 in order to be able to display all info in printDashBoard()}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+int16_t}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ local_motor2_power;}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// This holds what the first motor is currently doing because the global directive can be overwritten when switching to motor 2}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+int8_t}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ local_motor1_directive;}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// This holds what the second motor is currently doing because the global directive can be overwritten when switching to motor 1}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+int8_t}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ local_motor2_directive;}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// This holds what motor we are currently affecting.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+uint8_t}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ local_motor_select;}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf5\afs18\rtlch \ltrch\loch\fs18\loch\f5
+protected:}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+// protected so that only methods of this class or possibly descendents can use it}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs18\rtlch \ltrch\loch\fs18\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// This method displays a simple help message telling the user what to do}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ }{\cf7\afs18\rtlch \ltrch\loch\fs18\loch\f5
+print_help_message}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ (}{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+);}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// This method displays information about the status of the system}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ }{\cf7\afs18\rtlch \ltrch\loch\fs18\loch\f5
+show_status}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ (}{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+);}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// Method returns true if the user has typed somthing into the terminal window}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+bool}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ }{\cf7\afs18\rtlch \ltrch\loch\fs18\loch\f5
+hasUserInput}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ (}{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+);}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// Method extracts the number entered by the user and places it into private variable 'number_entered' }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ }{\cf7\afs18\rtlch \ltrch\loch\fs18\loch\f5
+getNumberInput}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+(}{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+);}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// Prints the opening menu when the user enters the 'Main Motor Module' in case1}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ }{\cf7\afs18\rtlch \ltrch\loch\fs18\loch\f5
+printMotorMenu}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ (}{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+);}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// Prints the Main Menu at the beginning of the program.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ }{\cf7\afs18\rtlch \ltrch\loch\fs18\loch\f5
+printMainMenu}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ (}{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+);}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// Prints the Single Motor Menu after the user has entered from the 'Main Motor Module'}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ }{\cf7\afs18\rtlch \ltrch\loch\fs18\loch\f5
+printSingleMotorOptions}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+(}{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+);}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// Prints useful information about each motor like directive, power, and direction}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ }{\cf7\afs18\rtlch \ltrch\loch\fs18\loch\f5
+printDashBoard}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+(}{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+);}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// Method that takes the motor number, motor power, and directive and sets the correct motor to that directive at the apporpriate power level.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ }{\cf7\afs18\rtlch \ltrch\loch\fs18\loch\f5
+setMotor}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+(}{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+uint8_t}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+, }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+int16_t}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+, }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+uint8_t}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+);}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// This Method resets the 'run once' lock on each print menu method so that it can be run again.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ }{\cf7\afs18\rtlch \ltrch\loch\fs18\loch\f5
+resetMenus}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+(}{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+);}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// Holds true if there is a menu currently printed on the screen, false otherwise.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+bool}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ is_menu_visible;}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// Method checks whether the motor number entered is valid and within range (<2) right now.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+bool}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ }{\cf7\afs18\rtlch \ltrch\loch\fs18\loch\f5
+isValidMotor}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+(}{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+int16_t}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+);}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs18\rtlch \ltrch\loch\fs18\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf5\afs18\rtlch \ltrch\loch\fs18\loch\f5
+public:}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/// This constructor creates a user interface task object}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+task_user (}{\cf8\b\afs18\rtlch \ltrch\loch\fs18\loch\f5
+const}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+char}{\cf4\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+, }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+unsigned}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ portBASE_TYPE, }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+size_t}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+, emstream}{\cf4\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+);}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033\afs18\rtlch \ltrch\loch\fs18\loch\f5
+
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+/** This method is called by the RTOS once to run the task loop for ever and ever.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf2\i\afs18\rtlch \ltrch\fs18\loch\f5
+     }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+*/}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\fs18\loch\f5
+    }{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ }{\cf7\afs18\rtlch \ltrch\loch\fs18\loch\f5
+run}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+ (}{\cf6\afs18\rtlch \ltrch\loch\fs18\loch\f5
+void}{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+);}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\afs18\rtlch \ltrch\loch\fs18\loch\f5
+\};}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\cf0\kerning1\dbch\af6\langfe2052\dbch\af7\afs24\alang1081\loch\f3\fs24\lang1033{\cf3\afs18\rtlch \ltrch\loch\fs18\loch\f5
+#endif }{\cf2\i\afs18\rtlch \ltrch\loch\fs18\loch\f5
+// _TASK_USER_H_}
+\par }

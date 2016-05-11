@@ -1,0 +1,37 @@
+ref     // reference value
+out     // output value
+
+act     // actual value
+old_act // previous value
+err_sum // integral
+windup  // counters the integral at saturation
+
+KW      // windup constant
+KI      // integral constant
+KP      // proportional constant
+KD      // derivative  constant
+
+MIN     // minimum value for saturation
+MAX     // maximum value for saturation
+-----------------------
+
+// Proportional
+err = ref - act
+
+// Integral
+err_sum += err - (windup*KW)
+
+// Derivative
+err_deriv = act - old_act
+old_act = act
+
+// total error
+err_tot = (KI*err_sum) + (KP*err) + (KD*err_deriv)
+
+// saturation limits
+if (err_tot > MAX) out = MAX
+else if (err_tot < MIN) out = MIN
+else out = err_tot
+
+// integrator windup
+windup = out - err_tot

@@ -55,6 +55,8 @@
 #include "shares.h"                       // Shared inter-task communications
 #include "time_stamp.h"
 
+#define MAX_SPREAD 1700
+#define LIMIT 4095
 
 /**
  * @brief      This is the constructor for the task_encoder class.
@@ -85,7 +87,10 @@ task_encoder::task_encoder (
 {
    /// Initialize pointer passed from main() to local variable to work with
    p_hctl = p_hctl_inc;
-   last_count = 0;
+   previous_encoder_count = 0;
+   //previous_encoder_difference = 0; 
+   this_difference = 0;
+   this_count = 0;
 }
 
 
@@ -108,30 +113,59 @@ void task_encoder::run (void)
    // Make a variable which will hold times to use for precise task scheduling
    TickType_t previousTicks = xTaskGetTickCount ();
 
-   // The loop to contunially run the motors
+   
+   // The loop to continully check the encoder
    while (1)
-   {
-      //last_count = p_hctl -> read();
-      //uint16_t current_val = p_hctl->read();
-      //int32_t difference = current_val - last_count;
-      //encoder_count -> put((encoder_count -> get()) + difference);
-      uint16_t this_count = p_hctl -> read();
-      //*p_serial << this_count <<endl;
-      encoder_count -> put(this_count);
-      //*p_serial << p_hctl -> read()<<endl;
-      //*p_serial << PMS("Current encoder reading: ") << dec << val << " = " << bin << val << endl;
-      
-      //encoder_count -> put(val);
-      //last_count = current_val;
-      
-//      count_per_sec -> put(difference*1000);
+   { 
+      //read value from chip
+      this_count = p_hctl -> read();
+      // find raw difference w/o taking into account overflow
+      this_difference = this_count - previous_encoder_count;
 
-      // Increment the run counter. This counter belongs to the parent class and can
-      // be printed out for debugging purposes
-      runs++;
-      // This is a method we use to cause a task to make one run through its task
-      // loop every N milliseconds and let other tasks run at other times
-      delay_from_for_ms (previousTicks, 1);
+      //fix the difference to account for overflow
+      if(my_abs(this_difference) > MAX_SPREAD)
+      {
+         //an overflow occurred, must find correct ticks difference
+         //if this reading is smaller e.g 375 and prev was like 3800 we know
+         //we are counting up and overflowed
+         if(this_count < previous_encoder_count)
+         {
+            this_difference = ((LIMIT - previous_encoder_count) + this_count);
+         }
+         else // we know we are counting down so neg
+         {
+            this_difference = -1 * ((LIMIT - this_count) + previous_encoder_count);
+         }
+         //*p_serial <<endl<<endl<<this_difference<<endl<<this_count<<endl<<previous_encoder_count<<endl<<endl;
+
+      }
+      // add the correct difference to the encoder_count variable
+      encoder_count -> put((encoder_count -> get()) + (int32_t)this_difference);
+      //place ticks per MS in this case in the correct shares variable
+      encoder_ticks_per_task -> put(this_difference);
+
+      // store the current count as previous
+      previous_encoder_count = this_count;
+
+
+   // Increment the run counter. This counter belongs to the parent class and can
+   // be printed out for debugging purposes
+   runs++;
+   // This is a method we use to cause a task to make one run through its task
+   // loop every N milliseconds and let other tasks run at other times
+   delay_from_for_ms (previousTicks, 1);
    }
+   
 }
 
+uint16_t task_encoder::my_abs(int16_t the_number)
+{
+   if(the_number < 0)
+   {
+      return ((uint16_t)(the_number * -1));
+   }
+   else
+   {
+      return (uint16_t)the_number;
+   }
+}

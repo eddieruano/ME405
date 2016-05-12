@@ -17,7 +17,8 @@ build/main.o: main.cpp ../lib/freertos/FreeRTOS.h \
  ../testing/headers/imu_driver.h ../testing/headers/task_motor.h \
  ../testing/headers/task_motor.h ../testing/headers/task_encoder.h \
  ../testing/headers/hctl_driver.h ../testing/headers/hctl_driver.h \
- ../testing/headers/imu_driver.h
+ ../testing/headers/imu_driver.h ../testing/headers/hctl.h \
+ ../testing/headers/task_pid.h ../testing/headers/satmath.h
 
 ../lib/freertos/FreeRTOS.h:
 
@@ -94,3 +95,9 @@ build/main.o: main.cpp ../lib/freertos/FreeRTOS.h \
 ../testing/headers/hctl_driver.h:
 
 ../testing/headers/imu_driver.h:
+
+../testing/headers/hctl.h:
+
+../testing/headers/task_pid.h:
+
+../testing/headers/satmath.h:

@@ -69,8 +69,10 @@
 
 /**
  * @brief      this is the declaration for 'task_encoder' which directly 
- *             handles the encoder_driver. Only three variables are required 
- *             for this class since the ISR is declared in the driver.
+ *             handles the htcl_driver. it contains necessary logic for 
+ *             correct behavior needed at high rpms when the 12bit counter 
+ *             overflows and it is necessary to try and guess whether we're 
+ *             going forwards or backwards based on encoder ticks **ONLY**
  */
 
 class task_encoder : public TaskBase
@@ -79,10 +81,14 @@ private:
 
 protected:
     /// This variable hold the previous count of encoder ticks since the last time the task was called.
-    uint16_t last_count;
+    int16_t previous_encoder_count;
+
     /// This is the diffrence between the global count and the local count
-    int32_t count_diff;
-    
+    //int16_t previous_encoder_difference;
+
+    int16_t this_count;
+
+    int16_t this_difference;
 
 public:
     ///This is the constructor prototype, added the pointer for an encoder_driver to be passed in by main.
@@ -92,6 +98,8 @@ public:
     void run (void);
     /// This is the declaration for the local copy of the encoder_driver pointer.
     hctl_driver* p_hctl;
+
+    uint16_t my_abs(int16_t);
     
     
 };

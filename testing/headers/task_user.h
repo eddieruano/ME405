@@ -69,11 +69,8 @@
 
 /// This macro defines a string that identifies the name and version of this
 /// program.
-<<<<<<< HEAD:testing/headers/task_user.h
-#define PROGRAM_VERSION PMS ("ME405 Lab 69 IMU TESTING")
-=======
-#define PROGRAM_VERSION PMS ("ME405 Lab 4 Driver Integration")
->>>>>>> 42a793885b2da4f71c7f1decf7ebc6db822ebc41:lab4/headers/task_user.h
+#define PROGRAM_VERSION PMS ("ME405 Testing Platfrom v6.0")
+
 
 /**
  * @brief      This task will interact with the user and make the motors
@@ -91,6 +88,8 @@ private:
     bool in_main_motor_module;
     bool in_imu_module;
     bool in_encoder_module;
+    bool in_drive_mode;
+    bool in_joystick_mode;
     /// 
     int16_t local_motor1_power;
     /// This holds the local power variable for motor 2 in order to be able to display all info in printDashBoard()
@@ -101,6 +100,9 @@ private:
     int8_t local_motor2_directive;
     /// This holds what motor we are currently affecting.
     uint8_t local_motor_select;
+
+    adc* p_adc_x;
+    adc* p_adc_y;
 protected:
     // protected so that only methods of this class or possibly descendents can use it
 
@@ -132,6 +134,10 @@ protected:
     void printEncoderModuleOptions(void);
 
     void printIMUModuleOptions(void);
+
+    void printDriveModeOptions(void);
+
+    void printJoystickOptions(void);
 
 public:
     /// This constructor creates a user interface task object

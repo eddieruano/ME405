@@ -124,9 +124,9 @@ void task_motor::run (void)
         // 'motor_directive'
         uint8_t LOCAL_motor_directive = motor_directive -> get();
 
-        //begin logic checks
-        if (motor_identifier == motor_select -> get())
-        {
+        // //begin logic checks **DROPPING SUPPORT 2 MOTORS
+        // if (motor_identifier == motor_select -> get())
+        // {
             //if Directive = 0, set the power of the motor.
             if (LOCAL_motor_directive == SETPOWER)
             {
@@ -177,7 +177,7 @@ void task_motor::run (void)
             }
 
 
-        }
+        //}
         // Increment the run counter in the parent class.
         runs++;
 

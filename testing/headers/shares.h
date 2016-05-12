@@ -74,31 +74,14 @@ extern TaskShare<int16_t>* motor_power;
 ///  1 Indicates BRAKE W/ brake_power
 ///  2 Indicates FREEWHEEL
 extern TaskShare<uint8_t>* motor_directive;
-/// This declares a taskshare which indicates that this variable is a shared 
-/// variable. This variable will hold the select for each motor.
-/// 0 Indicates Motor 0
-/// 1 Indicates Motor 1
-extern TaskShare<uint8_t>* motor_select;
-
-
 
 /// This variable holds the encoder count and is positive or negative relative to the rotation of the counts accumulated either ClockWise(+), or CounterClockWise (-)
 extern TaskShare<int32_t>* encoder_count;
 /// This variable holds the ticks per seconds so that other tasks like task_user may access it.
-extern TaskShare<int32_t>* count_per_sec;
-/// This holds the total number of errors detected by the ISR when setting the counts
-extern TaskShare<uint32_t>* encoder_errors;
-/// Holds the previous state of the last interrupt called
-/// Holds either 0 for 00
-///              1 for 01
-///              2 for 10
-///              3 for 11
-extern TaskShare<uint8_t>* the_state;
-
-extern TaskShare<uint8_t>* error_state;
-extern TaskShare<int32_t>* error_pos;
+extern TaskShare<int16_t>* encoder_ticks_per_task;
+/// This holds the total number of errors detected by the ISR when setting the counts        
 extern TaskShare<uint32_t>* data_read;
 
-
+extern TaskShare<uint8_t>* activate_encoder;
 
 #endif // _SHARES_H_

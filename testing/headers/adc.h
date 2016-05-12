@@ -44,24 +44,27 @@
 
 class adc
 {
-	protected:
-		/// The ADC class uses this pointer to the serial port to say hello
-		emstream* ptr_to_serial;
+    protected:
+        /// The ADC class uses this pointer to the serial port to say hello
+        emstream* ptr_to_serial;
 
     public:
-		// The constructor sets up the A/D converter for use. The "= NULL" part is a
-		// default parameter, meaning that if that parameter isn't given on the line
-		// where this constructor is called, the compiler will just fill in "NULL".
-		// In this case that has the effect of turning off diagnostic printouts
-		adc (emstream* = NULL);
+        // The constructor sets up the A/D converter for use. The "= NULL" part is a
+        // default parameter, meaning that if that parameter isn't given on the line
+        // where this constructor is called, the compiler will just fill in "NULL".
+        // In this case that has the effect of turning off diagnostic printouts
+        adc (emstream* = NULL);
 
-		// This function reads one channel once, returning the result as an unsigned 
-		// integer; it should be called from within a normal task, not an ISR
+        // This function reads one channel once, returning the result as an unsigned 
+        // integer; it should be called from within a normal task, not an ISR
         uint16_t read_once (uint8_t);
 
-		// This function reads the A/D lots of times and returns the average. Doing so
-		// implements a crude sort of low-pass filtering that can help reduce noise
-		uint16_t read_oversampled (uint8_t, uint8_t);
+        // This function reads the A/D lots of times and returns the average. Doing so
+        // implements a crude sort of low-pass filtering that can help reduce noise
+        uint16_t read_oversampled (uint8_t, uint8_t);
+
+
+
 
 }; // end of class adc
 

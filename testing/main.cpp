@@ -74,15 +74,14 @@
 #include "task_brightness.h"                // Header for the data acquisition task
 #include "task_user.h"                      // Header for user interface task
 #include "task_motor.h"                     // Header for motor_driver task
-<<<<<<< HEAD:testing/main.cpp
 #include "task_encoder.h"
 #include "hctl_driver.h"
 #include "imu_driver.h"
-=======
-#include "task_hctl_2000.h"
+
+//#include "task_hctl_2000.h"
 #include "hctl.h"
 #include "task_pid.h"
->>>>>>> 42a793885b2da4f71c7f1decf7ebc6db822ebc41:lab4/main.cpp
+
 
 
 // Set all defines
@@ -112,7 +111,6 @@ TaskShare<int16_t>* motor_setpoint;
 /// This declares a taskshare which indicates that this variable is a shared
 /// variable. This variable will hold the duty cycle of a motor.
 TaskShare<int16_t>* motor_power;
-
 /// This declares a taskshare which indicates that this variable is a shared
 /// variable. This variable will hold the command that the user wishes the motor
 /// to do.
@@ -122,30 +120,15 @@ TaskShare<int16_t>* motor_power;
 ///  2 Indicates FREEWHEEL
 TaskShare<uint8_t>* motor_directive;
 
-
-/// This declares a taskshare which indicates that this variable is a shared
-/// variable. This variable will hold the select for each motor.
-/// 0 Indicates Motor 0
-/// 1 Indicates Motor 1
-TaskShare<uint8_t>* motor_select;
-
-
 /// This variable holds the encoder count and is positive or negative relative to the rotation of the counts accumulated either ClockWise(+), or CounterClockWise (-)
 TaskShare<int32_t>* encoder_count;
 /// This variable holds the ticks per seconds so that other tasks like task_user may access it.
-TaskShare<int32_t>* count_per_sec;
-/// This holds the total number of errors detected by the ISR when setting the counts
-TaskShare<uint32_t>* encoder_errors;
-/// Holds the previous state of the last interrupt called
-/// Holds either 0 for 00
-///              1 for 01
-///              2 for 10
-///              3 for 11
-TaskShare<uint8_t>* the_state;
-
-TaskShare<uint8_t>* error_state;
-TaskShare<int32_t>* error_pos;
+TaskShare<int16_t>* encoder_ticks_per_task;
+/// for IMU data read
 TaskShare<uint32_t>* data_read;
+
+TaskShare<uint8_t>* activate_encoder;
+
 
 
 //=============================================================================
@@ -161,6 +144,8 @@ int main (void)
     // sometimes the watchdog timer may have been left on...and it tends to stay on
     MCUSR = 0;
     wdt_disable ();
+    // MAKE RESET INTERRUPT
+
     // time_stamp the_time_now;
 
     // Configure a serial port which can be used by a task to print debugging infor-
@@ -176,21 +161,21 @@ int main (void)
 
     // Create the queues and other shared data items here
     p_print_ser_queue = new TextQueue (32, "Print", p_ser_port, 10);
+
+    motor_setpoint = new TaskShare<int16_t> ("Motor SetPoint");
+
     motor_directive = new TaskShare<uint8_t> ("Motor Directive");
     motor_power = new TaskShare<int16_t> ("Motor Power");
-    motor_select = new TaskShare<uint8_t> ("Motor Select");
-
     // start encoder variables 
     encoder_count = new TaskShare<int32_t> ("Encoder Pulse Count");
-    count_per_sec = new TaskShare<int32_t> ("count/sec");
-    encoder_errors = new TaskShare<uint32_t> ("errors");
-    error_state = new TaskShare<uint8_t> ("error_state");
-    error_pos = new TaskShare<int32_t> ("error_pos");
-    the_state = new TaskShare<uint8_t> ("state");
+    encoder_ticks_per_task = new TaskShare<int16_t> ("Encoder Pulse Per Time");
     data_read = new TaskShare<uint32_t> ("imu data");
+    activate_encoder = new TaskShare<uint8_t> ("Encoder Activate");
 
-    //initialize to special value so no motor is affected yet
-    motor_select -> put(NULL_MOTER);
+
+    //initialize to special value so no motor is affected yet 
+    //**DROPPING SUPPORT 2 MOTORS//
+    //motor_select -> put(NULL_MOTER);
 
     //initilaize two different motor driver pointers to pass into two tasks
     motor_driver* p_motor1 = new motor_driver(p_ser_port, &PORTC, &PORTC, &PORTB, &OCR1B, PC0, PC1, PC2, PB6);
@@ -199,23 +184,20 @@ int main (void)
     // set to high?
     // PORTD |= (1<<PIND1) | (1<<PIND0);
 
-    
-
     // motor_driver* p_motor2 = new motor_driver(p_ser_port, &PORTD, &PORTD, &PORTB, &OCR1A, PD5, PD6, PD7, PB5);
 
-<<<<<<< HEAD:testing/main.cpp
     // make instance of htcl_driver instead of encoder_driver which has been removed
     hctl_driver* p_hctl = new hctl_driver(p_ser_port, &PORTA, &PORTC, 7, &PORTC, 6); 
      
     imu_driver* p_imu = new imu_driver(p_ser_port, &PORTD, &DDRD, 0, 1);
 
 
-    int8_t tempsss = p_imu -> readIMU(0, 1);
+    //int8_t tempsss = p_imu -> readIMU(0, 1);
     *p_ser_port << PMS("PINS DOE: ") << PMS("  ") << endl;
-=======
+
     // make instance of encoder
     //encoder_driver* p_encoder1 = new encoder_driver(p_ser_port, &EICRB, &EIMSK, &DDRE, ISC60, ISC70, INT6, INT7, PE6, PE7);
->>>>>>> 42a793885b2da4f71c7f1decf7ebc6db822ebc41:lab4/main.cpp
+
     // The user interface is at low priority; it could have been run in the idle task
     // but it is desired to exercise the RTOS more thoroughly in this test program
     new task_user ("UserInt", task_priority (1), 260, p_ser_port, p_imu);
@@ -226,19 +208,17 @@ int main (void)
     //new task_motor ("Motor2", task_priority (3), 280, p_ser_port, p_motor2, p_main_adc, 2);
 
     //start encoder and give the highest priority
-<<<<<<< HEAD:testing/main.cpp
-    new task_encoder ("Encoder1", task_priority(5), 280, p_ser_port, p_hctl);
-=======
-    hctl* p_counter = new hctl(p_ser_port, &PORTA, &PORTC, PC7, &PORTC, PC6);
+    new task_encoder ("Encoder1", task_priority(4), 280, p_ser_port, p_hctl);
+
+    //hctl_driver* p_counter = new hctl_driver(p_ser_port, &PORTA, &PORTC, PC7, &PORTC, PC6);
     
-    new task_hctl_2000 ("counter",  task_priority(5), 280, p_ser_port, p_counter);
+    //new task_hctl_2000 ("counter",  task_priority(4), 280, p_ser_port, p_counter);
     //new task_encoder ("Encoder1", task_priority(5), 280, p_ser_port, p_encoder1);
     
     // create a new PID manager for the motor, with K values of:
     // Proportional = 1, Integral = 0, Derivative = 0, Windup = 0
     // And the default saturation limits
-    new task_pid ("PID", task_priority(4), 280, p_ser_port, motor_setpoint, encoder_count, motor_power, 1024,0,0,0);
->>>>>>> 42a793885b2da4f71c7f1decf7ebc6db822ebc41:lab4/main.cpp
+    //new task_pid ("PID", task_priority(4), 280, p_ser_port, motor_setpoint, encoder_count, motor_power, 1024,0,0,0,-255,255);
 
 
     // Here's where the RTOS scheduler is started up. It should never exit as long as

@@ -80,7 +80,7 @@ task_pid::task_pid (
     int16_t a_kw,
     int16_t a_min,
     int16_t a_max
-    ) : TaskBase (a_name, a_priority, a_stack_size, p_ser_dev)
+) : TaskBase (a_name, a_priority, a_stack_size, p_ser_dev)
 {
     setpoint = p_setpoint;
     feedback = p_feedback;
@@ -104,7 +104,7 @@ void task_pid::run (void)
 {
     // Make a variable which will hold times to use for precise task scheduling
     TickType_t previousTicks = xTaskGetTickCount ();
-    
+
     for (;;)
     {
         int16_t ref = setpoint->get();
@@ -112,22 +112,22 @@ void task_pid::run (void)
         // proportional
         int16_t err = ref - act;
         // integral
-        err_sum = sssub( ssadd(err, err_sum), ssdiv(ssmul(KW,windup),1024) );
+        err_sum = sssub( ssadd(err, err_sum), ssdiv(ssmul(KW, windup), 1024) );
         // derivative
         int16_t err_deriv = act - old_act;
         old_act = act;
-        
+
         // since the Ks are *1024, we divide by that after multiplying each error by its constant and summing them.
         int16_t err_tot = ssdiv(
-            ssadd(
-                  ssmul(KP,err),
-                  ssadd(
-                      ssmul(KI,err_sum),
-                      ssmul(KD,err_deriv)
-                  )
-            ), 1024
-        );
-        
+                              ssadd(
+                                  ssmul(KP, err),
+                                  ssadd(
+                                      ssmul(KI, err_sum),
+                                      ssmul(KD, err_deriv)
+                                  )
+                              ), 1024
+                          );
+
         int16_t out;
         // saturation limits
         if (err_tot > MAX)
@@ -139,11 +139,11 @@ void task_pid::run (void)
             out = MIN;
         }
         else out = err_tot;
-        
-        windup = sssub(err_tot,out);
-        
+
+        windup = sssub(err_tot, out);
+
         output->put(out);
-        
+
         // This is a method we use to cause a task to make one run through its task
         // loop every N milliseconds and let other tasks run at other times
         delay_from_for_ms (previousTicks, 10);

@@ -13,7 +13,8 @@ build/task_user.o: task_user.cpp ../testing/headers/task_user.h \
  ../lib/frtcpp/textqueue.h ../lib/frtcpp/taskshare.h \
  ../testing/headers/shares.h ../testing/headers/imu_driver.h \
  ../testing/headers/task_motor.h ../testing/headers/ansi_terminal.h \
- ../testing/headers/imu_driver.h
+ ../testing/headers/imu_driver.h ../testing/headers/task_user_library.h \
+ ../testing/headers/adc.h
 
 ../testing/headers/task_user.h:
 
@@ -76,3 +77,7 @@ build/task_user.o: task_user.cpp ../testing/headers/task_user.h \
 ../testing/headers/ansi_terminal.h:
 
 ../testing/headers/imu_driver.h:
+
+../testing/headers/task_user_library.h:
+
+../testing/headers/adc.h:

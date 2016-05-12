@@ -79,13 +79,10 @@ task_servo::task_servo (
    const char* a_name,
    unsigned portBASE_TYPE a_priority,
    size_t a_stack_size,
-   emstream* p_ser_dev,
-   hctl_driver* p_hctl_inc
+   emstream* p_ser_dev
 ): TaskBase (a_name, a_priority, a_stack_size, p_ser_dev)
 {
    /// Initialize pointer passed from main() to local variable to work with
-   p_hctl = p_hctl_inc;
-   last_count = 0;
 }
 
 

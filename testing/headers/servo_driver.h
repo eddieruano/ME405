@@ -58,10 +58,9 @@
 
 #include "rs232int.h"                       // ME405/507 library for serial comm.
 #include "adc.h"                            // Header for A/D converter driver class
-#include "motor_driver.h"                   // Header for Generic Motor driver
 #include "textqueue.h"                 // Header for text queue class
 #include "shares.h"                    // Shared inter-task communications
-                                       // 
+
 
 
 
@@ -78,35 +77,39 @@ private:
 protected:
     /// The servo_driver class uses this pointer to the serial port to say hello
     emstream* serial_PORT;
-    /// pointer to input DDR register
-    volatile uint8_t* input_DDR;
-    /// pointer to the data input register
-    volatile uint8_t* input_PORT;
-    /// SCL
-    uint8_t input_SCL;
-    /// SDA
-    uint8_t input_SDA;
-    /// Counter for Comms
-    uint8_t count;
-    /// Data holder
-    uint32_t data;
-    /// Slave address for BNO055 is 0x28
-    uint8_t slave_address;
-    uint8_t slave_address_write;
-    uint8_t slave_address_read;
+    /// pointer to first timer Register A
+    volatile uint8_t* local_timer_reg_A;
+    /// pointer to first timer Register B
+    volatile uint8_t* local_timer_reg_B;
+    /// pointer to ICR
+    volatile uint16_t* local_ICR_reg;
+    /// pointer to OCR
+    volatile uint16_t* local_OCR_reg;
+    /// given prescaler
+    uint8_t local_prescaler;
+    /// ICR top limit
+    uint16_t local_top_ICR;
+    /// pin where pwm comes out of
+    uint8_t local_OCR_pin;
+
+
 
     ///set the public constructor and the public methods
 public:
     servo_driver (
-        emstream* serial_PORT_incoming,
-        volatile uint8_t* input_PORT_incoming,
-        volatile uint8_t* input_DDR_incoming,
-        uint8_t input_SCL_incoming,
-        uint8_t input_SDA_incoming
+        emstream*,
+        volatile uint8_t*,
+        volatile uint8_t*,
+        volatile uint16_t*,
+        volatile uint16_t*,
+        uint8_t,
+        uint16_t,
+        uint8_t
     );
 
-void initializeServo(void);
+    void initializeServo(void);
 
+    void setServoAngle(int16_t);
 
 
 }; // end of class servo_driver

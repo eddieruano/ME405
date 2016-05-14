@@ -52,7 +52,8 @@
 #define FREEWHEEL 2
 /// Value for POTENTIOMETER directive
 #define POTENTIOMETER 3
-
+/// Value to recenter with adc control 
+#define RECENTER 1023
 
 /**
  * @brief      This constructor builds an instance of a task_motor that will
@@ -112,7 +113,7 @@ void task_motor::run (void)
     // Configure counter/timer 1 as a PWM for Motor Drivers.
     // COM1A1/COM1B1 to set to non inverting mode.
     // WGM10 to set to Fast PWM mode (only half ughhhhh)
-    TCCR1A |= (1 << WGM10) | (1 << COM1A1) | (1 << COM1B1);
+    TCCR1A |= (1 << WGM11) | (1 << WGM10) | (1 << COM1A1) | (1 << COM1B1);
     // This is the second Timer/Counter Register
     // WGM12 (other half of Fast PWM)
     // CS11 Sets the presacler to 8 (010)
@@ -124,9 +125,6 @@ void task_motor::run (void)
         // 'motor_directive'
         uint8_t LOCAL_motor_directive = motor_directive -> get();
 
-        // //begin logic checks **DROPPING SUPPORT 2 MOTORS
-        // if (motor_identifier == motor_select -> get())
-        // {
             //if Directive = 0, set the power of the motor.
             if (LOCAL_motor_directive == SETPOWER)
             {
@@ -146,38 +144,17 @@ void task_motor::run (void)
             else if (LOCAL_motor_directive == POTENTIOMETER)
             {
                 //create variable to hold the reading of the adc. 1023
-                uint16_t duty_cycle = p_adc -> read_once(1);
-
+                uint16_t duty_cycle = 2 * (p_adc -> read_once(0));
                 //convert the duty cycle into a signed variable and divide by
-                int16_t power = ((int16_t)duty_cycle / 4);
-                //*p_serial << PMS("Poweer: ") << power<<PMS(". ")<<endl;
-                //*p_serial << PMS("PDuty: ") << power << PMS(". ") << endl;
-                //if (duty_cycle == 0) {duty_cycle++;}
-                if (power < 128)
-                {
-                    //forwards start from high speed to go to low speed
-                    power = 255 - power * 2;
-                    motor->set_power(power);
-                    motor_power -> put(power);
-                }
-                else if (power > 128)
-                {
-                    //backwards start from low speed to go to high speed
-                    power = ((128 - power) * 2);
+                int16_t power = ((int16_t)duty_cycle - RECENTER);
 
-                    motor->set_power(power);
-                    motor_power -> put(power);
-                }
-                //place power in the shared variable in case it need to be accessed by the task_user
+                //motor_power -> put(power);
+
+                //motor -> set_power(power);
                 
-                //char temp = p_serial->puts("");
-                // *p_serial << PMS("Power: ") << power << PMS(". ") << endl;
-                //*p_serial << power;
-                //OCR3B = duty_cycle;
+                motor -> set_power(power);
+                motor_setpoint -> put(power);
             }
-
-
-        //}
         // Increment the run counter in the parent class.
         runs++;
 

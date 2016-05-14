@@ -1,31 +1,31 @@
 //*****************************************************************************
 /** @file main.cpp
- *  @brief     This is the file for the 'main()' function. This function 
+ *  @brief     This is the file for the 'main()' function. This function
  *             initialzies everything.
  *
- *  @details   Built on top of JR Ridgely's architecture, this modified main() 
- *             function initializes two motor_driver* objects, an A/D object. 
- *             and various taskShares and tasks. Everything is initialized 
+ *  @details   Built on top of JR Ridgely's architecture, this modified main()
+ *             function initializes two motor_driver* objects, an A/D object.
+ *             and various taskShares and tasks. Everything is initialized
  *             here and then propogated to other classes.
  *
  *  @author Eddie Ruano
  *  @author JR Ridgely
  *
- *  Revisions: @li 4/21/2016 created new motor tasks and gave them the correct 
+ *  Revisions: @li 4/21/2016 created new motor tasks and gave them the correct
  *             pointer values.
  *             @li 4/19/2016 added new shared variables
  *             @li 09-30-2012 JRR Original file was a one-file demonstration
  *             with two tasks
- *             @li 10-05-2012 JRR Split into multiple files, one for each task 
+ *             @li 10-05-2012 JRR Split into multiple files, one for each task
  *             plus a main one
- *             @li 10-30-2012 JRR A hopefully somewhat stable version with 
+ *             @li 10-30-2012 JRR A hopefully somewhat stable version with
  *             global queue pointers and the new operator used for most memory
  *             allocation
- *             @li 11-04-2012 JRR FreeRTOS Swoop demo program changed to a 
+ *             @li 11-04-2012 JRR FreeRTOS Swoop demo program changed to a
  *             sweet test suite
- *             @li 01-05-2012 JRR Program reconfigured as ME405 Lab 1 starting 
+ *             @li 01-05-2012 JRR Program reconfigured as ME405 Lab 1 starting
  *             point
- *             @li 03-28-2014 JRR Pointers to shared variables and queues 
+ *             @li 03-28-2014 JRR Pointers to shared variables and queues
  *             changed to references
  *             @li 01-04-2015 JRR Names of share & queue classes changed
                allocated with new now
@@ -77,10 +77,13 @@
 #include "task_encoder.h"
 #include "hctl_driver.h"
 #include "imu_driver.h"
-
+#include "servo_driver.h"
 //#include "task_hctl_2000.h"
 #include "hctl.h"
 #include "task_pid.h"
+#include "task_servo.h"
+
+
 
 
 
@@ -129,6 +132,12 @@ TaskShare<uint32_t>* data_read;
 
 TaskShare<uint8_t>* activate_encoder;
 
+TaskShare<int16_t>* steering_power;
+
+TaskShare<int16_t>* x_joystick;
+
+TaskShare<int16_t>* y_joystick;
+
 
 
 //=============================================================================
@@ -166,19 +175,27 @@ int main (void)
 
     motor_directive = new TaskShare<uint8_t> ("Motor Directive");
     motor_power = new TaskShare<int16_t> ("Motor Power");
-    // start encoder variables 
+    // start encoder variables
     encoder_count = new TaskShare<int32_t> ("Encoder Pulse Count");
     encoder_ticks_per_task = new TaskShare<int16_t> ("Encoder Pulse Per Time");
     data_read = new TaskShare<uint32_t> ("imu data");
     activate_encoder = new TaskShare<uint8_t> ("Encoder Activate");
+    steering_power = new TaskShare<int16_t> ("Steering Power");
 
+    x_joystick = new TaskShare<int16_t> ("y VAL");
+    y_joystick = new TaskShare<int16_t> ("y VAL");
 
-    //initialize to special value so no motor is affected yet 
+    //initialize to special value so no motor is affected yet
     //**DROPPING SUPPORT 2 MOTORS//
     //motor_select -> put(NULL_MOTER);
 
     //initilaize two different motor driver pointers to pass into two tasks
     motor_driver* p_motor1 = new motor_driver(p_ser_port, &PORTC, &PORTC, &PORTB, &OCR1B, PC0, PC1, PC2, PB6);
+
+    //USE TIMER AND COUNTER 3
+    //
+    // servo_driver* p_steering_servo = new servo_driver(p_ser_port, &TCCR3A, &TCCR3B, &ICR3, &OCR3A, 0, 0, PE3);
+    servo_driver* p_steering_servo = new servo_driver(p_ser_port, &TCCR3A, &TCCR3B, &ICR3, &OCR3A, 8, 20000, PE3);
     //enable two low bits
     // DDRD |= (1<<PIND1) | (1<<PIND0);
     // set to high?
@@ -187,8 +204,8 @@ int main (void)
     // motor_driver* p_motor2 = new motor_driver(p_ser_port, &PORTD, &PORTD, &PORTB, &OCR1A, PD5, PD6, PD7, PB5);
 
     // make instance of htcl_driver instead of encoder_driver which has been removed
-    hctl_driver* p_hctl = new hctl_driver(p_ser_port, &PORTA, &PORTC, 7, &PORTC, 6); 
-     
+    hctl_driver* p_hctl = new hctl_driver(p_ser_port, &PORTA, &PORTC, 7, &PORTC, 6);
+
     imu_driver* p_imu = new imu_driver(p_ser_port, &PORTD, &DDRD, 0, 1);
 
 
@@ -211,14 +228,16 @@ int main (void)
     new task_encoder ("Encoder1", task_priority(4), 280, p_ser_port, p_hctl);
 
     //hctl_driver* p_counter = new hctl_driver(p_ser_port, &PORTA, &PORTC, PC7, &PORTC, PC6);
-    
+
     //new task_hctl_2000 ("counter",  task_priority(4), 280, p_ser_port, p_counter);
     //new task_encoder ("Encoder1", task_priority(5), 280, p_ser_port, p_encoder1);
-    
+
+    new task_servo ("Steering", task_priority(3), 280, p_ser_port, p_steering_servo, 1);
+
     // create a new PID manager for the motor, with K values of:
     // Proportional = 1, Integral = 0, Derivative = 0, Windup = 0
     // And the default saturation limits
-    //new task_pid ("PID", task_priority(4), 280, p_ser_port, motor_setpoint, encoder_count, motor_power, 1024,0,0,0,-255,255);
+    new task_pid ("PID", task_priority(4), 280, p_ser_port, motor_setpoint, encoder_ticks_per_task, motor_power, 1024, 0, 0, 0, -1023, 1023);
 
 
     // Here's where the RTOS scheduler is started up. It should never exit as long as

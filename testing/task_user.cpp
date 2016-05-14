@@ -70,6 +70,11 @@
 /// Value for POTENTIOMETER directive
 #define POTENTIOMETER 3
 
+//#define CENTERZERO 1023
+
+//#define X_CENTER 49
+//#define Y_CENTER -29
+
 /**  This constant sets how many RTOS ticks the task delays if the user's not
  *   talking The duration is calculated to be about 5 ms.
  */
@@ -619,14 +624,17 @@ void task_user::run (void)
 
 
                 //get adc values
-                int16_t x_direction = (int16_t)(p_adc_x -> read_once(1));
-                int16_t y_direction = (int16_t)(p_adc_y -> read_once(2));
+                //x_direction = (int16_t)(p_adc_x -> read_once(1));
+                //y_direction = (int16_t)(p_adc_y -> read_once(0));
 
                 //Alter x_direction to have neg
-                x_direction = ((x_direction - 1) / 2) - 255;
+                //x_direction = (x_direction * 2) - CENTERZERO + X_CENTER;
+                //y_direction = (y_direction * 2) - CENTERZERO + Y_CENTER;
                 //setMotor(0, x_direction, SETPOWER);
+                //motor_directive -> put(SETPOWER);
+                //motor_power -> put(x_direction);
+                motor_setpoint -> put(x_direction);
                 motor_directive -> put(SETPOWER);
-                motor_power -> put(x_direction);
 
                 *p_serial 
                     << ATERM_CURSOR_TO_YX(19, 1)
@@ -640,7 +648,18 @@ void task_user::run (void)
                     << PMS("\t")
                     << encoder_count -> get() 
                     << PMS("\t")
-                << endl;
+                    << ATERM_CURSOR_TO_YX(23, 1)
+                    << ATERM_ERASE_IN_LINE(0)
+                    << steering_power -> get()
+                    << PMS("    \t")
+                    << encoder_ticks_per_task -> get() 
+                    << PMS("\t") 
+                    << PMS("\t")
+                    << x_joystick -> get()
+                    << PMS("\t") 
+                    << PMS("\t")
+                    << y_joystick -> get()
+                    << PMS("\t");
 
             }
             break;

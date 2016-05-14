@@ -64,9 +64,11 @@
 
 #include "rs232int.h"                       // ME405/507 library for serial comm.
 #include "adc.h"                            // Header for A/D converter driver class
-#include "motor_driver.h"                   // Header for Generic Motor driver
-#include "hctl_driver.h"                    // Header for the EHTCL Driver
 
+#include "servo_driver.h"                    // Header for the EHTCL Driver
+
+
+#define CHECK_TIMES
 /**
  * @brief      this is the declaration for 'task_servo' which directly 
  *             handles the encoder_driver. Only three variables are required 
@@ -82,16 +84,38 @@ protected:
     uint16_t last_count;
     /// This is the diffrence between the global count and the local count
     int32_t count_diff;
+
+    
     
 
 public:
     ///This is the constructor prototype, added the pointer for an encoder_driver to be passed in by main.
-    task_servo (const char*, unsigned portBASE_TYPE, size_t, emstream*, hctl_driver*);
+    task_servo (const char*, unsigned portBASE_TYPE, size_t, emstream*, servo_driver*, uint8_t);
 
     /// This method is called by the RTOS once to run the task loop for ever and ever.
     void run (void);
-    /// This is the declaration for the local copy of the encoder_driver pointer.
-    hctl_driver* p_hctl;
+    /// This is the declaration for the local copy of the servo_driver pointer.
+    servo_driver* p_local_servo_driver;
+
+    uint8_t local_channel_select;
+
+    adc* p_local_adc;
+
+    //void initializeJoystick(int16_t);
+
+    uint16_t local_error_adc;
+
+void initializeJoystick(int16_t channel_select)
+{
+   int32_t count;
+   while (count < 10)
+   {
+      count = count + (p_local_adc -> read_once(channel_select));
+      count++;
+   }
+
+   local_error_adc = (512 - (count / 10));
+}   
     
     
 };

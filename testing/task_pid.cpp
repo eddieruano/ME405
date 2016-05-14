@@ -43,6 +43,15 @@
 #include "shares.h"                    // Shared inter-task communications
 #include "task_pid.h"
 
+ /// Value for BRAKE directive
+#define BRAKE 0
+/// Value for SETPOWER directive
+#define SETPOWER 1
+/// Value for FREEWHEEL directive
+#define FREEWHEEL 2
+/// Value for POTENTIOMETER directive
+#define POTENTIOMETER 3
+
 /**
  * @brief      This constructor builds an instance of a PID controller.
  *
@@ -72,7 +81,7 @@ task_pid::task_pid (
     size_t a_stack_size,
     emstream* p_ser_dev,
     TaskShare<int16_t>* p_setpoint,
-    TaskShare<int32_t>* p_feedback,
+    TaskShare<int16_t>* p_feedback,
     TaskShare<int16_t>* p_output,
     int16_t a_kp,
     int16_t a_ki,
@@ -120,22 +129,22 @@ void task_pid::run (void)
         old_act = act;
 
         // since the Ks are *1024, we divide by that after multiplying each error by its constant and summing them.
-        *p_serial << PMS("SSMUL KI ERRSUM: ") << ssmul(KI, err_sum) <<endl;
-        *p_serial << PMS("SSMUL KD ERR_D: ") << ssmul(KD, err_sum) <<endl;
-        *p_serial << PMS("SSADD ^^: ") << 
-            ssadd(
-                ssdiv(ssmul(KI,err_sum),1024),
-                ssdiv(ssmul(KD,err_deriv),1024)
-            ) <<endl;
-        *p_serial << PMS("SSMUL KP ERR: ") << ssmul(KP, err) <<endl;
-        *p_serial << PMS("SSADD ^^: ") << 
-            ssadd(
-                ssdiv(ssmul(KP,err),1024),
-                ssadd(
-                    ssdiv(ssmul(KI,err_sum),1024),
-                    ssdiv(ssmul(KD,err_deriv),1024)
-                )
-            ) <<endl;
+        // *p_serial << PMS("SSMUL KI ERRSUM: ") << ssmul(KI, err_sum) <<endl;
+        // *p_serial << PMS("SSMUL KD ERR_D: ") << ssmul(KD, err_sum) <<endl;
+        // *p_serial << PMS("SSADD ^^: ") << 
+        //     ssadd(
+        //         ssdiv(ssmul(KI,err_sum),1024),
+        //         ssdiv(ssmul(KD,err_deriv),1024)
+        //     ) <<endl;
+        // *p_serial << PMS("SSMUL KP ERR: ") << ssmul(KP, err) <<endl;
+        // *p_serial << PMS("SSADD ^^: ") << 
+        //     ssadd(
+        //         ssdiv(ssmul(KP,err),1024),
+        //         ssadd(
+        //             ssdiv(ssmul(KI,err_sum),1024),
+        //             ssdiv(ssmul(KD,err_deriv),1024)
+        //         )
+        //     ) <<endl;
         int16_t err_tot = 
             ssadd(
                 ssdiv(ssmul(KP,err),1024),
@@ -144,7 +153,7 @@ void task_pid::run (void)
                     ssdiv(ssmul(KD,err_deriv),1024)
                 )
             );
-        *p_serial << PMS("Error: ") <<err_tot <<endl;
+        // *p_serial << PMS("Error: ") <<err_tot <<endl;
 
         int16_t out;
         // saturation limits
@@ -159,13 +168,13 @@ void task_pid::run (void)
         else out = err_tot;
 
         windup = sssub(err_tot, out);
-
-        output->put(out);;;
-        *p_serial << PMS ("OUTPUT: ") << out << endl;
-
+        motor_directive -> put(SETPOWER);
+        output->put(out);
+        // *p_serial << PMS ("OUTPUT: ") << out << endl;
+        // *p_serial << PMS ("MOTOR_POWER: ") << motor_power -> get() << endl;
         // This is a method we use to cause a task to make one run through its task
         // loop every N milliseconds and let other tasks run at other times
-        delay_from_for_ms (previousTicks, 1000);
+        delay_from_for_ms (previousTicks, 1);
     }
 }
 

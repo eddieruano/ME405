@@ -97,7 +97,7 @@ protected:
     /// Stores a pointer to the shared variable storing the setpoint for the control loop
     TaskShare<int16_t>* setpoint;
     /// Stores a pointer to the shared variable storing the system feedback input
-    TaskShare<int32_t>* feedback;
+    TaskShare<int16_t>* feedback;
     /// Stores a pointer to the shared variable that serves as the loop output
     TaskShare<int16_t>* output;
     /// stores the previous loop's actual value, for derivative control
@@ -123,7 +123,7 @@ public:
     /// This constructor takes the default task argument set, plus two pointers (setpoint and output), all the control loop constants (multiplied by 1024) to be used, and two saturation limits.
     task_pid (const char*, unsigned portBASE_TYPE, size_t, emstream*,
     TaskShare<int16_t>*, // p_setpoint,
-    TaskShare<int32_t>*, // p_feedback,
+    TaskShare<int16_t>*, // p_feedback,
     TaskShare<int16_t>*, // p_output,
     int16_t = 1024,      // a_kp,
     int16_t = 1024,      // a_ki,

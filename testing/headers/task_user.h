@@ -103,6 +103,8 @@ private:
 
     adc* p_adc_x;
     adc* p_adc_y;
+    int16_t x_direction;
+    int16_t y_direction;
 protected:
     // protected so that only methods of this class or possibly descendents can use it
 

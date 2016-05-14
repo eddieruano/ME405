@@ -84,4 +84,11 @@ extern TaskShare<uint32_t>* data_read;
 
 extern TaskShare<uint8_t>* activate_encoder;
 
+extern TaskShare<int16_t>* steering_power;
+
+extern TaskShare<uint16_t>* steering_angle;
+
+extern TaskShare<int16_t>* x_joystick;
+extern TaskShare<int16_t>* y_joystick;
+
 #endif // _SHARES_H_

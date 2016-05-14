@@ -162,17 +162,33 @@ void task_user::printDashBoard(void)
 
         *p_serial
                 << endl
-                << PMS ("Debugging Info: ") <<endl
+                << PMS ("Debugging Info: ") << endl
                 << PMS ("-------\t\t--------\t-------\t\t-----------")
                 << endl
                 << PMS ("Motor\t\tSetPoint\t Power\t\tEncoderCount")
                 << endl
                 << PMS ("-------\t\t--------\t-------\t\t-----------")
                 << endl
-                << PMS ("Motor 1\t\t") 
+                << PMS ("Motor 1\t\t")
                 << motor_setpoint -> get() << PMS("\t") << PMS("\t")
                 << motor_power -> get() << PMS("\t") << PMS("\t")
                 << encoder_count -> get() << PMS("\t")
+                << endl
+                << PMS ("-------\t\t--------\t-------\t\t-----------")
+                << endl
+                << PMS ("STE_P\t\tNcoder/s\t X-DIRC\t\tY-DIRC")
+                << endl
+                << PMS ("-------\t\t--------\t-------\t\t-----------")
+                << endl
+                << PMS ("Motor 1\t\t")
+                << steering_power-> get()
+                << PMS("\t")
+                << PMS("\t")
+                << x_direction
+                << PMS("\t")
+                << PMS("\t")
+                << y_direction
+                << PMS("\t")
                 << endl;
 
 
@@ -448,7 +464,7 @@ void task_user::printDriveModeOptions(void)
         *p_serial << PMS ("|\t\t          Drive Control Mode            \t\t|") << endl;
         *p_serial << PMS ("|---------------------------------------------------------------------- |") << endl;
         *p_serial << PMS ("|\t\t    Use the JoyStick to move around     \t\t|") << endl;
-        *p_serial << PMS ("|\t\t 'q'    quit to main menu               \t\t|") << endl <<endl;
+        *p_serial << PMS ("|\t\t 'q'    quit to main menu               \t\t|") << endl << endl;
         printDashBoard();
         is_menu_visible = true;
 

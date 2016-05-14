@@ -40,8 +40,7 @@
 // Include header for serial port class
 #include "rs232int.h"
 // Include header for the driver class
-#include "imu_driver.h"
-#include <util/twi.h>
+#include "servo_driver.h"
 
 
 
@@ -69,34 +68,36 @@
  *                                   diag ping
  * @param[in]  pwm_PIN_incoming      This holds defined value for pwm pin
  */
-imu_driver::imu_driver (
+ 
+servo_driver::servo_driver (
+
     emstream* serial_PORT_incoming,
-    volatile uint8_t* input_PORT_incoming,
-    volatile uint8_t* input_DDR_incoming,
-    uint8_t input_SCL_incoming,
-    uint8_t input_SDA_incoming
+    volatile uint8_t* timer_reg_A_inc,
+    volatile uint8_t* timer_reg_B_inc,
+    volatile uint16_t* ICR_reg_inc,
+    volatile uint16_t* OCR_reg_inc,
+    uint8_t prescaler_inc,
+    uint16_t top_ICR_inc,
+    uint8_t OCR_pin_inc
 )
 {
     //Set locals
-    input_PORT = input_PORT_incoming;
     serial_PORT = serial_PORT_incoming;
-    input_SCL = input_SCL_incoming;
-    input_SDA = input_SDA_incoming;
-    input_DDR = input_DDR_incoming;
-    data = 0;
-    count = 0;
-    slave_address = 0x28;
-    slave_address_write = 0x50;
-    slave_address_read = 0x51;
-
-    *input_PORT |= (1 << input_SDA) | (1 << input_SCL);
+    local_timer_reg_A = timer_reg_A_inc;
+    local_timer_reg_B = timer_reg_B_inc;
+    local_ICR_reg = ICR_reg_inc;
+    local_OCR_reg = OCR_reg_inc;
+    local_prescaler = prescaler_inc;
+    local_top_ICR = top_ICR_inc;
+    local_OCR_pin = OCR_pin_inc;
 
     // Do all the cool stuff in this method.
 
-    initializeIMU();
+    initializeServo();
+
 
     // Print a handy debugging message
-    DBG (serial_PORT, "IMU Driver Construced Successfully" << endl);
+    DBG (serial_PORT, "Servo Driver Construced Successfully. " << endl);
 
 }
 
@@ -105,17 +106,18 @@ imu_driver::imu_driver (
 
 
 
-void imu_driver::initializeIMU(void)
+void servo_driver::initializeServo(void)
 {
-    /****** Begin initialization of I2C communication ******/
+    /****** Begin alteration of TIMER/COUNTER 3 ******/
 
-    //Power Reduction Register 0 PPR0 (0x64)
-    //PPR0 -PRTWI | PRTIM2 | PRTIM0 |   -  | PRTIM1 | PRSPI | PRUSART0 | PRADC
-    //PPR0 ---7---|---6----|---5----|---4--|---3----|---2---|---1------|---0--
-    //PRTWI - (---Power Reduction Two Wire Input---)
-    //Normally set to 1, we need to set it to 0 to enable 2 wire comms
+    //Power Reduction Register 0 PPR1 (0x65)
+    //PPR0   -  |  -  | PRTIM5 |PRTIM4| PRTIM3 | PRUSART3 | PRUSART2 | PRUSART1
+    //PPR0 --7--|--6--|---5----|---4--|---3----|----2---  |---1----|---0--
+    //PRTIM3
+    //Normally set to 1, we need to set it to 0 to enable timer 3
 
-    PRR0 &= ~(1 << PRTWI);
+    PRR1 &= ~(1 << PRTIM3);
+    //change this to generic
 
     //  For the next two registers consider this formula:
     //  SCL Freq = (CPU Internal Clock Frequency) / 16 + 2 (TWBR) * 4 ^ TWPS
@@ -127,8 +129,15 @@ void imu_driver::initializeIMU(void)
     //  TWSR - (----------Status Bits-----------)-------(-Prescaler Bits-)
     //  TWSR will be 0x08 after a start condition
     //  The SCL clock should be 100kHz
+    
     //No prescaler so clean bottom two bits
-    TWSR &= ~((1 << TWPS1) | (1 << TWPS0));
+    // Configure counter/timer 3 as a PWM for Motor Drivers.
+    // COM1A1/COM1B1 to set to non inverting mode.
+    *local_timer_reg_A |= (1 << COM3A1) | (1 << COM3B1);
+    // This is the second Timer/Counter Register
+    // WGM13 only bit we set for freq and phase correct PWM w/ ICR as TOP
+    // CS11 Sets the presacler to 8 (010)
+    *local_timer_reg_B |= (1 << WGM33) | (1 << CS31);
 
     //  TWBR (Bit Rate Generator Unit)
     //  TWBR (TWI Bit Rate Register) - will be 2 for a 50kHz SCL
@@ -136,188 +145,29 @@ void imu_driver::initializeIMU(void)
     //  TWBR - --7---|---6---|---5---|---4---|---3---|---2---|---1---|---0----
     //  Set bitrate to either 12 to make SCL got to 400kHz which is max
     //  OR set to 72 and get 100kHz on SCL
-    TWBR = 72;
+    *local_ICR_reg = 20000;
+    //*local_OCR_pin = 1500;
 
-    TWCR &= ~(1 << TWIE);
-
-    *serial_PORT << PMS("Initialized BNO055: ")
-                 << endl
-                 << PMS("Value in PRR0[CHECK: BIT:7 = 0]: ")
-                 << bin
-                 << PRR0
-                 << endl
-                 << PMS("Value in TWSR[CHECK: BIT1->0 = 00]: ")
-                 << bin
-                 << TWSR
-                 << endl
-                 << PMS("Value in TWBR[CHECK: 72]: ")
-                 << TWBR
-                 << endl;
+    //set pin as output
+    DDRE |= (1 << local_OCR_pin);
 
 
 
-
-
+    // /// now need to initialize and get correct values of the joysticks
+    // uint8_t count = 0;
+    // uint32_t total = 0;
+    // while( count < 20)
+    // {
+    //     total+= 
+    // }
 }
 
-
-
-int8_t imu_driver::readIMU(uint8_t address, uint8_t byte_size)
+void servo_driver::setServoAngle(int16_t angle)
 {
-    int thecount = -1;
-    data = 0;
-    /* Pseudo Code for I2C PROTOCOL READ*/
-
-    // Initialze Start by master, change SDA while SCL is high
-    // Send Slave Address and W/R bit attached to the LSB (0 Write FIRST)
-    // Slave will send us an ACK (acknowledge) || BNO055 -> ACKS = 0
-    // Master sends 8 bit address to write (7bits really doe)
-    // Slave sends ACKS = 0
-    // Master RESTARTS
-    // Master sends Slave Address and a READ BIT OF 1
-    // Slave Sends ACKS
-    // Slave Sends 1 byte of data
-    // Master Acknowledges ACK = 0
-    // Slave keeps sending until Master makes NMACK
-    // NMACK = 1, bus is released by Slave
-    // Now Master can generate Stop
-
-    *serial_PORT << PMS("Reading IMU..: ") << hex << slave_address << endl;
-    *serial_PORT << PMS("IMU Address: ") << hex << slave_address << endl;
-    *serial_PORT << PMS("IMU Address Write: ") << hex << slave_address_write << endl;
-    *serial_PORT << PMS("IMU Address Read: ") << hex << slave_address_read << endl;
-    *serial_PORT << PMS("Given Address: ") << hex << address << endl;
-    *serial_PORT << PMS("Current Data: ") << hex << data << endl;
-
-    //  TWCR (Two Wire Control Register)  (0xBC)
-    //  TWCR (Two Wire Control Register)
-    //  TWCR - TWINT | TWEA  | TWSTA | TWSTO | TWWC  | TWEN  | TWIE  |   -
-    //  TWCR - --7---|---6---|---5---|---4---|---3---|---2---|---1---|---0----
-    //  Set the Enable TWEN
-    //  Set the Flag TWINT
-    //  Set the Start Bit
-
-    /***OFFICIAL START***/
-    TWCR = (1 << TWEN) | (1 << TWINT) | (1 << TWSTA);
-    //wait for the flag to be set
-    waitForSet();
-    checkError(TW_START);
-    // Now we send Slave Address and wait for it
-    TWDR = slave_address_write;
-    clearEnable(STOP);
-    waitForSet();
-    checkError(TW_MT_SLA_ACK); //0x18
-    //Send Register we want to access
-    TWDR = address;
-    clearEnable(STOP);
-    waitForSet();
-    checkError(TW_MT_DATA_ACK); //check if it data request ack (0x28)
-    //Repeat Start
-    TWCR = (1 << TWEN) | (1 << TWINT) | (1 << TWSTA);
-    waitForSet();
-    checkError(TW_REP_START); //check of restart ack (0x10)
-    //send slave address of reg w/ READ
-    TWDR = slave_address_read;
-    clearEnable(STOP);
-    waitForSet();
-    checkError(TW_MR_SLA_ACK);
-
-    *serial_PORT << PMS("1st Value Read at ") << hex << thecount << PMS(" : ") << hex << TWDR << endl;
-    clearEnable(CONTINUE);
-    waitForSet();
-    checkError(TW_MR_DATA_ACK); //master has data send ACKM (0x40)
-    //
-    //
-    thecount++;
-    // now starts actual data
-    while ((thecount + 1) < byte_size)
-    {
-        *serial_PORT << PMS("Value Read at ") << hex << thecount << PMS(" : ") << hex << TWDR << endl;
-        //merge new data and our data holder
-        mergeData(TWDR);
-        shiftData();
-        clearEnable(CONTINUE);
-        waitForSet();
-        checkError(TW_MR_DATA_ACK);
-        thecount++;
-    }
-    
-
-    //merge with last bits
-    mergeData(TWDR);
-    clearEnable(STOP);
-    waitForSet();
-    checkError(TW_MR_DATA_NACK); //master has data and sent nack
-
-    TWCR = (1 << TWEN) | (1 << TWINT) | (1 << TWSTO);
-    *serial_PORT << PMS("THE FINAL DATA: ") << hex << data <<endl;
-    data_read -> put(data);
-    return thecount;
-
-}
-
-void imu_driver::clearEnable(int val)
-{
-    if(val == STOP)
-    {
-        TWCR = ((1 << TWINT) | (1 << TWEN));
-    }
-    else if(val == CONTINUE)
-    {
-        TWCR = ((1 << TWINT) | (1 << TWEN) | (1 << TWEA));
-        *serial_PORT << PMS("CONTINUES") << endl;
-    }
-    else
-    {
-        *serial_PORT << PMS("error in clear enable") << endl;
-        while(1)
-        {
-
-        }
-    }
+    //going to change PWM
+    //need to change OCR but keep between 1000 and 2000 for 1ms and 2ms pulses
+    *local_OCR_reg = angle;
     return;
-}
-
-void imu_driver::waitForSet(void)
-{
-    while (!(TWCR & (1 << TWINT)))
-    {
-        *serial_PORT << PMS("waiting..") << endl;
-    }
-    count++;
-    *serial_PORT << PMS("Wait Set: ") << count << endl;
-    *serial_PORT << PMS("STATUS: ") << hex << TWSR << endl;
-    return;
-}
-
-void imu_driver::checkError(int code)
-{
-    if ((TWSR & 0xF8) != code)
-    {
-        *serial_PORT << PMS("Error at: ") << hex << count << endl;
-        *serial_PORT << PMS("Needed: ") << hex << code << endl;
-        *serial_PORT << PMS("Received: ") << hex << TWSR << endl;
-        while (1)
-        {
-
-
-        }
-    }
-    else
-    {
-        return;
-    }
-}
-
-void imu_driver::shiftData(void)
-{
-    //shift data by 8 to make way for other concat
-    data = data << 8;
-}
-
-void imu_driver::mergeData(uint8_t newdata)
-{
-    data |= newdata;
 }
 
 
@@ -336,10 +186,10 @@ void imu_driver::mergeData(uint8_t newdata)
  *                            together things to write with @c << operators
  */
 
-emstream& operator << (emstream& serpt, imu_driver& imudrv)
+emstream& operator << (emstream& serpt, servo_driver& servodrv)
 {
     // Prints info to serial
-    serpt << PMS ("imu Driver Input: ") << endl;
+    serpt << PMS ("Servo Driver Input: ") << endl;
 
 
     return (serpt);

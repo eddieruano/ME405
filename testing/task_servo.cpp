@@ -54,6 +54,11 @@
 #include "task_servo.h"                   // Header for this task
 #include "shares.h"                       // Shared inter-task communications
 #include "time_stamp.h"
+#include "servo_driver.h"
+
+#define X_ERROR_OFFSET -13
+#define Y_ERROR_OFFSET 25
+//#define CHECK_TIMES 10
 
 
 /**
@@ -79,10 +84,16 @@ task_servo::task_servo (
    const char* a_name,
    unsigned portBASE_TYPE a_priority,
    size_t a_stack_size,
-   emstream* p_ser_dev
+   emstream* p_ser_dev,
+   servo_driver* p_servo_inc,
+   uint8_t channel_select_inc
+
 ): TaskBase (a_name, a_priority, a_stack_size, p_ser_dev)
 {
    /// Initialize pointer passed from main() to local variable to work with
+   p_local_servo_driver = p_servo_inc;
+   local_channel_select = channel_select_inc;
+ //  initialzeJoystick(channel_select);
 }
 
 
@@ -105,16 +116,41 @@ void task_servo::run (void)
    // Make a variable which will hold times to use for precise task scheduling
    TickType_t previousTicks = xTaskGetTickCount ();
 
-
-   adc 
-
    // The loop to contunially run the motors
    while (1)
    {
+      // make it read correct channel for this task
+      int16_t adc_reading = (int16_t) p_local_adc -> read_once(local_channel_select);
+      int16_t corrected_value = adc_reading + 1000;
+
+      if(local_channel_select == 1)
+      {
+         x_joystick -> put(corrected_value);
+      }
+      if(local_channel_select == 2)
+      {
+         y_joystick -> put(corrected_value);
+      }
+
+
+
+
+
+      p_local_servo_driver -> setServoAngle(corrected_value);
+
+      steering_power -> put(corrected_value);
+
+      //*p_serial << PMS("corrected_angle: ") << corrected_angle << endl;
+
+
 
       // This is a method we use to cause a task to make one run through its task
       // loop every N milliseconds and let other tasks run at other times
       delay_from_for_ms (previousTicks, 1);
    }
 }
+
+
+
+
 

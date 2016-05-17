@@ -182,7 +182,7 @@ int main (void)
     activate_encoder = new TaskShare<uint8_t> ("Encoder Activate");
     steering_power = new TaskShare<int16_t> ("Steering Power");
 
-    x_joystick = new TaskShare<int16_t> ("y VAL");
+    x_joystick = new TaskShare<int16_t> ("x VAL");
     y_joystick = new TaskShare<int16_t> ("y VAL");
 
     //initialize to special value so no motor is affected yet

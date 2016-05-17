@@ -633,7 +633,19 @@ void task_user::run (void)
                 //setMotor(0, x_direction, SETPOWER);
                 //motor_directive -> put(SETPOWER);
                 //motor_power -> put(x_direction);
-                motor_setpoint -> put(x_direction);
+                int16_t x_direction = y_joystick -> get();
+                int16_t map_x = x_direction - 526;
+                if(x_direction > 526)
+                {
+                    map_x = 2 * (x_direction - 526);
+                }
+                else
+                {
+                    map_x = -2 * (526 - x_direction);
+                }
+               
+                motor_setpoint -> put(map_x);
+
                 motor_directive -> put(SETPOWER);
 
                 *p_serial 

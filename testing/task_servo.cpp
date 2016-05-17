@@ -93,7 +93,8 @@ task_servo::task_servo (
    /// Initialize pointer passed from main() to local variable to work with
    p_local_servo_driver = p_servo_inc;
    local_channel_select = channel_select_inc;
- //  initialzeJoystick(channel_select);
+
+   initJoystick(local_channel_select);
 }
 
 
@@ -120,18 +121,32 @@ void task_servo::run (void)
    while (1)
    {
       // make it read correct channel for this task
-      int16_t adc_reading = (int16_t) p_local_adc -> read_once(local_channel_select);
-      int16_t corrected_value = adc_reading + 1000;
+      int16_t adc_reading = (int16_t) p_local_adc -> read_oversampled(local_channel_select, 5);
 
-      if(local_channel_select == 1)
+      adc_reading = adc_reading + local_error_adc;
+      int16_t adjust;
+      if (adc_reading < 512)
+      {
+         adjust = (512 - adc_reading) * -1;
+      }
+      else
+      {
+         adjust = adc_reading - 512;
+      }
+      int16_t corrected_value = adc_reading + 1000 + adjust;
+
+      if (local_channel_select == 1)
       {
          x_joystick -> put(corrected_value);
       }
-      if(local_channel_select == 2)
-      {
-         y_joystick -> put(corrected_value);
-      }
+      // if (local_channel_select == 2)
+      // {
+      //    y_joystick -> put(corrected_value);
+      // }
 
+      int16_t adc_y = (int16_t) p_local_adc -> read_once(0);
+
+      y_joystick ->put(adc_y);
 
 
 
@@ -148,9 +163,24 @@ void task_servo::run (void)
       // loop every N milliseconds and let other tasks run at other times
       delay_from_for_ms (previousTicks, 1);
    }
+
+
+
 }
 
 
+void task_servo::initJoystick (int16_t channel_select)
+{
+   int8_t count = 0; 
+   local_error_adc = 0;
+   while (count < 10)
+   {
+      local_error_adc = local_error_adc + (p_local_adc -> read_once(channel_select));
+      count++;
+   }
 
+   local_error_adc = (512 - (local_error_adc / 10));
+   *p_serial << local_channel_select << PMS(" ERROR: ") << local_error_adc << endl;
+}
 
 

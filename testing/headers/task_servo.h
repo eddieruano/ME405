@@ -105,17 +105,7 @@ public:
 
     uint16_t local_error_adc;
 
-void initializeJoystick(int16_t channel_select)
-{
-   int32_t count;
-   while (count < 10)
-   {
-      count = count + (p_local_adc -> read_once(channel_select));
-      count++;
-   }
-
-   local_error_adc = (512 - (count / 10));
-}   
+    void initJoystick(int16_t); 
     
     
 };

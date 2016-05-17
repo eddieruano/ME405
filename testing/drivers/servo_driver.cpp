@@ -145,7 +145,7 @@ void servo_driver::initializeServo(void)
     //  TWBR - --7---|---6---|---5---|---4---|---3---|---2---|---1---|---0----
     //  Set bitrate to either 12 to make SCL got to 400kHz which is max
     //  OR set to 72 and get 100kHz on SCL
-    *local_ICR_reg = 20000;
+    *local_ICR_reg = local_top_ICR;
     //*local_OCR_pin = 1500;
 
     //set pin as output

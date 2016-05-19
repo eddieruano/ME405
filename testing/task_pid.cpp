@@ -127,24 +127,6 @@ void task_pid::run (void)
         // derivative
         int16_t err_deriv = act - old_act;
         old_act = act;
-
-        // since the Ks are *1024, we divide by that after multiplying each error by its constant and summing them.
-        // *p_serial << PMS("SSMUL KI ERRSUM: ") << ssmul(KI, err_sum) <<endl;
-        // *p_serial << PMS("SSMUL KD ERR_D: ") << ssmul(KD, err_sum) <<endl;
-        // *p_serial << PMS("SSADD ^^: ") << 
-        //     ssadd(
-        //         ssdiv(ssmul(KI,err_sum),1024),
-        //         ssdiv(ssmul(KD,err_deriv),1024)
-        //     ) <<endl;
-        // *p_serial << PMS("SSMUL KP ERR: ") << ssmul(KP, err) <<endl;
-        // *p_serial << PMS("SSADD ^^: ") << 
-        //     ssadd(
-        //         ssdiv(ssmul(KP,err),1024),
-        //         ssadd(
-        //             ssdiv(ssmul(KI,err_sum),1024),
-        //             ssdiv(ssmul(KD,err_deriv),1024)
-        //         )
-        //     ) <<endl;
         int16_t err_tot = 
             ssadd(
                 ssdiv(ssmul(KP,err),1024),
@@ -153,8 +135,6 @@ void task_pid::run (void)
                     ssdiv(ssmul(KD,err_deriv),1024)
                 )
             );
-        // *p_serial << PMS("Error: ") <<err_tot <<endl;
-
         int16_t out;
         // saturation limits
         if (err_tot > MAX)
@@ -170,8 +150,6 @@ void task_pid::run (void)
         windup = sssub(err_tot, out);
         motor_directive -> put(SETPOWER);
         output->put(out);
-        // *p_serial << PMS ("OUTPUT: ") << out << endl;
-        // *p_serial << PMS ("MOTOR_POWER: ") << motor_power -> get() << endl;
         // This is a method we use to cause a task to make one run through its task
         // loop every N milliseconds and let other tasks run at other times
         delay_from_for_ms (previousTicks, 1);

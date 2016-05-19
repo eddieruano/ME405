@@ -7,22 +7,20 @@
 
 var indexSectionsWithContent =
 {
-  0: "abdfghimnoprst",
-  1: "amt",
-  2: "amst",
-  3: "abghimoprst",
-  4: "dimopst",
-  5: "bfnps"
+  0: "bdefmnprst",
+  1: "mt",
+  2: "m",
+  3: "dempt",
+  4: "bfnprs"
 };
 
 var indexSectionNames =
 {
   0: "all",
-  1: "classes",
-  2: "files",
-  3: "functions",
-  4: "variables",
-  5: "defines"
+  1: "files",
+  2: "functions",
+  3: "variables",
+  4: "defines"
 };
 
 function convertToId(search)

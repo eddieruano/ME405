@@ -15,6 +15,7 @@ This is the file for the '\hyperlink{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe
 {\ttfamily \#include \char`\"{}queue.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}croutine.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}rs232int.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}ansi\-\_\-terminal.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}time\-\_\-stamp.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}taskbase.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}textqueue.\-h\char`\"{}}\\*
@@ -24,6 +25,11 @@ This is the file for the '\hyperlink{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe
 {\ttfamily \#include \char`\"{}task\-\_\-brightness.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}task\-\_\-user.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}task\-\_\-motor.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}task\-\_\-encoder.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}hctl\-\_\-driver.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}imu\-\_\-driver.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}hctl.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}task\-\_\-pid.\-h\char`\"{}}\\*
 \subsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
@@ -40,11 +46,32 @@ int \hyperlink{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{main} (void)
 \item 
 Text\-Queue $\ast$ \hyperlink{main_8cpp_acd99bf5d187d4809af2f460a5415e904}{p\-\_\-print\-\_\-ser\-\_\-queue}
 \item 
+Task\-Share$<$ int16\-\_\-t $>$ $\ast$ \hyperlink{main_8cpp_a68e3aef51c9bd9903eca9b72f35fee2c}{motor\-\_\-setpoint}
+\item 
 Task\-Share$<$ int16\-\_\-t $>$ $\ast$ \hyperlink{main_8cpp_a94ed6a23dc3685572a19c9b35ad4d91b}{motor\-\_\-power}
 \item 
 Task\-Share$<$ uint8\-\_\-t $>$ $\ast$ \hyperlink{main_8cpp_a044692a403a6ad19401bd615cdefd5af}{motor\-\_\-directive}
 \item 
-Task\-Share$<$ uint8\-\_\-t $>$ $\ast$ \hyperlink{main_8cpp_a63b8526f83a43ed6aeb66f528aada7d6}{motor\-\_\-select}
+\hypertarget{main_8cpp_a23620c74793eea7c070bd9799260bef4}{Task\-Share$<$ int32\-\_\-t $>$ $\ast$ \hyperlink{main_8cpp_a23620c74793eea7c070bd9799260bef4}{encoder\-\_\-count}}\label{main_8cpp_a23620c74793eea7c070bd9799260bef4}
+
+\begin{DoxyCompactList}\small\item\em This variable holds the encoder count and is positive or negative relative to the rotation of the counts accumulated either Clock\-Wise(+), or Counter\-Clock\-Wise (-\/) \end{DoxyCompactList}\item 
+\hypertarget{main_8cpp_ab8ab0b810225c2501e1952586bb99533}{Task\-Share$<$ int16\-\_\-t $>$ $\ast$ \hyperlink{main_8cpp_ab8ab0b810225c2501e1952586bb99533}{encoder\-\_\-ticks\-\_\-per\-\_\-task}}\label{main_8cpp_ab8ab0b810225c2501e1952586bb99533}
+
+\begin{DoxyCompactList}\small\item\em This variable holds the ticks per seconds so that other tasks like task\-\_\-user may access it. \end{DoxyCompactList}\item 
+\hypertarget{main_8cpp_ada2a13ebae63bc767f0c950ff1b8cb68}{Task\-Share$<$ uint32\-\_\-t $>$ $\ast$ \hyperlink{main_8cpp_ada2a13ebae63bc767f0c950ff1b8cb68}{data\-\_\-read}}\label{main_8cpp_ada2a13ebae63bc767f0c950ff1b8cb68}
+
+\begin{DoxyCompactList}\small\item\em for I\-M\-U data read \end{DoxyCompactList}\item 
+\hypertarget{main_8cpp_a0b55a56ebac94e7852175df8a4d45d27}{Task\-Share$<$ uint8\-\_\-t $>$ $\ast$ {\bfseries activate\-\_\-encoder}}\label{main_8cpp_a0b55a56ebac94e7852175df8a4d45d27}
+
+\item 
+\hypertarget{main_8cpp_a4d52cc8ed2fe6fdc27f652a6674829b8}{Task\-Share$<$ int16\-\_\-t $>$ $\ast$ {\bfseries steering\-\_\-power}}\label{main_8cpp_a4d52cc8ed2fe6fdc27f652a6674829b8}
+
+\item 
+\hypertarget{main_8cpp_af05c4a5de56d17ffcb642c090fab6a83}{Task\-Share$<$ int16\-\_\-t $>$ $\ast$ {\bfseries x\-\_\-joystick}}\label{main_8cpp_af05c4a5de56d17ffcb642c090fab6a83}
+
+\item 
+\hypertarget{main_8cpp_aab69cf68ba3a8e2382cce86f74bd5db4}{Task\-Share$<$ int16\-\_\-t $>$ $\ast$ {\bfseries y\-\_\-joystick}}\label{main_8cpp_aab69cf68ba3a8e2382cce86f74bd5db4}
+
 \end{DoxyCompactItemize}
 
 
@@ -77,11 +104,11 @@ This is a real-\/time microcontroller program which doesn't return. Ever.
 \end{DoxyReturn}
 
 
-Definition at line 127 of file main.\-cpp.
+Definition at line 148 of file main.\-cpp.
 
 
 
-References motor\-\_\-directive, motor\-\_\-power, motor\-\_\-select, N\-U\-L\-L\-\_\-\-M\-O\-T\-E\-R, and p\-\_\-print\-\_\-ser\-\_\-queue.
+References data\-\_\-read, encoder\-\_\-count, encoder\-\_\-ticks\-\_\-per\-\_\-task, motor\-\_\-directive, motor\-\_\-power, motor\-\_\-setpoint, and p\-\_\-print\-\_\-ser\-\_\-queue.
 
 
 
@@ -91,42 +118,42 @@ References motor\-\_\-directive, motor\-\_\-power, motor\-\_\-select, N\-U\-L\-L
 \subsubsection[{motor\-\_\-directive}]{\setlength{\rightskip}{0pt plus 5cm}Task\-Share$<$uint8\-\_\-t$>$$\ast$ motor\-\_\-directive}}\label{main_8cpp_a044692a403a6ad19401bd615cdefd5af}
 This declares a taskshare which indicates that this variable is a shared variable. This variable will hold the command that the user wishes the motor to do. -\/1 Indicates C\-H\-A\-N\-G\-E\-\_\-\-D\-I\-R\-E\-C\-T\-I\-O\-N 0 Indicates S\-T\-O\-P W/ brake\-\_\-power 1 Indicates S\-E\-T P\-O\-W\-E\-R 2 Indicates F\-R\-E\-E\-W\-H\-E\-E\-L 
 
-Definition at line 110 of file main.\-cpp.
+Definition at line 122 of file main.\-cpp.
 
 
 
-Referenced by main(), task\-\_\-motor\-::run(), and task\-\_\-user\-::set\-Motor().
+Referenced by main().
 
 \hypertarget{main_8cpp_a94ed6a23dc3685572a19c9b35ad4d91b}{\index{main.\-cpp@{main.\-cpp}!motor\-\_\-power@{motor\-\_\-power}}
 \index{motor\-\_\-power@{motor\-\_\-power}!main.cpp@{main.\-cpp}}
 \subsubsection[{motor\-\_\-power}]{\setlength{\rightskip}{0pt plus 5cm}Task\-Share$<$int16\-\_\-t$>$$\ast$ motor\-\_\-power}}\label{main_8cpp_a94ed6a23dc3685572a19c9b35ad4d91b}
 This declares a taskshare which indicates that this variable is a shared variable. This variable will hold the duty cycle of a motor. 
 
-Definition at line 101 of file main.\-cpp.
+Definition at line 114 of file main.\-cpp.
 
 
 
-Referenced by main(), task\-\_\-motor\-::run(), task\-\_\-user\-::run(), and task\-\_\-user\-::set\-Motor().
+Referenced by main().
 
-\hypertarget{main_8cpp_a63b8526f83a43ed6aeb66f528aada7d6}{\index{main.\-cpp@{main.\-cpp}!motor\-\_\-select@{motor\-\_\-select}}
-\index{motor\-\_\-select@{motor\-\_\-select}!main.cpp@{main.\-cpp}}
-\subsubsection[{motor\-\_\-select}]{\setlength{\rightskip}{0pt plus 5cm}Task\-Share$<$uint8\-\_\-t$>$$\ast$ motor\-\_\-select}}\label{main_8cpp_a63b8526f83a43ed6aeb66f528aada7d6}
-This declares a taskshare which indicates that this variable is a shared variable. This variable will hold the select for each motor. 0 Indicates Motor 0 1 Indicates Motor 1 
+\hypertarget{main_8cpp_a68e3aef51c9bd9903eca9b72f35fee2c}{\index{main.\-cpp@{main.\-cpp}!motor\-\_\-setpoint@{motor\-\_\-setpoint}}
+\index{motor\-\_\-setpoint@{motor\-\_\-setpoint}!main.cpp@{main.\-cpp}}
+\subsubsection[{motor\-\_\-setpoint}]{\setlength{\rightskip}{0pt plus 5cm}Task\-Share$<$int16\-\_\-t$>$$\ast$ motor\-\_\-setpoint}}\label{main_8cpp_a68e3aef51c9bd9903eca9b72f35fee2c}
+This declares a taskshare which indicates that this variable is a shared variable. This variable stores the setpoint for the P\-I\-D motor controller. 
 
-Definition at line 117 of file main.\-cpp.
+Definition at line 110 of file main.\-cpp.
 
 
 
-Referenced by main(), task\-\_\-motor\-::run(), task\-\_\-user\-::run(), and task\-\_\-user\-::set\-Motor().
+Referenced by main().
 
 \hypertarget{main_8cpp_acd99bf5d187d4809af2f460a5415e904}{\index{main.\-cpp@{main.\-cpp}!p\-\_\-print\-\_\-ser\-\_\-queue@{p\-\_\-print\-\_\-ser\-\_\-queue}}
 \index{p\-\_\-print\-\_\-ser\-\_\-queue@{p\-\_\-print\-\_\-ser\-\_\-queue}!main.cpp@{main.\-cpp}}
 \subsubsection[{p\-\_\-print\-\_\-ser\-\_\-queue}]{\setlength{\rightskip}{0pt plus 5cm}Text\-Queue$\ast$ p\-\_\-print\-\_\-ser\-\_\-queue}}\label{main_8cpp_acd99bf5d187d4809af2f460a5415e904}
 This is a print queue, descended from {\ttfamily emstream} so that things can be printed into the queue using the \char`\"{}$<$$<$\char`\"{} operator and they'll come out the other end as a stream of characters. It's used by tasks that send things to the user interface task to be printed. 
 
-Definition at line 96 of file main.\-cpp.
+Definition at line 106 of file main.\-cpp.
 
 
 
-Referenced by task\-\_\-user\-::get\-Number\-Input(), and main().
+Referenced by main().
 

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Lab 2 Controlling a Motor_Driver w/ a Task: File Members</title>
+<title>Lab 4 PID Controller: File Members</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,10 +22,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Lab 2 Controlling a Motor_Driver w/ a Task
-   &#160;<span id="projectnumber">v1.2</span>
+   <div id="projectname">Lab 4 PID Controller
+   &#160;<span id="projectnumber">lab4v1.0</span>
    </div>
-   <div id="projectbrief">Make a task that will control motor_driver</div>
+   <div id="projectbrief">Makes a PID controller</div>
   </td>
  </tr>
  </tbody>
@@ -39,7 +39,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -79,7 +78,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -92,10 +91,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="textblock">Here is a list of all documented file members with links to the documentation:</div><ul>
 <li>BRAKE
 : <a class="el" href="task__motor_8cpp.html#af78f6af13b9c032bf9d48ef40aa7e683">task_motor.cpp</a>
+, <a class="el" href="task__pid_8cpp.html#af78f6af13b9c032bf9d48ef40aa7e683">task_pid.cpp</a>
 , <a class="el" href="task__user_8cpp.html#af78f6af13b9c032bf9d48ef40aa7e683">task_user.cpp</a>
+</li>
+<li>data_read
+: <a class="el" href="main_8cpp.html#ada2a13ebae63bc767f0c950ff1b8cb68">main.cpp</a>
+</li>
+<li>encoder_count
+: <a class="el" href="main_8cpp.html#a23620c74793eea7c070bd9799260bef4">main.cpp</a>
+</li>
+<li>encoder_ticks_per_task
+: <a class="el" href="main_8cpp.html#ab8ab0b810225c2501e1952586bb99533">main.cpp</a>
 </li>
 <li>FREEWHEEL
 : <a class="el" href="task__motor_8cpp.html#af9291ffc58d55b50465db4eb26e5b02d">task_motor.cpp</a>
+, <a class="el" href="task__pid_8cpp.html#af9291ffc58d55b50465db4eb26e5b02d">task_pid.cpp</a>
 , <a class="el" href="task__user_8cpp.html#af9291ffc58d55b50465db4eb26e5b02d">task_user.cpp</a>
 </li>
 <li>main()
@@ -103,38 +113,30 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>motor_directive
 : <a class="el" href="main_8cpp.html#a044692a403a6ad19401bd615cdefd5af">main.cpp</a>
-, <a class="el" href="shares_8h.html#a044692a403a6ad19401bd615cdefd5af">shares.h</a>
 </li>
 <li>motor_power
 : <a class="el" href="main_8cpp.html#a94ed6a23dc3685572a19c9b35ad4d91b">main.cpp</a>
-, <a class="el" href="shares_8h.html#a94ed6a23dc3685572a19c9b35ad4d91b">shares.h</a>
 </li>
-<li>motor_select
-: <a class="el" href="main_8cpp.html#a63b8526f83a43ed6aeb66f528aada7d6">main.cpp</a>
-, <a class="el" href="shares_8h.html#a63b8526f83a43ed6aeb66f528aada7d6">shares.h</a>
+<li>motor_setpoint
+: <a class="el" href="main_8cpp.html#a68e3aef51c9bd9903eca9b72f35fee2c">main.cpp</a>
 </li>
 <li>NULL_MOTER
 : <a class="el" href="main_8cpp.html#a523c5bde6173ed43b687f460b70648c1">main.cpp</a>
 </li>
-<li>operator&lt;&lt;()
-: <a class="el" href="adc_8cpp.html#afb33ca9fe94765ee57079e7feb03f975">adc.cpp</a>
-, <a class="el" href="adc_8h.html#a6e6d1e227b216fe2a1fee9b0ea52180d">adc.h</a>
-, <a class="el" href="motor__driver_8cpp.html#ad657010257780226a5b845103f45f996">motor_driver.cpp</a>
-, <a class="el" href="motor__driver_8h.html#a660b47b84ed9c985bfb681036ce37d7a">motor_driver.h</a>
-</li>
 <li>p_print_ser_queue
 : <a class="el" href="main_8cpp.html#acd99bf5d187d4809af2f460a5415e904">main.cpp</a>
-, <a class="el" href="shares_8h.html#acd99bf5d187d4809af2f460a5415e904">shares.h</a>
 </li>
 <li>POTENTIOMETER
 : <a class="el" href="task__motor_8cpp.html#a3e8e611e983546f51c69c43342fda6f2">task_motor.cpp</a>
+, <a class="el" href="task__pid_8cpp.html#a3e8e611e983546f51c69c43342fda6f2">task_pid.cpp</a>
 , <a class="el" href="task__user_8cpp.html#a3e8e611e983546f51c69c43342fda6f2">task_user.cpp</a>
 </li>
-<li>PROGRAM_VERSION
-: <a class="el" href="task__user_8h.html#a2f10abd650e471fae2d7e8c63d41206a">task_user.h</a>
+<li>RECENTER
+: <a class="el" href="task__motor_8cpp.html#ab0b7767883fef01903b5d22fc809fbc1">task_motor.cpp</a>
 </li>
 <li>SETPOWER
 : <a class="el" href="task__motor_8cpp.html#add1d508d51340e49c96b0385ae4ad7d2">task_motor.cpp</a>
+, <a class="el" href="task__pid_8cpp.html#add1d508d51340e49c96b0385ae4ad7d2">task_pid.cpp</a>
 , <a class="el" href="task__user_8cpp.html#add1d508d51340e49c96b0385ae4ad7d2">task_user.cpp</a>
 </li>
 <li>ticks_to_delay
@@ -144,7 +146,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 25 2016 14:53:27 for Lab 2 Controlling a Motor_Driver w/ a Task by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu May 19 2016 09:40:02 for Lab 4 PID Controller by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hasuserinput',['hasUserInput',['../classtask__user.html#aeebf78dc3a261ab26f137b9dedb4fae3',1,'task_user']]]
+  ['null_5fmoter',['NULL_MOTER',['../main_8cpp.html#a523c5bde6173ed43b687f460b70648c1',1,'main.cpp']]]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Lab 2 Controlling a Motor_Driver w/ a Task: main.cpp File Reference</title>
+<title>Lab 4 PID Controller: main.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,10 +22,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Lab 2 Controlling a Motor_Driver w/ a Task
-   &#160;<span id="projectnumber">v1.2</span>
+   <div id="projectname">Lab 4 PID Controller
+   &#160;<span id="projectnumber">lab4v1.0</span>
    </div>
-   <div id="projectbrief">Make a task that will control motor_driver</div>
+   <div id="projectbrief">Makes a PID controller</div>
   </td>
  </tr>
  </tbody>
@@ -39,7 +39,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -70,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -101,15 +100,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &quot;queue.h&quot;</code><br/>
 <code>#include &quot;croutine.h&quot;</code><br/>
 <code>#include &quot;rs232int.h&quot;</code><br/>
+<code>#include &quot;ansi_terminal.h&quot;</code><br/>
 <code>#include &quot;time_stamp.h&quot;</code><br/>
 <code>#include &quot;taskbase.h&quot;</code><br/>
 <code>#include &quot;textqueue.h&quot;</code><br/>
 <code>#include &quot;taskqueue.h&quot;</code><br/>
 <code>#include &quot;taskshare.h&quot;</code><br/>
-<code>#include &quot;<a class="el" href="shares_8h_source.html">shares.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="task__brightness_8h_source.html">task_brightness.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="task__user_8h_source.html">task_user.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="task__motor_8h_source.html">task_motor.h</a>&quot;</code><br/>
+<code>#include &quot;shares.h&quot;</code><br/>
+<code>#include &quot;task_brightness.h&quot;</code><br/>
+<code>#include &quot;task_user.h&quot;</code><br/>
+<code>#include &quot;task_motor.h&quot;</code><br/>
+<code>#include &quot;task_encoder.h&quot;</code><br/>
+<code>#include &quot;hctl_driver.h&quot;</code><br/>
+<code>#include &quot;imu_driver.h&quot;</code><br/>
+<code>#include &quot;hctl.h&quot;</code><br/>
+<code>#include &quot;task_pid.h&quot;</code><br/>
 </div>
 <p><a href="main_8cpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -129,12 +134,36 @@ Functions</h2></td></tr>
 Variables</h2></td></tr>
 <tr class="memitem:acd99bf5d187d4809af2f460a5415e904"><td class="memItemLeft" align="right" valign="top">TextQueue *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#acd99bf5d187d4809af2f460a5415e904">p_print_ser_queue</a></td></tr>
 <tr class="separator:acd99bf5d187d4809af2f460a5415e904"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68e3aef51c9bd9903eca9b72f35fee2c"><td class="memItemLeft" align="right" valign="top">TaskShare&lt; int16_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a68e3aef51c9bd9903eca9b72f35fee2c">motor_setpoint</a></td></tr>
+<tr class="separator:a68e3aef51c9bd9903eca9b72f35fee2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a94ed6a23dc3685572a19c9b35ad4d91b"><td class="memItemLeft" align="right" valign="top">TaskShare&lt; int16_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a94ed6a23dc3685572a19c9b35ad4d91b">motor_power</a></td></tr>
 <tr class="separator:a94ed6a23dc3685572a19c9b35ad4d91b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a044692a403a6ad19401bd615cdefd5af"><td class="memItemLeft" align="right" valign="top">TaskShare&lt; uint8_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a044692a403a6ad19401bd615cdefd5af">motor_directive</a></td></tr>
 <tr class="separator:a044692a403a6ad19401bd615cdefd5af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63b8526f83a43ed6aeb66f528aada7d6"><td class="memItemLeft" align="right" valign="top">TaskShare&lt; uint8_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a63b8526f83a43ed6aeb66f528aada7d6">motor_select</a></td></tr>
-<tr class="separator:a63b8526f83a43ed6aeb66f528aada7d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23620c74793eea7c070bd9799260bef4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a23620c74793eea7c070bd9799260bef4"></a>
+TaskShare&lt; int32_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a23620c74793eea7c070bd9799260bef4">encoder_count</a></td></tr>
+<tr class="memdesc:a23620c74793eea7c070bd9799260bef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This variable holds the encoder count and is positive or negative relative to the rotation of the counts accumulated either ClockWise(+), or CounterClockWise (-) <br/></td></tr>
+<tr class="separator:a23620c74793eea7c070bd9799260bef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8ab0b810225c2501e1952586bb99533"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab8ab0b810225c2501e1952586bb99533"></a>
+TaskShare&lt; int16_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ab8ab0b810225c2501e1952586bb99533">encoder_ticks_per_task</a></td></tr>
+<tr class="memdesc:ab8ab0b810225c2501e1952586bb99533"><td class="mdescLeft">&#160;</td><td class="mdescRight">This variable holds the ticks per seconds so that other tasks like task_user may access it. <br/></td></tr>
+<tr class="separator:ab8ab0b810225c2501e1952586bb99533"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada2a13ebae63bc767f0c950ff1b8cb68"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada2a13ebae63bc767f0c950ff1b8cb68"></a>
+TaskShare&lt; uint32_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ada2a13ebae63bc767f0c950ff1b8cb68">data_read</a></td></tr>
+<tr class="memdesc:ada2a13ebae63bc767f0c950ff1b8cb68"><td class="mdescLeft">&#160;</td><td class="mdescRight">for IMU data read <br/></td></tr>
+<tr class="separator:ada2a13ebae63bc767f0c950ff1b8cb68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b55a56ebac94e7852175df8a4d45d27"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0b55a56ebac94e7852175df8a4d45d27"></a>
+TaskShare&lt; uint8_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>activate_encoder</b></td></tr>
+<tr class="separator:a0b55a56ebac94e7852175df8a4d45d27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d52cc8ed2fe6fdc27f652a6674829b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4d52cc8ed2fe6fdc27f652a6674829b8"></a>
+TaskShare&lt; int16_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>steering_power</b></td></tr>
+<tr class="separator:a4d52cc8ed2fe6fdc27f652a6674829b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af05c4a5de56d17ffcb642c090fab6a83"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af05c4a5de56d17ffcb642c090fab6a83"></a>
+TaskShare&lt; int16_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>x_joystick</b></td></tr>
+<tr class="separator:af05c4a5de56d17ffcb642c090fab6a83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab69cf68ba3a8e2382cce86f74bd5db4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aab69cf68ba3a8e2382cce86f74bd5db4"></a>
+TaskShare&lt; int16_t &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>y_joystick</b></td></tr>
+<tr class="separator:aab69cf68ba3a8e2382cce86f74bd5db4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This is the file for the '<a class="el" href="main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe">main()</a>' function. This function initialzies everything. </p>
@@ -173,9 +202,9 @@ JR Ridgely</dd></dl>
 <p>The main function sets up the RTOS. Some test tasks are created. Then the scheduler is started up; the scheduler runs until power is turned off or there's a reset. </p>
 <dl class="section return"><dt>Returns</dt><dd>This is a real-time microcontroller program which doesn't return. Ever. </dd></dl>
 
-<p>Definition at line <a class="el" href="main_8cpp_source.html#l00127">127</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Definition at line <a class="el" href="main_8cpp_source.html#l00148">148</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 
-<p>References <a class="el" href="main_8cpp_source.html#l00110">motor_directive</a>, <a class="el" href="main_8cpp_source.html#l00101">motor_power</a>, <a class="el" href="main_8cpp_source.html#l00117">motor_select</a>, <a class="el" href="main_8cpp_source.html#l00080">NULL_MOTER</a>, and <a class="el" href="main_8cpp_source.html#l00096">p_print_ser_queue</a>.</p>
+<p>References <a class="el" href="main_8cpp_source.html#l00129">data_read</a>, <a class="el" href="main_8cpp_source.html#l00125">encoder_count</a>, <a class="el" href="main_8cpp_source.html#l00127">encoder_ticks_per_task</a>, <a class="el" href="main_8cpp_source.html#l00122">motor_directive</a>, <a class="el" href="main_8cpp_source.html#l00114">motor_power</a>, <a class="el" href="main_8cpp_source.html#l00110">motor_setpoint</a>, and <a class="el" href="main_8cpp_source.html#l00106">p_print_ser_queue</a>.</p>
 
 </div>
 </div>
@@ -191,9 +220,9 @@ JR Ridgely</dd></dl>
 </div><div class="memdoc">
 <p>This declares a taskshare which indicates that this variable is a shared variable. This variable will hold the command that the user wishes the motor to do. -1 Indicates CHANGE_DIRECTION 0 Indicates STOP W/ brake_power 1 Indicates SET POWER 2 Indicates FREEWHEEL </p>
 
-<p>Definition at line <a class="el" href="main_8cpp_source.html#l00110">110</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Definition at line <a class="el" href="main_8cpp_source.html#l00122">122</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="main_8cpp_source.html#l00127">main()</a>, <a class="el" href="task__motor_8cpp_source.html#l00109">task_motor::run()</a>, and <a class="el" href="task__user_8cpp_source.html#l00776">task_user::setMotor()</a>.</p>
+<p>Referenced by <a class="el" href="main_8cpp_source.html#l00148">main()</a>.</p>
 
 </div>
 </div>
@@ -208,26 +237,26 @@ JR Ridgely</dd></dl>
 </div><div class="memdoc">
 <p>This declares a taskshare which indicates that this variable is a shared variable. This variable will hold the duty cycle of a motor. </p>
 
-<p>Definition at line <a class="el" href="main_8cpp_source.html#l00101">101</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Definition at line <a class="el" href="main_8cpp_source.html#l00114">114</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="main_8cpp_source.html#l00127">main()</a>, <a class="el" href="task__motor_8cpp_source.html#l00109">task_motor::run()</a>, <a class="el" href="task__user_8cpp_source.html#l00122">task_user::run()</a>, and <a class="el" href="task__user_8cpp_source.html#l00776">task_user::setMotor()</a>.</p>
+<p>Referenced by <a class="el" href="main_8cpp_source.html#l00148">main()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a63b8526f83a43ed6aeb66f528aada7d6"></a>
+<a class="anchor" id="a68e3aef51c9bd9903eca9b72f35fee2c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">TaskShare&lt;uint8_t&gt;* motor_select</td>
+          <td class="memname">TaskShare&lt;int16_t&gt;* motor_setpoint</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This declares a taskshare which indicates that this variable is a shared variable. This variable will hold the select for each motor. 0 Indicates Motor 0 1 Indicates Motor 1 </p>
+<p>This declares a taskshare which indicates that this variable is a shared variable. This variable stores the setpoint for the PID motor controller. </p>
 
-<p>Definition at line <a class="el" href="main_8cpp_source.html#l00117">117</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Definition at line <a class="el" href="main_8cpp_source.html#l00110">110</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="main_8cpp_source.html#l00127">main()</a>, <a class="el" href="task__motor_8cpp_source.html#l00109">task_motor::run()</a>, <a class="el" href="task__user_8cpp_source.html#l00122">task_user::run()</a>, and <a class="el" href="task__user_8cpp_source.html#l00776">task_user::setMotor()</a>.</p>
+<p>Referenced by <a class="el" href="main_8cpp_source.html#l00148">main()</a>.</p>
 
 </div>
 </div>
@@ -242,16 +271,16 @@ JR Ridgely</dd></dl>
 </div><div class="memdoc">
 <p>This is a print queue, descended from <code>emstream</code> so that things can be printed into the queue using the "&lt;&lt;" operator and they'll come out the other end as a stream of characters. It's used by tasks that send things to the user interface task to be printed. </p>
 
-<p>Definition at line <a class="el" href="main_8cpp_source.html#l00096">96</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
+<p>Definition at line <a class="el" href="main_8cpp_source.html#l00106">106</a> of file <a class="el" href="main_8cpp_source.html">main.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="task__user_8cpp_source.html#l00668">task_user::getNumberInput()</a>, and <a class="el" href="main_8cpp_source.html#l00127">main()</a>.</p>
+<p>Referenced by <a class="el" href="main_8cpp_source.html#l00148">main()</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 25 2016 14:53:26 for Lab 2 Controlling a Motor_Driver w/ a Task by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu May 19 2016 09:40:02 for Lab 4 PID Controller by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

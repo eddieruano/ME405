@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['setpower',['SETPOWER',['../task__motor_8cpp.html#add1d508d51340e49c96b0385ae4ad7d2',1,'SETPOWER():&#160;task_motor.cpp'],['../task__user_8cpp.html#add1d508d51340e49c96b0385ae4ad7d2',1,'SETPOWER():&#160;task_user.cpp']]]
+  ['recenter',['RECENTER',['../task__motor_8cpp.html#ab0b7767883fef01903b5d22fc809fbc1',1,'task_motor.cpp']]]
 ];

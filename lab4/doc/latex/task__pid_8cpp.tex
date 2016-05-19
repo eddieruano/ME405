@@ -1,0 +1,40 @@
+\hypertarget{task__pid_8cpp}{\section{task\-\_\-pid.\-cpp File Reference}
+\label{task__pid_8cpp}\index{task\-\_\-pid.\-cpp@{task\-\_\-pid.\-cpp}}
+}
+
+
+This class implements a generic P\-I\-D controller that works on 16-\/bit values and features anti-\/windup and saturation points.  
+
+
+{\ttfamily \#include \char`\"{}textqueue.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}task\-\_\-pid.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}shares.\-h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{task__pid_8cpp_af78f6af13b9c032bf9d48ef40aa7e683}{\#define \hyperlink{task__pid_8cpp_af78f6af13b9c032bf9d48ef40aa7e683}{B\-R\-A\-K\-E}~0}\label{task__pid_8cpp_af78f6af13b9c032bf9d48ef40aa7e683}
+
+\begin{DoxyCompactList}\small\item\em Value for B\-R\-A\-K\-E directive. \end{DoxyCompactList}\item 
+\hypertarget{task__pid_8cpp_add1d508d51340e49c96b0385ae4ad7d2}{\#define \hyperlink{task__pid_8cpp_add1d508d51340e49c96b0385ae4ad7d2}{S\-E\-T\-P\-O\-W\-E\-R}~1}\label{task__pid_8cpp_add1d508d51340e49c96b0385ae4ad7d2}
+
+\begin{DoxyCompactList}\small\item\em Value for S\-E\-T\-P\-O\-W\-E\-R directive. \end{DoxyCompactList}\item 
+\hypertarget{task__pid_8cpp_af9291ffc58d55b50465db4eb26e5b02d}{\#define \hyperlink{task__pid_8cpp_af9291ffc58d55b50465db4eb26e5b02d}{F\-R\-E\-E\-W\-H\-E\-E\-L}~2}\label{task__pid_8cpp_af9291ffc58d55b50465db4eb26e5b02d}
+
+\begin{DoxyCompactList}\small\item\em Value for F\-R\-E\-E\-W\-H\-E\-E\-L directive. \end{DoxyCompactList}\item 
+\hypertarget{task__pid_8cpp_a3e8e611e983546f51c69c43342fda6f2}{\#define \hyperlink{task__pid_8cpp_a3e8e611e983546f51c69c43342fda6f2}{P\-O\-T\-E\-N\-T\-I\-O\-M\-E\-T\-E\-R}~3}\label{task__pid_8cpp_a3e8e611e983546f51c69c43342fda6f2}
+
+\begin{DoxyCompactList}\small\item\em Value for P\-O\-T\-E\-N\-T\-I\-O\-M\-E\-T\-E\-R directive. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class implements a generic P\-I\-D controller that works on 16-\/bit values and features anti-\/windup and saturation points. This is a task class that will iterate through a Proportional, Integral, Derivative control loop using a 16-\/bit signed setpoint and output value, control loop constants, and saturation points. The task sleeps for 10 milliseconds between evaluations of the control loop.
+
+\begin{DoxyAuthor}{Author}
+Anthony Lombardi
+\end{DoxyAuthor}
+Revisions\-: \begin{DoxyItemize}
+\item @ 5/5/2016 Now uses C.\-Refvem's satmath library, and Ks are stored as $\ast$1024. \item @ 5/4/2016 Initial version. License\-: This file is copyright 2016 by Anthony Lombardi and released under the Lesser G\-N\-U Public License, version 2. It intended for educational use only, but its use is not limited thereto. \end{DoxyItemize}
+
+
+Definition in file \hyperlink{task__pid_8cpp_source}{task\-\_\-pid.\-cpp}.
+

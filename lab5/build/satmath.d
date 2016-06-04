@@ -1,4 +1,3 @@
-build/satmath.o: ../testing/drivers/satmath.cpp \
- ../testing/headers/satmath.h
+build/satmath.o: ../lab5/drivers/satmath.cpp ../lab5/headers/satmath.h
 
-../testing/headers/satmath.h:
+../lab5/headers/satmath.h:

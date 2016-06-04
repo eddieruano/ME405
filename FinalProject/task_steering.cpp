@@ -1,6 +1,6 @@
 //*****************************************************************************
-/** @file task_servo.cpp
- *  @brief     This is the file for the 'task_servo' class which handles the
+/** @file task_steering.cpp
+ *  @brief     This is the file for the 'task_steering' class which handles the
  *             encoder_driver class.
  *
  *  @details   This class is given a pointer to an 'encoder_driver' class
@@ -51,7 +51,7 @@
  *    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 //****************************************************************************
 #include "textqueue.h"                    // Header for text queue class
-#include "task_servo.h"                   // Header for this task
+#include "task_steering.h"                   // Header for this task
 #include "shares.h"                       // Shared inter-task communications
 #include "time_stamp.h"
 #include "servo_driver.h"
@@ -62,7 +62,7 @@
 
 
 /**
- * @brief      This is the constructor for the task_servo class.
+ * @brief      This is the constructor for the task_steering class.
  * @details    It initialzes all the variables given to the TaskBase super
  *             class and then initializes the encoder pointer given and the
  *             last_count variable.
@@ -80,7 +80,7 @@
  *                            in from the main() fucntion
  */
 
-task_servo::task_servo (
+task_steering::task_steering (
    const char* a_name,
    unsigned portBASE_TYPE a_priority,
    size_t a_stack_size,
@@ -112,7 +112,7 @@ task_servo::task_servo (
  *             we can obtain an estimate of the counts per sec.
  */
 
-void task_servo::run (void)
+void task_steering::run (void)
 {
    // Make a variable which will hold times to use for precise task scheduling
    TickType_t previousTicks = xTaskGetTickCount ();
@@ -125,6 +125,8 @@ void task_servo::run (void)
 
       adc_reading = adc_reading + local_error_adc;
       int16_t adjust;
+
+
       if (adc_reading < 512)
       {
          adjust = (512 - adc_reading) * -1;
@@ -133,22 +135,17 @@ void task_servo::run (void)
       {
          adjust = adc_reading - 512;
       }
+      
       int16_t corrected_value = adc_reading + 1000 + adjust;
 
       if (local_channel_select == 1)
       {
          x_joystick -> put(corrected_value);
       }
-      // if (local_channel_select == 2)
-      // {
-      //    y_joystick -> put(corrected_value);
-      // }
 
       int16_t adc_y = (int16_t) p_local_adc -> read_once(0);
 
       y_joystick ->put(adc_y);
-
-
 
 
       p_local_servo_driver -> setServoAngle(corrected_value);
@@ -169,7 +166,7 @@ void task_servo::run (void)
 }
 
 
-void task_servo::initJoystick (int16_t channel_select)
+void task_steering::initJoystick (int16_t channel_select)
 {
    int8_t count = 0; 
    local_error_adc = 0;

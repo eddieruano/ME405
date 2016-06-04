@@ -1,6 +1,6 @@
-build/motor_driver.o: ../testing/drivers/motor_driver.cpp \
+build/motor_driver.o: ../lab5/drivers/motor_driver.cpp \
  ../lib/serial/rs232int.h ../lib/serial/base232.h \
- ../lib/serial/emstream.h ../testing/headers/motor_driver.h \
+ ../lib/serial/emstream.h ../lab5/headers/motor_driver.h \
  ../lib/serial/emstream.h ../lib/freertos/FreeRTOS.h \
  ../lib/freertos/FreeRTOSConfig.h ../lib/freertos/projdefs.h \
  ../lib/freertos/portable.h ../lib/freertos/portmacro.h \
@@ -14,7 +14,7 @@ build/motor_driver.o: ../testing/drivers/motor_driver.cpp \
 
 ../lib/serial/emstream.h:
 
-../testing/headers/motor_driver.h:
+../lab5/headers/motor_driver.h:
 
 ../lib/serial/emstream.h:
 

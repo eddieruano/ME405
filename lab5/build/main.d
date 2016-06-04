@@ -5,22 +5,27 @@ build/main.o: main.cpp ../lib/freertos/FreeRTOS.h \
  ../lib/freertos/list.h ../lib/freertos/queue.h \
  ../lib/freertos/croutine.h ../lib/serial/rs232int.h \
  ../lib/serial/base232.h ../lib/serial/emstream.h \
- ../testing/headers/ansi_terminal.h ../lib/serial/emstream.h \
+ ../lab5/headers/ansi_terminal.h ../lib/serial/emstream.h \
  ../lib/frtcpp/time_stamp.h ../lib/frtcpp/taskbase.h \
  ../lib/frtcpp/time_stamp.h ../lib/misc/mechutil.h \
  ../lib/frtcpp/textqueue.h ../lib/frtcpp/baseshare.h \
  ../lib/frtcpp/taskqueue.h ../lib/frtcpp/taskshare.h \
- ../testing/headers/shares.h ../testing/headers/task_brightness.h \
- ../testing/headers/adc.h ../lib/freertos/semphr.h \
- ../lib/freertos/queue.h ../testing/headers/motor_driver.h \
- ../testing/headers/task_user.h ../testing/headers/shares.h \
- ../testing/headers/imu_driver.h ../testing/headers/task_motor.h \
- ../testing/headers/task_motor.h ../testing/headers/task_encoder.h \
- ../testing/headers/hctl_driver.h ../testing/headers/hctl_driver.h \
- ../testing/headers/imu_driver.h ../testing/headers/servo_driver.h \
- ../testing/headers/hctl.h ../testing/headers/task_pid.h \
- ../testing/headers/satmath.h ../testing/headers/task_servo.h \
- ../testing/headers/servo_driver.h
+ ../lab5/headers/shares.h ../lab5/headers/task_brightness.h \
+ ../lab5/headers/adc.h ../lib/freertos/semphr.h ../lib/freertos/queue.h \
+ ../lab5/headers/motor_driver.h ../lab5/headers/task_user.h \
+ ../lab5/headers/shares.h ../lab5/headers/bno055_driver.h \
+ ../lab5/headers/i2c_driver.h ../lab5/headers/Adafruit_BNO055.h \
+ ../lab5/headers/imumaths.h ../lab5/headers/vector.h \
+ ../lab5/headers/matrix.h ../lab5/headers/quaternion.h \
+ ../lab5/headers/imumaths.h ../lab5/headers/task_motor.h \
+ ../lab5/headers/task_encoder.h ../lab5/headers/hctl_driver.h \
+ ../lab5/headers/hctl_driver.h ../lab5/headers/servo_driver.h \
+ ../lab5/headers/hctl.h ../lab5/headers/task_pid.h \
+ ../lab5/headers/satmath.h ../lab5/headers/task_steering.h \
+ ../lab5/headers/servo_driver.h ../lab5/headers/task_shift.h \
+ ../lab5/headers/shift_driver.h ../lab5/headers/task_imu.h \
+ ../lab5/headers/task_imu.h ../lab5/headers/shift_driver.h \
+ ../lab5/headers/i2c_driver.h ../lab5/headers/bno055_driver.h
 
 ../lib/freertos/FreeRTOS.h:
 
@@ -48,7 +53,7 @@ build/main.o: main.cpp ../lib/freertos/FreeRTOS.h \
 
 ../lib/serial/emstream.h:
 
-../testing/headers/ansi_terminal.h:
+../lab5/headers/ansi_terminal.h:
 
 ../lib/serial/emstream.h:
 
@@ -68,44 +73,68 @@ build/main.o: main.cpp ../lib/freertos/FreeRTOS.h \
 
 ../lib/frtcpp/taskshare.h:
 
-../testing/headers/shares.h:
+../lab5/headers/shares.h:
 
-../testing/headers/task_brightness.h:
+../lab5/headers/task_brightness.h:
 
-../testing/headers/adc.h:
+../lab5/headers/adc.h:
 
 ../lib/freertos/semphr.h:
 
 ../lib/freertos/queue.h:
 
-../testing/headers/motor_driver.h:
+../lab5/headers/motor_driver.h:
 
-../testing/headers/task_user.h:
+../lab5/headers/task_user.h:
 
-../testing/headers/shares.h:
+../lab5/headers/shares.h:
 
-../testing/headers/imu_driver.h:
+../lab5/headers/bno055_driver.h:
 
-../testing/headers/task_motor.h:
+../lab5/headers/i2c_driver.h:
 
-../testing/headers/task_motor.h:
+../lab5/headers/Adafruit_BNO055.h:
 
-../testing/headers/task_encoder.h:
+../lab5/headers/imumaths.h:
 
-../testing/headers/hctl_driver.h:
+../lab5/headers/vector.h:
 
-../testing/headers/hctl_driver.h:
+../lab5/headers/matrix.h:
 
-../testing/headers/imu_driver.h:
+../lab5/headers/quaternion.h:
 
-../testing/headers/servo_driver.h:
+../lab5/headers/imumaths.h:
 
-../testing/headers/hctl.h:
+../lab5/headers/task_motor.h:
 
-../testing/headers/task_pid.h:
+../lab5/headers/task_encoder.h:
 
-../testing/headers/satmath.h:
+../lab5/headers/hctl_driver.h:
 
-../testing/headers/task_servo.h:
+../lab5/headers/hctl_driver.h:
 
-../testing/headers/servo_driver.h:
+../lab5/headers/servo_driver.h:
+
+../lab5/headers/hctl.h:
+
+../lab5/headers/task_pid.h:
+
+../lab5/headers/satmath.h:
+
+../lab5/headers/task_steering.h:
+
+../lab5/headers/servo_driver.h:
+
+../lab5/headers/task_shift.h:
+
+../lab5/headers/shift_driver.h:
+
+../lab5/headers/task_imu.h:
+
+../lab5/headers/task_imu.h:
+
+../lab5/headers/shift_driver.h:
+
+../lab5/headers/i2c_driver.h:
+
+../lab5/headers/bno055_driver.h:

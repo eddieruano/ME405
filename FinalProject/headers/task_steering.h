@@ -1,10 +1,10 @@
 //*****************************************************************************
-/** @file task_servo.h
- *  @brief     This is the header file for the 'task_servo' class which 
+/** @file task_steering.h
+ *  @brief     This is the header file for the 'task_steering' class which 
  *             handles the 'encoder_driver' class.
  *
  *  @details   This class declares all the prototypes for all variables and
- *             methods required in task_servo.
+ *             methods required in task_steering.
  *
  *  @author Eddie Ruano
  *  @author JR Ridgely
@@ -47,8 +47,8 @@
 //****************************************************************************
 
 // This define prevents this .h file from being included multiple times in a .cpp file
-#ifndef _task_servo_H_
-#define _task_servo_H_
+#ifndef _task_steering_H_
+#define _task_steering_H_
 
 #include <stdlib.h>                         // Prototype declarations for I/O functions
 #include <avr/io.h>                         // Header for special function registers
@@ -70,12 +70,12 @@
 
 #define CHECK_TIMES
 /**
- * @brief      this is the declaration for 'task_servo' which directly 
+ * @brief      this is the declaration for 'task_steering' which directly 
  *             handles the encoder_driver. Only three variables are required 
  *             for this class since the ISR is declared in the driver.
  */
 
-class task_servo : public TaskBase
+class task_steering : public TaskBase
 {
 private:
 
@@ -90,7 +90,7 @@ protected:
 
 public:
     ///This is the constructor prototype, added the pointer for an encoder_driver to be passed in by main.
-    task_servo (const char*, unsigned portBASE_TYPE, size_t, emstream*, servo_driver*, uint8_t);
+    task_steering (const char*, unsigned portBASE_TYPE, size_t, emstream*, servo_driver*, uint8_t);
 
     /// This method is called by the RTOS once to run the task loop for ever and ever.
     void run (void);
@@ -110,4 +110,4 @@ public:
     
 };
 
-#endif // _task_servo_H_
+#endif // _task_steering_H_

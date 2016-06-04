@@ -1,6 +1,6 @@
 //*****************************************************************************
-/** @file task_servo.cpp
- *  @brief     This is the file for the 'task_servo' class which handles the
+/** @file task_encoder.cpp
+ *  @brief     This is the file for the 'task_encoder' class which handles the
  *             encoder_driver class.
  *
  *  @details   This class is given a pointer to an 'encoder_driver' class
@@ -51,18 +51,15 @@
  *    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 //****************************************************************************
 #include "textqueue.h"                    // Header for text queue class
-#include "task_servo.h"                   // Header for this task
+#include "task_encoder.h"                   // Header for this task
 #include "shares.h"                       // Shared inter-task communications
 #include "time_stamp.h"
-#include "servo_driver.h"
 
-#define X_ERROR_OFFSET -13
-#define Y_ERROR_OFFSET 25
-//#define CHECK_TIMES 10
-
+#define MAX_SPREAD 1700
+#define LIMIT 4095
 
 /**
- * @brief      This is the constructor for the task_servo class.
+ * @brief      This is the constructor for the task_encoder class.
  * @details    It initialzes all the variables given to the TaskBase super
  *             class and then initializes the encoder pointer given and the
  *             last_count variable.
@@ -80,21 +77,20 @@
  *                            in from the main() fucntion
  */
 
-task_servo::task_servo (
+task_encoder::task_encoder (
    const char* a_name,
    unsigned portBASE_TYPE a_priority,
    size_t a_stack_size,
    emstream* p_ser_dev,
-   servo_driver* p_servo_inc,
-   uint8_t channel_select_inc
-
+   hctl_driver* p_hctl_inc
 ): TaskBase (a_name, a_priority, a_stack_size, p_ser_dev)
 {
    /// Initialize pointer passed from main() to local variable to work with
-   p_local_servo_driver = p_servo_inc;
-   local_channel_select = channel_select_inc;
-
-   initJoystick(local_channel_select);
+   p_hctl = p_hctl_inc;
+   previous_encoder_count = 0;
+   //previous_encoder_difference = 0; 
+   this_difference = 0;
+   this_count = 0;
 }
 
 
@@ -112,75 +108,64 @@ task_servo::task_servo (
  *             we can obtain an estimate of the counts per sec.
  */
 
-void task_servo::run (void)
+void task_encoder::run (void)
 {
    // Make a variable which will hold times to use for precise task scheduling
    TickType_t previousTicks = xTaskGetTickCount ();
 
-   // The loop to contunially run the motors
+   
+   // The loop to continully check the encoder
    while (1)
-   {
-      // make it read correct channel for this task
-      int16_t adc_reading = (int16_t) p_local_adc -> read_oversampled(local_channel_select, 5);
+   { 
+      //read value from chip
+      this_count = p_hctl -> read();
+      // find raw difference w/o taking into account overflow
+      this_difference = this_count - previous_encoder_count;
 
-      adc_reading = adc_reading + local_error_adc;
-      int16_t adjust;
-      if (adc_reading < 512)
+      //fix the difference to account for overflow
+      if(my_abs(this_difference) > MAX_SPREAD)
       {
-         adjust = (512 - adc_reading) * -1;
+         //an overflow occurred, must find correct ticks difference
+         //if this reading is smaller e.g 375 and prev was like 3800 we know
+         //we are counting up and overflowed
+         if(this_count < previous_encoder_count)
+         {
+            this_difference = ((LIMIT - previous_encoder_count) + this_count);
+         }
+         else // we know we are counting down so neg
+         {
+            this_difference = -1 * ((LIMIT - this_count) + previous_encoder_count);
+         }
+         //*p_serial <<endl<<endl<<this_difference<<endl<<this_count<<endl<<previous_encoder_count<<endl<<endl;
+
       }
-      else
-      {
-         adjust = adc_reading - 512;
-      }
-      int16_t corrected_value = adc_reading + 1000 + adjust;
+      // add the correct difference to the encoder_count variable
+      encoder_count -> put((encoder_count -> get()) + (int32_t)this_difference);
+      //place ticks per MS in this case in the correct shares variable
+      encoder_ticks_per_task -> put(this_difference);
 
-      if (local_channel_select == 1)
-      {
-         x_joystick -> put(corrected_value);
-      }
-      // if (local_channel_select == 2)
-      // {
-      //    y_joystick -> put(corrected_value);
-      // }
-
-      int16_t adc_y = (int16_t) p_local_adc -> read_once(0);
-
-      y_joystick ->put(adc_y);
+      // store the current count as previous
+      previous_encoder_count = this_count;
 
 
-
-
-      p_local_servo_driver -> setServoAngle(corrected_value);
-
-      steering_power -> put(corrected_value);
-
-      //*p_serial << PMS("corrected_angle: ") << corrected_angle << endl;
-
-
-
-      // This is a method we use to cause a task to make one run through its task
-      // loop every N milliseconds and let other tasks run at other times
-      delay_from_for_ms (previousTicks, 1);
+   // Increment the run counter. This counter belongs to the parent class and can
+   // be printed out for debugging purposes
+   runs++;
+   // This is a method we use to cause a task to make one run through its task
+   // loop every N milliseconds and let other tasks run at other times
+   delay_from_for_ms (previousTicks, 1);
    }
-
-
-
+   
 }
 
-
-void task_servo::initJoystick (int16_t channel_select)
+uint16_t task_encoder::my_abs(int16_t the_number)
 {
-   int8_t count = 0; 
-   local_error_adc = 0;
-   while (count < 10)
+   if(the_number < 0)
    {
-      local_error_adc = local_error_adc + (p_local_adc -> read_once(channel_select));
-      count++;
+      return ((uint16_t)(the_number * -1));
    }
-
-   local_error_adc = (512 - (local_error_adc / 10));
-   *p_serial << local_channel_select << PMS(" ERROR: ") << local_error_adc << endl;
+   else
+   {
+      return (uint16_t)the_number;
+   }
 }
-
-

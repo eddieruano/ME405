@@ -26,11 +26,11 @@
 
 # The name of the program you're building, usually the file which contains main(). 
 # The name without its extension (.c or .cpp or whatever) must be given here. 
-PROJECT_NAME = testing
+PROJECT_NAME = lab5
 
 # A list of the source (.c, .cc, .cpp) files in the project. Files in library 
 # subdirectories do not go in this list; they're included automatically
-SOURCES = main.cpp task_user.cpp task_motor.cpp task_encoder.cpp task_pid.cpp task_servo.cpp
+SOURCES = main.cpp task_user.cpp task_motor.cpp task_encoder.cpp task_pid.cpp task_steering.cpp task_shift.cpp task_imu.cpp
 
 # Clock frequency of the CPU, in Hz. This number should be an unsigned long integer.
 # For example, 16 MHz would be represented as 16000000UL. 
@@ -212,11 +212,11 @@ ICE     = avarice
 OPTIM = -O2
 
 # Warnings which need to be given
-C_WARNINGS = -Wall -Wextra -Wshadow -Wpointer-arith -Wbad-function-cast -Wcast-align \
+C_WARNINGS = -Wall -Wextra  -Wpointer-arith -Wbad-function-cast -Wcast-align \
              -Wsign-compare -Wstrict-prototypes -Wmissing-prototypes -Wunused \
              -Wmissing-declarations -Waggregate-return 
 
-CPP_WARNINGS = -Wall -Wextra -Wshadow -Wpointer-arith -Wcast-align -Wsign-compare \
+CPP_WARNINGS = -Wall -Wextra -Wpointer-arith -Wcast-align -Wsign-compare \
                -Wmissing-declarations -Wunused
 
 # Various compiler options which are common to both the C and C++ compilers

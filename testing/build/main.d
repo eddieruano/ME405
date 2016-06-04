@@ -19,8 +19,9 @@ build/main.o: main.cpp ../lib/freertos/FreeRTOS.h \
  ../testing/headers/hctl_driver.h ../testing/headers/hctl_driver.h \
  ../testing/headers/imu_driver.h ../testing/headers/servo_driver.h \
  ../testing/headers/hctl.h ../testing/headers/task_pid.h \
- ../testing/headers/satmath.h ../testing/headers/task_servo.h \
- ../testing/headers/servo_driver.h
+ ../testing/headers/satmath.h ../testing/headers/task_steering.h \
+ ../testing/headers/servo_driver.h ../testing/headers/task_shift.h \
+ ../testing/headers/shift_driver.h ../testing/headers/shift_driver.h
 
 ../lib/freertos/FreeRTOS.h:
 
@@ -106,6 +107,12 @@ build/main.o: main.cpp ../lib/freertos/FreeRTOS.h \
 
 ../testing/headers/satmath.h:
 
-../testing/headers/task_servo.h:
+../testing/headers/task_steering.h:
 
 ../testing/headers/servo_driver.h:
+
+../testing/headers/task_shift.h:
+
+../testing/headers/shift_driver.h:
+
+../testing/headers/shift_driver.h:

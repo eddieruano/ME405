@@ -1,6 +1,6 @@
-build/imu_driver.o: ../testing/drivers/imu_driver.cpp \
+build/imu_driver.o: ../lab5/drivers/imu_driver.cpp \
  ../lib/serial/rs232int.h ../lib/serial/base232.h \
- ../lib/serial/emstream.h ../testing/headers/imu_driver.h \
+ ../lib/serial/emstream.h ../lab5/headers/imu_driver.h \
  ../lib/serial/emstream.h ../lib/freertos/FreeRTOS.h \
  ../lib/freertos/FreeRTOSConfig.h ../lib/freertos/projdefs.h \
  ../lib/freertos/portable.h ../lib/freertos/portmacro.h \
@@ -9,10 +9,9 @@ build/imu_driver.o: ../testing/drivers/imu_driver.cpp \
  ../lib/frtcpp/time_stamp.h ../lib/misc/mechutil.h \
  ../lib/frtcpp/time_stamp.h ../lib/frtcpp/taskqueue.h \
  ../lib/frtcpp/baseshare.h ../lib/frtcpp/taskshare.h \
- ../testing/headers/adc.h ../lib/freertos/semphr.h \
- ../lib/freertos/queue.h ../testing/headers/motor_driver.h \
- ../lib/frtcpp/textqueue.h ../testing/headers/task_motor.h \
- ../testing/headers/shares.h
+ ../lab5/headers/adc.h ../lib/freertos/semphr.h ../lib/freertos/queue.h \
+ ../lab5/headers/motor_driver.h ../lib/frtcpp/textqueue.h \
+ ../lab5/headers/task_motor.h ../lab5/headers/shares.h
 
 ../lib/serial/rs232int.h:
 
@@ -20,7 +19,7 @@ build/imu_driver.o: ../testing/drivers/imu_driver.cpp \
 
 ../lib/serial/emstream.h:
 
-../testing/headers/imu_driver.h:
+../lab5/headers/imu_driver.h:
 
 ../lib/serial/emstream.h:
 
@@ -56,16 +55,16 @@ build/imu_driver.o: ../testing/drivers/imu_driver.cpp \
 
 ../lib/frtcpp/taskshare.h:
 
-../testing/headers/adc.h:
+../lab5/headers/adc.h:
 
 ../lib/freertos/semphr.h:
 
 ../lib/freertos/queue.h:
 
-../testing/headers/motor_driver.h:
+../lab5/headers/motor_driver.h:
 
 ../lib/frtcpp/textqueue.h:
 
-../testing/headers/task_motor.h:
+../lab5/headers/task_motor.h:
 
-../testing/headers/shares.h:
+../lab5/headers/shares.h:

@@ -89,6 +89,7 @@ protected:
     int16_t this_count;
 
     int16_t this_difference;
+    int32_t running;
 
 public:
     ///This is the constructor prototype, added the pointer for an encoder_driver to be passed in by main.

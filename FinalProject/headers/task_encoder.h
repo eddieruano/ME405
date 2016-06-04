@@ -1,10 +1,10 @@
 //*****************************************************************************
-/** @file task_servo.h
- *  @brief     This is the header file for the 'task_servo' class which 
+/** @file task_encoder.h
+ *  @brief     This is the header file for the 'task_encoder' class which 
  *             handles the 'encoder_driver' class.
  *
  *  @details   This class declares all the prototypes for all variables and
- *             methods required in task_servo.
+ *             methods required in task_encoder.
  *
  *  @author Eddie Ruano
  *  @author JR Ridgely
@@ -47,8 +47,8 @@
 //****************************************************************************
 
 // This define prevents this .h file from being included multiple times in a .cpp file
-#ifndef _task_servo_H_
-#define _task_servo_H_
+#ifndef _task_encoder_H_
+#define _task_encoder_H_
 
 #include <stdlib.h>                         // Prototype declarations for I/O functions
 #include <avr/io.h>                         // Header for special function registers
@@ -64,50 +64,44 @@
 
 #include "rs232int.h"                       // ME405/507 library for serial comm.
 #include "adc.h"                            // Header for A/D converter driver class
+#include "motor_driver.h"                   // Header for Generic Motor driver
+#include "hctl_driver.h"                    // Header for the EHTCL Driver
 
-#include "servo_driver.h"                    // Header for the EHTCL Driver
-
-
-#define CHECK_TIMES
 /**
- * @brief      this is the declaration for 'task_servo' which directly 
- *             handles the encoder_driver. Only three variables are required 
- *             for this class since the ISR is declared in the driver.
+ * @brief      this is the declaration for 'task_encoder' which directly 
+ *             handles the htcl_driver. it contains necessary logic for 
+ *             correct behavior needed at high rpms when the 12bit counter 
+ *             overflows and it is necessary to try and guess whether we're 
+ *             going forwards or backwards based on encoder ticks **ONLY**
  */
 
-class task_servo : public TaskBase
+class task_encoder : public TaskBase
 {
 private:
 
 protected:
     /// This variable hold the previous count of encoder ticks since the last time the task was called.
-    uint16_t last_count;
-    /// This is the diffrence between the global count and the local count
-    int32_t count_diff;
+    int16_t previous_encoder_count;
 
-    
-    
+    /// This is the diffrence between the global count and the local count
+    //int16_t previous_encoder_difference;
+
+    int16_t this_count;
+
+    int16_t this_difference;
 
 public:
     ///This is the constructor prototype, added the pointer for an encoder_driver to be passed in by main.
-    task_servo (const char*, unsigned portBASE_TYPE, size_t, emstream*, servo_driver*, uint8_t);
+    task_encoder (const char*, unsigned portBASE_TYPE, size_t, emstream*, hctl_driver*);
 
     /// This method is called by the RTOS once to run the task loop for ever and ever.
     void run (void);
-    /// This is the declaration for the local copy of the servo_driver pointer.
-    servo_driver* p_local_servo_driver;
+    /// This is the declaration for the local copy of the encoder_driver pointer.
+    hctl_driver* p_hctl;
 
-    uint8_t local_channel_select;
-
-    adc* p_local_adc;
-
-    //void initializeJoystick(int16_t);
-
-    uint16_t local_error_adc;
-
-    void initJoystick(int16_t); 
+    uint16_t my_abs(int16_t);
     
     
 };
 
-#endif // _task_servo_H_
+#endif // _task_encoder_H_

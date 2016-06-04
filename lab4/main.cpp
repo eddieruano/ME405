@@ -230,7 +230,7 @@ int main (void)
     //new task_hctl_2000 ("counter",  task_priority(4), 280, p_ser_port, p_counter);
     //new task_encoder ("Encoder1", task_priority(5), 280, p_ser_port, p_encoder1);
 
-    //new task_servo ("Steering", task_priority(3), 280, p_ser_port, p_steering_servo, 1);
+    //new task_steering ("Steering", task_priority(3), 280, p_ser_port, p_steering_servo, 1);
 
     // create a new PID manager for the motor, with K values of:
     // Proportional = 1, Integral = 0, Derivative = 0, Windup = 0

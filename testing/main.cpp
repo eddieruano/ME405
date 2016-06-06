@@ -81,15 +81,9 @@
 //#include "task_hctl_2000.h"
 #include "hctl.h"
 #include "task_pid.h"
-#include "task_servo.h"
-
-
-
-
-
-// Set all defines
-/// Set the initital motor selector to something neutral
-#define NULL_MOTER 255
+#include "task_steering.h"
+#include "task_shift.h"
+#include "shift_driver.h"
 
 
 
@@ -138,6 +132,8 @@ TaskShare<int16_t>* x_joystick;
 
 TaskShare<int16_t>* y_joystick;
 
+TaskShare<int8_t>* gear_state;
+
 
 
 //=============================================================================
@@ -171,19 +167,23 @@ int main (void)
     // Create the queues and other shared data items here
     p_print_ser_queue = new TextQueue (32, "Print", p_ser_port, 10);
 
+    /// Start Shares Motor Variables
     motor_setpoint = new TaskShare<int16_t> ("Motor SetPoint");
-
     motor_directive = new TaskShare<uint8_t> ("Motor Directive");
     motor_power = new TaskShare<int16_t> ("Motor Power");
-    // start encoder variables
+    // Start Shares Encoder Variables
     encoder_count = new TaskShare<int32_t> ("Encoder Pulse Count");
     encoder_ticks_per_task = new TaskShare<int16_t> ("Encoder Pulse Per Time");
+    // Start Shares IMU variables
     data_read = new TaskShare<uint32_t> ("imu data");
-    activate_encoder = new TaskShare<uint8_t> ("Encoder Activate");
-    steering_power = new TaskShare<int16_t> ("Steering Power");
 
-    x_joystick = new TaskShare<int16_t> ("x VAL");
-    y_joystick = new TaskShare<int16_t> ("y VAL");
+    // Start Shares Steering Variables
+    steering_power = new TaskShare<int16_t> ("Steering Power");
+    // Start Shares oystick Position Variables
+    x_joystick = new TaskShare<int16_t> ("X Joystick Position");
+    y_joystick = new TaskShare<int16_t> ("Y Joystick Position");
+    // Start  Shares Gear Variables
+    gear_state = new TaskShare<int8_t> ("Shift State");
 
     //initialize to special value so no motor is affected yet
     //**DROPPING SUPPORT 2 MOTORS//
@@ -193,52 +193,42 @@ int main (void)
     motor_driver* p_motor1 = new motor_driver(p_ser_port, &PORTC, &PORTC, &PORTB, &OCR1B, PC0, PC1, PC2, PB6);
 
     //USE TIMER AND COUNTER 3
-    //
-    // servo_driver* p_steering_servo = new servo_driver(p_ser_port, &TCCR3A, &TCCR3B, &ICR3, &OCR3A, 0, 0, PE3);
+    // this is steering
     servo_driver* p_steering_servo = new servo_driver(p_ser_port, &TCCR3A, &TCCR3B, &ICR3, &OCR3A, 8, 20000, PE3);
-    //enable two low bits
-    // DDRD |= (1<<PIND1) | (1<<PIND0);
-    // set to high?
-    // PORTD |= (1<<PIND1) | (1<<PIND0);
+    // this is shifting
 
-    // motor_driver* p_motor2 = new motor_driver(p_ser_port, &PORTD, &PORTD, &PORTB, &OCR1A, PD5, PD6, PD7, PB5);
-
-    // make instance of htcl_driver instead of encoder_driver which has been removed
-    hctl_driver* p_hctl = new hctl_driver(p_ser_port, &PORTA, &PORTC, 7, &PORTC, 6);
-
-    imu_driver* p_imu = new imu_driver(p_ser_port, &PORTD, &DDRD, 0, 1);
-
-
-    //int8_t tempsss = p_imu -> readIMU(0, 1);
-    *p_ser_port << PMS("PINS DOE: ") << PMS("  ") << endl;
-
-    // make instance of encoder
     //encoder_driver* p_encoder1 = new encoder_driver(p_ser_port, &EICRB, &EIMSK, &DDRE, ISC60, ISC70, INT6, INT7, PE6, PE7);
 
-    // The user interface is at low priority; it could have been run in the idle task
-    // but it is desired to exercise the RTOS more thoroughly in this test program
+    servo_driver* p_shift_servo = new servo_driver(p_ser_port, &TCCR3A, &TCCR3B, &ICR3, &OCR3B, 8, 20000, PE4);
+
+    // make instance of hctl_driver to count external ticks from hctl chip
+    hctl_driver* p_hctl = new hctl_driver(p_ser_port, &PORTA, &PORTC, 7, &PORTC, 6);
+
+    // make instance of imu_driver to be able to link to the BNO055
+    imu_driver* p_imu = new imu_driver(p_ser_port, &PORTD, &DDRD, 0, 1);
+    // temp method to read from IMU
+    int8_t tempsss = p_imu -> readIMU(0, 1);
+
+    shift_driver* p_local_shift = new shift_driver(p_ser_port, &EICRB, &EIMSK, &PORTE, ISC50, INT5, PE5);
+
+    // Create tasks to control motors, encoders, and IMUs
     new task_user ("UserInt", task_priority (1), 260, p_ser_port, p_imu);
 
-    // Create tasks to control motors, given individual p_motors
-
-    new task_motor ("Motor1", task_priority (2), 280, p_ser_port, p_motor1, p_main_adc, 1);
-    //new task_motor ("Motor2", task_priority (3), 280, p_ser_port, p_motor2, p_main_adc, 2);
+    new task_motor ("MotorControl", task_priority (2), 280, p_ser_port, p_motor1, p_main_adc, 1);
 
     //start encoder and give the highest priority
-    new task_encoder ("Encoder1", task_priority(4), 280, p_ser_port, p_hctl);
+    new task_encoder ("EncoderControl", task_priority(5), 280, p_ser_port, p_hctl);
 
-    //hctl_driver* p_counter = new hctl_driver(p_ser_port, &PORTA, &PORTC, PC7, &PORTC, PC6);
+    new task_steering ("SteeringControl", task_priority(3), 280, p_ser_port, p_steering_servo, 1);
 
-    //new task_hctl_2000 ("counter",  task_priority(4), 280, p_ser_port, p_counter);
-    //new task_encoder ("Encoder1", task_priority(5), 280, p_ser_port, p_encoder1);
 
-    new task_servo ("Steering", task_priority(3), 280, p_ser_port, p_steering_servo, 1);
+    new task_shift ("ShiftControl", task_priority(4), 280, p_ser_port,p_shift_servo, 1, p_local_shift);
+    
 
     // create a new PID manager for the motor, with K values of:
     // Proportional = 1, Integral = 0, Derivative = 0, Windup = 0
     // And the default saturation limits
     new task_pid ("PID", task_priority(4), 280, p_ser_port, motor_setpoint, encoder_ticks_per_task, motor_power, 1024, 0, 0, 0, -1023, 1023);
-
 
     // Here's where the RTOS scheduler is started up. It should never exit as long as
     // power is on and the microcontroller isn't rebooted

@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['adc',['adc',['../classadc.html',1,'adc'],['../classadc.html#af3b8262c08f5fc5ae325a20622883424',1,'adc::adc()']]],
-  ['adc_2ecpp',['adc.cpp',['../adc_8cpp.html',1,'']]],
-  ['adc_2eh',['adc.h',['../adc_8h.html',1,'']]]
+  ['brake',['BRAKE',['../task__motor_8cpp.html#af78f6af13b9c032bf9d48ef40aa7e683',1,'BRAKE():&#160;task_motor.cpp'],['../task__pid_8cpp.html#af78f6af13b9c032bf9d48ef40aa7e683',1,'BRAKE():&#160;task_pid.cpp'],['../task__user_8cpp.html#af78f6af13b9c032bf9d48ef40aa7e683',1,'BRAKE():&#160;task_user.cpp']]]
 ];

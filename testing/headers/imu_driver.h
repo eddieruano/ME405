@@ -85,7 +85,7 @@ protected:
     /// Counter for Comms
     uint8_t count;
     /// Data holder
-    uint32_t data;
+    uint8_t data;
     /// Slave address for BNO055 is 0x28
     uint8_t slave_address;
     uint8_t slave_address_write;
@@ -102,8 +102,8 @@ public:
     );
 
 void initializeIMU(void);
-int8_t readIMU(uint8_t, uint8_t);
-void writeIMU(uint8_t);
+uint8_t readIMU(uint8_t, uint8_t);
+void writeRegister(uint8_t);
 void clearEnable(int);
 void waitForSet(void);
 void checkError(int);

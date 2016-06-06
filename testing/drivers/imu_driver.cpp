@@ -42,6 +42,8 @@
 // Include header for the driver class
 #include "imu_driver.h"
 #include <util/twi.h>
+#include <math.h>
+#include <limits.h>
 
 
 
@@ -162,7 +164,7 @@ void imu_driver::initializeIMU(void)
 
 
 
-int8_t imu_driver::readIMU(uint8_t address, uint8_t byte_size)
+uint8_t imu_driver::readIMU(uint8_t address, uint8_t byte_size)
 {
     int thecount = -1;
     data = 0;
@@ -241,7 +243,8 @@ int8_t imu_driver::readIMU(uint8_t address, uint8_t byte_size)
         checkError(TW_MR_DATA_ACK);
         thecount++;
     }
-    
+
+
 
     //merge with last bits
     mergeData(TWDR);
@@ -250,19 +253,20 @@ int8_t imu_driver::readIMU(uint8_t address, uint8_t byte_size)
     checkError(TW_MR_DATA_NACK); //master has data and sent nack
 
     TWCR = (1 << TWEN) | (1 << TWINT) | (1 << TWSTO);
-    *serial_PORT << PMS("THE FINAL DATA: ") << hex << data <<endl;
-    data_read -> put(data);
-    return thecount;
+    *serial_PORT << PMS("THE FINAL DATA: ") << hex << data << endl;
+    //data_read -> put(data);
+
+    return data;
 
 }
 
 void imu_driver::clearEnable(int val)
 {
-    if(val == STOP)
+    if (val == STOP)
     {
         TWCR = ((1 << TWINT) | (1 << TWEN));
     }
-    else if(val == CONTINUE)
+    else if (val == CONTINUE)
     {
         TWCR = ((1 << TWINT) | (1 << TWEN) | (1 << TWEA));
         *serial_PORT << PMS("CONTINUES") << endl;
@@ -270,7 +274,7 @@ void imu_driver::clearEnable(int val)
     else
     {
         *serial_PORT << PMS("error in clear enable") << endl;
-        while(1)
+        while (1)
         {
 
         }

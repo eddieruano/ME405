@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['input_5fapin',['input_APIN',['../classmotor__driver.html#a0f3eeec4986d707cfcd5d25a6dd5fac9',1,'motor_driver']]],
-  ['input_5fbpin',['input_BPIN',['../classmotor__driver.html#a079434aa37c0edbdbce3c1c04ffc0e0a',1,'motor_driver']]],
-  ['input_5fddr',['input_DDR',['../classmotor__driver.html#aa9ce032000d0eb28499df3fa53255022',1,'motor_driver']]],
-  ['input_5fport',['input_PORT',['../classmotor__driver.html#ad821a9c32c2e296373f5273db99e3f59',1,'motor_driver']]],
-  ['is_5fmenu_5fvisible',['is_menu_visible',['../classtask__user.html#aeed69ce02fadbfb4a64758535e5c958b',1,'task_user']]],
-  ['isvalidmotor',['isValidMotor',['../classtask__user.html#a6178fb80b0e6fdebf254cc9aee6235a5',1,'task_user']]]
+  ['p_5fprint_5fser_5fqueue',['p_print_ser_queue',['../main_8cpp.html#acd99bf5d187d4809af2f460a5415e904',1,'main.cpp']]],
+  ['potentiometer',['POTENTIOMETER',['../task__motor_8cpp.html#a3e8e611e983546f51c69c43342fda6f2',1,'POTENTIOMETER():&#160;task_motor.cpp'],['../task__pid_8cpp.html#a3e8e611e983546f51c69c43342fda6f2',1,'POTENTIOMETER():&#160;task_pid.cpp'],['../task__user_8cpp.html#a3e8e611e983546f51c69c43342fda6f2',1,'POTENTIOMETER():&#160;task_user.cpp']]]
 ];

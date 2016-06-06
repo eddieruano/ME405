@@ -55,6 +55,10 @@
 #include <avr/io.h>                         // Port I/O for SFR's
 #include <avr/wdt.h>
 #include "task_user.h"                      // task_user header file
+#include "ansi_terminal.h" //testing ansi
+#include "imu_driver.h"
+#include "task_user_library.h"
+#include "adc.h"
 //Set these defines in case we want to change things later.
 
 /// Value for BRAKE directive
@@ -65,6 +69,11 @@
 #define FREEWHEEL 2
 /// Value for POTENTIOMETER directive
 #define POTENTIOMETER 3
+
+//#define CENTERZERO 1023
+
+//#define X_CENTER 49
+//#define Y_CENTER -29
 
 /**  This constant sets how many RTOS ticks the task delays if the user's not
  *   talking The duration is calculated to be about 5 ms.
@@ -92,7 +101,8 @@ const TickType_t ticks_to_delay = ((configTICK_RATE_HZ / 1000) * 5);
 task_user::task_user (const char* a_name,
                       unsigned portBASE_TYPE a_priority,
                       size_t a_stack_size,
-                      emstream* p_ser_dev
+                      emstream* p_ser_dev,
+                      imu_driver* p_imu_incoming
                      )
     : TaskBase (a_name, a_priority, a_stack_size, p_ser_dev)
 {
@@ -100,14 +110,21 @@ task_user::task_user (const char* a_name,
     //Set the menu visible variable or FLAG to false so main menu may print
     is_menu_visible = false;
     in_encoder_module = false;
+    in_imu_module = false;
+    in_drive_mode = false;
+    in_joystick_mode = false;
+
     //Set the in main motor flag to false because we start in main menu
     in_main_motor_module = false;
     //Set both motor directives to freewheel because no command has been given
     local_motor1_directive = FREEWHEEL;
-    local_motor2_directive = FREEWHEEL;
     //Intialize the power to ZERO
     local_motor1_power = 0;
-    local_motor2_power = 0;
+    *p_serial << ATERM_BKG_WHITE;
+    p_imu = p_imu_incoming;
+
+    p_adc_x = new adc (p_serial);
+    p_adc_y = new adc (p_serial);
 
 
 
@@ -165,14 +182,13 @@ void task_user::run (void)
                 case ('e'):
                     *p_serial << PMS("->Selected: ") << char_in;
                     *p_serial
-                            << endl
-                            << endl
+                            << ATERM_CLEAR_SCREEN << ATERM_CURSOR_TO_YX(1, 1)
                             << PMS ("\t->Switching to Encoder Module..")
                             << endl
                             << PMS ("\t->Clearing Registers and Menus..")
                             << endl
                             << PMS ("\t->Intializing Encoder..")
-                            << endl;
+                            << endl << endl;
 
                     // Reset the visible menu flag
                     resetMenus();
@@ -180,6 +196,26 @@ void task_user::run (void)
                     in_encoder_module = true;
                     // go to case 1 over all
                     transition_to(3);
+                    break;
+                // The 't' command asks what time it is right now
+                // Enter encoder test module
+                case ('i'):
+                    *p_serial << PMS("->Selected: ") << char_in;
+                    *p_serial
+                            << ATERM_CLEAR_SCREEN << ATERM_CURSOR_TO_YX(1, 1)
+                            << PMS ("\t->Switching to IMU Module..")
+                            << endl
+                            << PMS ("\t->Clearing Registers and Menus..")
+                            << endl
+                            << PMS ("\t->Intializing IMU..")
+                            << endl << endl;
+
+                    // Reset the visible menu flag
+                    resetMenus();
+                    // Sets the variable to true so it doesn't go into single module yet
+                    in_imu_module = true;
+                    // go to case 1 over all
+                    transition_to(4);
                     break;
                 // The 't' command asks what time it is right now
                 case ('t'):
@@ -190,12 +226,18 @@ void task_user::run (void)
                 case ('s'):
                     show_status ();
                     break;
-
-                // The 'd' command has all the tasks dump their stacks
+                // The 'd' means drive control
                 case ('d'):
-                    print_task_stacks (p_serial);
+                    *p_serial << PMS("->Selected: ") << char_in;
+                    *p_serial
+                            << ATERM_CLEAR_SCREEN << ATERM_CURSOR_TO_YX(1, 1)
+                            << PMS ("\t->Switching to Drive Mode..")
+                            << endl << endl;
+                    transition_to(5);
+                    in_drive_mode = true;
+                    resetMenus();
                     break;
-
+                //case ('d'):
                 // The 'h' command is a plea for help; '?' works also
                 case ('h'):
                 case ('?'):
@@ -363,7 +405,7 @@ void task_user::run (void)
                                 << PMS("->Selected: ") << char_in << endl;
                         *p_serial
                                 << PMS ("\t->Releasing Motor..") << endl;
-                        setMotor(motor_select->get(), 0, FREEWHEEL);
+                        setMotor(0, 0, FREEWHEEL);
                         resetMenus();
                         printDashBoard();
                         //now that operation is complete, ask for more
@@ -385,6 +427,7 @@ void task_user::run (void)
                                   << endl << PMS ("\t->Press 'r' to refresh the DashBoard ") << endl;
                         transition_to(2);
                         resetMenus();
+                        activate_encoder -> put(1);
                         break;
                     case ('o'):
                         resetMenus();
@@ -450,7 +493,8 @@ void task_user::run (void)
                     switch (char_in)
                     {
                     case ('q'):
-                        *p_serial << PMS("->Selected: ") << char_in << endl
+                        *p_serial << ATERM_CLEAR_SCREEN << ATERM_BKG_WHITE
+                                  << PMS("->Selected: ") << char_in << endl
                                   << endl
                                   << endl
                                   << PMS("\t->Returning to Mission Control.. ")
@@ -460,30 +504,226 @@ void task_user::run (void)
                         in_main_motor_module = true;
                         in_encoder_module = false;
                         resetMenus();
+                        *p_serial
+                                << ATERM_CLEAR_SCREEN
+                                << ATERM_CURSOR_TO_YX(1, 1) << endl;
 
                         break;
                     case ('r'):
+                        //constant refreshing already
 
-                        *p_serial << PMS("Encoder Count: ") << encoder_count -> get() << endl;
-                        *p_serial << PMS("Encoder Count / sec: ") << count_per_sec -> get() << endl;
-                        *p_serial << PMS("Error Count: ") << encoder_errors -> get() << endl;
-                        *p_serial << PMS("State: ") << the_state -> get() << endl;
-                        *p_serial << PMS("ERROR State: ") << error_state -> get() << endl;
-                        *p_serial << PMS("ERROR Count: ") << error_pos -> get() << endl;
-                        *p_serial << endl << PMS("\t\t-> press 'r' to refresh ")<<endl<<endl;
+                        break;
+                    default:
+                        *p_serial << ATERM_CURSOR_TO_YX(9, 16)
+                                  << ATERM_ERASE_IN_LINE(0)
+                                  << ATERM_CURSOR_TO_YX(9, 16)
+                                  << encoder_count -> get();
+                        *p_serial << ATERM_CURSOR_TO_YX(10, 19)
+                                  << ATERM_ERASE_IN_LINE(0)
+                                  << ATERM_CURSOR_TO_YX(10, 19)
+                                  << encoder_ticks_per_task -> get();
+                        break;
+                    }
+            }
+            break;
+        case (4):
+            if (in_imu_module)
+            {
+                printIMUModuleOptions();
+                if (hasUserInput())
+                    switch (char_in)
+                    {
+                    case ('q'):
+                        *p_serial << ATERM_CLEAR_SCREEN
+                                  << PMS("->Selected: ") << char_in << endl
+                                  << endl
+                                  << endl
+                                  << PMS("\t->Returning to Mission Control.. ")
+                                  << endl
+                                  << PMS("\t->Releasing IMU..") << endl;
+                        transition_to(0);
+
+                        in_imu_module = false;
+                        resetMenus();
+
+                        break;
+                    case ('r'):
+                        uint8_t registers;
+                        *p_serial << PMS("Input Register to read: ") << endl;
+                        getNumberInput();
+                        registers = (uint8_t) number_entered;
+                        *p_serial << endl << PMS("How many Bytes?: ") << endl;
+                        getNumberInput();
+                        uint8_t bytes;
+
+
+                        bytes = (uint8_t)number_entered;
+                        int8_t tempssss;
+                        tempssss = p_imu -> readIMU(registers, bytes);
+                        *p_serial
+                                << endl << endl
+                                << PMS ("\tIMU WILL READ: ") << hex << registers
+                                << PMS(". ") << endl;
+
+                        //resetMenus();
+                        //printIMUModuleOptions();
                         break;
                     default:
                         break;
                     }
             }
             break;
-        case (4):
-            break;
+        // Drive Mode
         case (5):
-            *p_serial << PMS("This Demo has been disabled. Sorry") << endl << PMS("\t->Returning to main..") << endl;
-            resetMenus();
-            transition_to(0);
+            if (in_drive_mode)
+            {
+                printDriveModeOptions();
+                // printDashBoard();
+                if (hasUserInput())
+                    switch (char_in)
+                    {
+                    case ('q'):
+                        *p_serial << ATERM_CLEAR_SCREEN
+                                  << PMS("->Selected: ") << char_in << endl
+                                  << endl
+                                  << endl
+                                  << PMS("\t->Returning to Mission Control.. ")
+                                  << endl
+                                  << PMS("\t->Releasing Drive Mode..") << endl;
+                        transition_to(0);
+                        in_drive_mode = false;
+                        resetMenus();
+                        break;
+                    case ('s'):
+                        *p_serial << endl
+                                  << PMS("Input Power Value for Motor: ")
+                                  << endl;
+                        getNumberInput();
+                        setMotor(0, (int16_t)number_entered, SETPOWER);
+                        *p_serial
+                                << endl << endl
+                                << PMS ("\tPower set at ") << number_entered
+                                << PMS (". ") << endl << endl
+                                << PMS ("Printing DashBoard.. ") << endl
+                                << endl;
+                        resetMenus();
+                        printDashBoard();
+                        break;
+                    case ('r'):
+                        *p_serial
+                                << PMS ("Printing DashBoard.. ")
+                                << endl
+                                << endl;
+                        resetMenus();
+                        printDashBoard();
+
+                        break;
+                    default:
+                        break;
+                    }
+
+
+                //get adc values
+                //x_direction = (int16_t)(p_adc_x -> read_once(1));
+                //y_direction = (int16_t)(p_adc_y -> read_once(0));
+
+                //Alter x_direction to have neg
+                //x_direction = (x_direction * 2) - CENTERZERO + X_CENTER;
+                //y_direction = (y_direction * 2) - CENTERZERO + Y_CENTER;
+                //setMotor(0, x_direction, SETPOWER);
+                //motor_directive -> put(SETPOWER);
+                //motor_power -> put(x_direction);
+                int16_t x_direction = y_joystick -> get();
+                int16_t map_x = x_direction - 526;
+                if(x_direction > 526)
+                {
+                    map_x = 2 * (x_direction - 526);
+                }
+                else
+                {
+                    map_x = -2 * (526 - x_direction);
+                }
+               
+                motor_setpoint -> put(map_x);
+
+                motor_directive -> put(SETPOWER);
+
+                *p_serial 
+                    << ATERM_CURSOR_TO_YX(19, 1)
+                    << ATERM_ERASE_IN_LINE(0)
+                    << PMS ("Motor 1\t\t") 
+                    << motor_setpoint -> get() 
+                    << PMS("\t") 
+                    << PMS("\t")
+                    << motor_power -> get() 
+                    << PMS("\t") 
+                    << PMS("\t")
+                    << encoder_count -> get() 
+                    << PMS("\t")
+                    << ATERM_CURSOR_TO_YX(23, 1)
+                    << ATERM_ERASE_IN_LINE(0)
+                    << steering_power -> get()
+                    << PMS("    \t")
+                    << encoder_ticks_per_task -> get() 
+                    << PMS("\t") 
+                    << PMS("\t")
+                    << x_joystick -> get()
+                    << PMS("\t") 
+                    << PMS("\t")
+                    << y_joystick -> get()
+                    << PMS("\t");
+
+            }
             break;
+        //JoyStick test
+        case (6):
+        // if (in_joystick_mode)
+        // {
+        //     printJoyStickOptions();
+        //     if (hasUserInput())
+        //         switch (char_in)
+        //         {
+        //         case ('q'):
+        //             *p_serial << ATERM_CLEAR_SCREEN
+        //                       << PMS("->Selected: ") << char_in << endl
+        //                       << endl
+        //                       << endl
+        //                       << PMS("\t->Returning to Mission Control.. ")
+        //                       << endl
+        //                       << PMS("\t->Releasing Drive Mode..") << endl;
+        //             transition_to(0);
+        //             in_drive_mode = false;
+        //             resetMenus();
+        //             break;
+        //         case ('s'):
+        //             *p_serial << endl
+        //                       << PMS("Input Power Value for Motor: ")
+        //                       << endl;
+        //             getNumberInput();
+        //             setMotor(0, (int16_t)number_entered, SETPOWER);
+        //             *p_serial
+        //                     << endl << endl
+        //                     << PMS ("\tPower set at ") << number_entered
+        //                     << PMS (". ") << endl << endl
+        //                     << PMS ("Printing DashBoard.. ") << endl
+        //                     << endl;
+        //             resetMenus();
+        //             printDashBoard();
+        //             break;
+        //         case ('r'):
+        //             *p_serial
+        //                     << PMS ("Printing DashBoard.. ")
+        //                     << endl
+        //                     << endl;
+        //             resetMenus();
+        //             printDashBoard();
+
+        //             break;
+        //         default:
+        //             break;
+        //         }
+        //}
+        //break;
         default:
             *p_serial << PMS ("Illegal state! Resetting AVR") << endl;
             wdt_enable (WDTO_120MS);
@@ -499,401 +739,4 @@ void task_user::run (void)
         delay_ms (1);
     }
 
-}
-
-/**
- * @brief      Method prints out the main menu, which is the first thing the
- *             user sees.
- *
- * @details    Menu is designed so that Control and testing modules are one
- *             part and all other operations like the ones included in the
- *             given version of this class are sectioned off accordingly.
- */
-void task_user::printMainMenu (void)
-{
-    if (!is_menu_visible)
-    {
-        *p_serial
-                << endl
-                //<< PMS ("Motor\t\tStatus\t\tPower\t\tDirection")
-                << PROGRAM_VERSION << endl << endl << PMS("\t\t\t    ") << PMS (__DATE__) << endl
-                << PMS ("|\t\t    Mission Control Program v1.0    \t\t|") << endl
-                << PMS ("|---------------------------------------------------------------|") << endl
-                << PMS ("|\t\t 'm'     Enter Motor Control Module   \t\t|") << endl
-                << PMS ("|\t\t 'e'     Enter Encoder Control Module \t\t|") << endl
-                << PMS ("|\t\t 'h'     Display all options          \t\t|") << endl
-                << PMS ("|\t\t 'Ctl-C' Reset AVR                    \t\t|") << endl;
-
-        is_menu_visible = true;
-    }
-
-}
-
-/**
- * @brief      Method prints out the 'Main Motor Module' menu
- * @details    Only print the menu if the is_menu_visible flag is false. This
- *             is so that it doesn't inifinitely print as the user is trying
- *             to input a value or trying to read it.
- */
-void task_user::printMotorMenu (void)
-{
-    if (!is_menu_visible)
-    {
-        *p_serial
-                << endl << endl
-                //<< PMS ("Motor\t\tStatus\t\tPower\t\tDirection")
-                << PMS ("|\t\t    Main Motor Control Module    \t\t|") << endl
-                << PMS ("|---------------------------------------------------------------|") << endl
-                << PMS ("|\t\t '1'     to operate Motor 1      \t\t|") << endl
-                << PMS ("|\t\t '2'     to operate Motor 2      \t\t|") << endl
-                << PMS ("|\t\t 'q'     Return to Main Menu     \t\t|") << endl;
-        is_menu_visible = true;
-    }
-}
-
-/**
- * @brief      Method prints out the 'Single Motor Control Module' menu
- *
- * @details    Only print the menu if the is_menu_visible flag is false. This
- *             is so that it doesn't inifinitely print as the user is trying
- *             to input a value or trying to read it.
- */
-void task_user::printSingleMotorOptions(void)
-{
-    if (is_menu_visible == false)
-    {   *p_serial << endl;
-        *p_serial << PMS ("|\t\t   Single Motor Control Module   \t\t|") << endl;
-        *p_serial << PMS ("|---------------------------------------------------------------|") << endl;
-        *p_serial << PMS ("|\t\t 's'     Set the motor power     \t\t|") << endl;
-        *p_serial << PMS ("|\t\t 'b'     Apply the motor brake   \t\t|") << endl;
-        *p_serial << PMS ("|\t\t 'f'     Freewheel motor         \t\t|") << endl;
-        *p_serial << PMS ("|\t\t 'p'     Enter Potentiometer Mode\t\t|") << endl;
-        *p_serial << PMS ("|\t\t 'q'     Return to previous menu \t\t|") << endl;
-        is_menu_visible = true;
-    }
-}
-/**
- * @brief      Method prints out useful information about both motors.
- *
- * @details    Only print the menu if the is_menu_visible flag is false. This
- *             is so that it doesn't inifinitely print as the user is trying
- *             to input a value or trying to read it. Furthermore, it prints
- *             out 'status', 'power', & 'direction'
- */
-void task_user::printDashBoard(void)
-{
-    if (!is_menu_visible)
-    {
-
-        const char* status;
-        const char* direction;
-        //int16_t temp_power;
-        //if(motor_select)
-        if (local_motor1_directive == 0)
-        {
-            status = "Stopped\t";
-            direction = "N/A";
-        }
-        else if (local_motor1_directive == 1)
-        {
-            status = "Running\t";
-        }
-        else if (local_motor1_directive == 2)
-        {
-            status = "Frwheel\t";
-        }
-        else if (local_motor1_directive == 3)
-        {
-            status = "PotMeter";
-
-        }
-        else
-        {
-            status = "Error\t";
-        }
-
-        if (!(local_motor1_directive == BRAKE))
-        {
-
-            if (local_motor1_power < 0)
-            {
-                direction = "Reverse";
-            }
-            else if (local_motor1_power > 0)
-            {
-                direction = "Forwards";
-            }
-
-        }
-        else
-        {
-            direction = "N/A";
-        }
-
-
-        *p_serial << endl;
-        *p_serial
-        //<< PMS ("")
-                << PMS ("-------\t\t--------\t-------\t\t-----------")
-                << endl
-                << PMS ("Motor\t\tStatus\t\tPower\t\tDirection")
-                << endl
-                << PMS ("-------\t\t--------\t-------\t\t-----------")
-                << endl
-                << PMS ("Motor 1\t\t") << status << PMS("\t") << local_motor1_power << PMS("\t\t") << direction << endl;
-        if (local_motor2_directive == BRAKE)
-        {status = "Stopped\t";}
-        else if (local_motor2_directive == SETPOWER)
-        {
-            status = "Running\t";
-        }
-        else if (local_motor2_directive == FREEWHEEL)
-        {
-            status = "Frwheel\t";
-        }
-        else if (local_motor2_directive == POTENTIOMETER)
-        {
-            status = "PotMeter";
-            //*local_motor2_power;
-        }
-        else
-        {
-            status = "Error\t";
-        }
-        if (!(local_motor2_directive == BRAKE))
-        {
-
-            if (local_motor2_power < 0)
-            {
-                direction = "Reverse";
-            }
-            else if (local_motor2_power > 0)
-            {
-                direction = "Forwards";
-            }
-
-        }
-        else
-        {
-            direction = "N/A";
-        }
-        *p_serial
-                << endl
-                << PMS ("Motor 2\t\t") << status << PMS("\t") << local_motor2_power << PMS("\t\t") << direction << endl;
-
-        is_menu_visible = true;
-    }
-}
-
-/**
- * @brief      This method contains the old main menu that has extra
- *             information and avaliable options.
- */
-void task_user::print_help_message (void)
-{
-    *p_serial << endl << PROGRAM_VERSION << PMS (" help") << endl;
-    *p_serial << PMS ("  t:     Show the time right now") << endl;
-    *p_serial << PMS ("  s:     Version and setup information") << endl;
-    *p_serial << PMS ("  d:     Stack dump for tasks") << endl;
-    *p_serial << PMS ("  n:     Enter a number (demo)") << endl;
-    *p_serial << PMS ("  Ctl-C: Reset the AVR") << endl;
-    *p_serial << PMS ("  h:     HALP!") << endl;
-}
-
-/**
- * @brief      Method checks if the user has made an input
- *
- * @return     returns TRUE if the user has made an input and places that
- *             charater into the class variable 'char_in'. Returns FALSE
- *             otherwise.
- */
-bool task_user::hasUserInput(void)
-{
-    if (p_serial->check_for_char ())            // If the user typed a
-    {   // character, read
-        char_in = p_serial->getchar ();
-        return true;
-    }
-    return false;
-}
-
-/**
- * @brief      Method gets the number being entered by the user.
- *
- * @details    This method uses a loop to constantly look for input until a
- *             return or escape symbol occurs. It then  places the extracted
- *             negative or positive value in local class varible
- *             'number_entered'.
- */
-void task_user::getNumberInput(void)
-{
-    number_entered = 0;
-    bool negative = false;
-    while (1)
-    {
-        //*p_serial << PMS ("in case 5")<<endl;
-        if (p_serial->check_for_char ())        // If the user typed a
-        {   // character, read
-            char_in = p_serial->getchar ();     // the character
-
-            // Respond to numeric characters, Enter or Esc only. Numbers are
-            // put into the numeric value we're building up
-            if (char_in >= '0' && char_in <= '9')
-            {
-                *p_serial << char_in;
-                number_entered *= 10;
-                number_entered += char_in - '0';
-            }
-            else if (char_in == '-')
-            {
-                //as soon as the user enters a negative sign we multiply by -1.
-                *p_serial << char_in;
-                negative = true;
-
-            }
-            else if (char_in == 'q')
-            {
-                //return so caller can handle the quit request.
-                return;
-            }
-            // Carriage return is ignored; the newline character ends the entry
-            else if (char_in == 10)
-            {
-                *p_serial << "\r";
-            }
-            // Carriage return or Escape ends numeric entry
-            else if (char_in == 13 || char_in == 27)
-            {
-
-                if (negative)
-                {
-                    number_entered *= -1;
-                }
-                return;
-            }
-            else
-            {
-                *p_serial << PMS ("<invalid char \"") << char_in
-                          << PMS ("\">");
-
-            }
-        }
-
-        // Check the print queue to see if another task has sent this task
-        // something to be printed
-        else if (p_print_ser_queue->check_for_char ())
-        {
-            p_serial->putchar (p_print_ser_queue->getchar ());
-        }
-    }
-
-}
-//-----------------------------------------------------------------------------
-/** This method displays information about the status of the system, including the
- *  following:
- *    \li The name and version of the program
- *    \li The name, status, priority, and free stack space of each task
- *    \li Processor cycles used by each task
- *    \li Amount of heap space free and setting of RTOS tick timer
- */
-void task_user::show_status (void)
-{
-    time_stamp the_time;                    // Holds current time for printing
-
-    // First print the program version, compile date, etc.
-    *p_serial << endl << PROGRAM_VERSION << PMS (__DATE__) << endl
-              << PMS ("System time: ") << the_time.set_to_now ()
-              << PMS (", Heap: ") << heap_left() << "/" << configTOTAL_HEAP_SIZE
-#ifdef OCR5A
-              << PMS (", OCR5A: ") << OCR5A << endl << endl;
-#elif (defined OCR3A)
-              << PMS (", OCR3A: ") << OCR3A << endl << endl;
-#else
-              << PMS (", OCR1A: ") << OCR1A << endl << endl;
-#endif
-
-    // Have the tasks print their status; then the same for the shared data items
-    print_task_list (p_serial);
-    *p_serial << endl;
-    print_all_shares (p_serial);
-
-}
-
-/**
- * @brief      Method sets motor to the correct state as specified by user.
- *
- * @details    This method sets the global registers to the correct values so
- *             that 'task_motor' can affect the correct motor. Also sets
- *             appropriate local values to store the state of this motor so
- *             that when 'printDashBoard()' is called it can print info on
- *             each motor because the global registers can only hold info for
- *             one motor at a time.
- *
- * @param[in]  motor_id  The motor select identifier
- * @param[in]  power     The power setting specified by the user in the run()
- * @param[in]  direct    The directive, or what we want the motor to do
- */
-void task_user::setMotor(uint8_t motor_id, int16_t power, uint8_t direct)
-{
-    //place in global taskshares
-    motor_select -> put(motor_id);
-    motor_directive ->put(direct);
-    motor_setpoint ->put(power);
-    //motor_power->put(power);
-    //work with local vars
-    if (motor_id == 1)
-    {
-        local_motor1_directive = direct;
-        local_motor1_power = power;
-        return;
-    }
-    else if (motor_id == 2)
-    {
-        local_motor2_directive = direct;
-        local_motor2_power = power;
-        return;
-    }
-}
-/**
- * @brief      Method checks if the motor selected is a valid input.
- *
- * @param[in]  motor_number  The number number entered by the user.
- *
- * @return     returns TRUE if the motor value is valid, FALSE otherwise
- */
-bool task_user::isValidMotor(int16_t motor_number)
-{
-    if (motor_number == 1 || motor_number == 2)
-    {
-        return true;
-    }
-    return false;
-}
-
-/**
- * @brief      Method resets the is_menu_visible flag so that another menu may
- *             be printed.
- */
-void task_user::resetMenus(void)
-{
-    is_menu_visible = false;
-}
-
-/**
- * @brief      Method prints out the 'Encoder Control Module' menu
- *
- * @details    Only print the menu if the is_menu_visible flag is false. This
- *             is so that it doesn't inifinitely print as the user is trying
- *             to input a value or trying to read it.
- */
-void task_user::printEncoderModuleOptions(void)
-{
-    if (is_menu_visible == false)
-    {   *p_serial << endl;
-        *p_serial << PMS ("|\t\t        Encoder Control Module          \t\t|") << endl;
-        *p_serial << PMS ("|---------------------------------------------------------------|") << endl;
-        *p_serial << PMS ("|\t\t 'r'    Refresh the data                \t\t|") << endl;
-        *p_serial << PMS ("|\t\t 'q'    quit to main menu               \t\t|") << endl;
-        is_menu_visible = true;
-    }
 }

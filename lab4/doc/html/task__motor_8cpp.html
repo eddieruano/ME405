@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Lab 2 Controlling a Motor_Driver w/ a Task: task_motor.cpp File Reference</title>
+<title>Lab 4 PID Controller: task_motor.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,10 +22,10 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Lab 2 Controlling a Motor_Driver w/ a Task
-   &#160;<span id="projectnumber">v1.2</span>
+   <div id="projectname">Lab 4 PID Controller
+   &#160;<span id="projectnumber">lab4v1.0</span>
    </div>
-   <div id="projectbrief">Make a task that will control motor_driver</div>
+   <div id="projectbrief">Makes a PID controller</div>
   </td>
  </tr>
  </tbody>
@@ -39,7 +39,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -70,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Macros</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -91,8 +90,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>This class is the task motor class that handles a single motor operation.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;textqueue.h&quot;</code><br/>
-<code>#include &quot;<a class="el" href="task__motor_8h_source.html">task_motor.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="shares_8h_source.html">shares.h</a>&quot;</code><br/>
+<code>#include &quot;task_motor.h&quot;</code><br/>
+<code>#include &quot;shares.h&quot;</code><br/>
 </div>
 <p><a href="task__motor_8cpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -114,10 +113,14 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__motor_8cpp.html#a3e8e611e983546f51c69c43342fda6f2">POTENTIOMETER</a>&#160;&#160;&#160;3</td></tr>
 <tr class="memdesc:a3e8e611e983546f51c69c43342fda6f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value for POTENTIOMETER directive. <br/></td></tr>
 <tr class="separator:a3e8e611e983546f51c69c43342fda6f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0b7767883fef01903b5d22fc809fbc1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab0b7767883fef01903b5d22fc809fbc1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="task__motor_8cpp.html#ab0b7767883fef01903b5d22fc809fbc1">RECENTER</a>&#160;&#160;&#160;1023</td></tr>
+<tr class="memdesc:ab0b7767883fef01903b5d22fc809fbc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value to recenter with adc control. <br/></td></tr>
+<tr class="separator:ab0b7767883fef01903b5d22fc809fbc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class is the task motor class that handles a single motor operation. </p>
-<p>This is a task class that will control the operation of its own motor driver given to it as a pointer and initiated in the <a class="el" href="main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe">main()</a> function. it lays out the logic necessary to make commands from <a class="el" href="classtask__user.html" title="This task will interact with the user and make the motors operate based on their input. ">task_user</a> to the motor driver happen.</p>
+<p>This is a task class that will control the operation of its own motor driver given to it as a pointer and initiated in the <a class="el" href="main_8cpp.html#a840291bc02cba5474a4cb46a9b9566fe">main()</a> function. it lays out the logic necessary to make commands from task_user to the motor driver happen.</p>
 <dl class="section author"><dt>Author</dt><dd>Eddie Ruano</dd></dl>
 <p>Revisions: @ 4/20/2016 added main structure @ 4/22/2016 added pointers and correct logic License: This file is copyright 2016 by Eddie Ruano and released under the Lesser GNU Public License, version 2. It intended for educational use only, but its use is not limited thereto. </p>
 
@@ -125,7 +128,7 @@ Macros</h2></td></tr>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 25 2016 14:53:26 for Lab 2 Controlling a Motor_Driver w/ a Task by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu May 19 2016 09:40:02 for Lab 4 PID Controller by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

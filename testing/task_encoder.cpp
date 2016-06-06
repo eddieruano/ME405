@@ -144,6 +144,8 @@ void task_encoder::run (void)
       //place ticks per MS in this case in the correct shares variable
       encoder_ticks_per_task -> put(this_difference);
 
+      
+
       // store the current count as previous
       previous_encoder_count = this_count;
 

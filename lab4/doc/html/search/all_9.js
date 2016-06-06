@@ -1,5 +1,9 @@
 var searchData=
 [
-  ['ocr_5fport',['ocr_PORT',['../classmotor__driver.html#a960f4685dd5db6cbbe29399dbaf1a8f7',1,'motor_driver']]],
-  ['operator_3c_3c',['operator&lt;&lt;',['../adc_8cpp.html#afb33ca9fe94765ee57079e7feb03f975',1,'operator&lt;&lt;(emstream &amp;serpt, adc &amp;a2d):&#160;adc.cpp'],['../adc_8h.html#a6e6d1e227b216fe2a1fee9b0ea52180d',1,'operator&lt;&lt;(emstream &amp;, adc &amp;):&#160;adc.cpp'],['../motor__driver_8cpp.html#ad657010257780226a5b845103f45f996',1,'operator&lt;&lt;(emstream &amp;serpt, motor_driver &amp;motdrv):&#160;motor_driver.cpp'],['../motor__driver_8h.html#a660b47b84ed9c985bfb681036ce37d7a',1,'operator&lt;&lt;(emstream &amp;, motor_driver &amp;):&#160;motor_driver.cpp']]]
+  ['task_5fencoder_2ecpp',['task_encoder.cpp',['../task__encoder_8cpp.html',1,'']]],
+  ['task_5fhctl_5f2000_2ecpp',['task_hctl_2000.cpp',['../task__hctl__2000_8cpp.html',1,'']]],
+  ['task_5fmotor_2ecpp',['task_motor.cpp',['../task__motor_8cpp.html',1,'']]],
+  ['task_5fpid_2ecpp',['task_pid.cpp',['../task__pid_8cpp.html',1,'']]],
+  ['task_5fuser_2ecpp',['task_user.cpp',['../task__user_8cpp.html',1,'']]],
+  ['ticks_5fto_5fdelay',['ticks_to_delay',['../task__user_8cpp.html#a608f2ff6213a79bd1f25a29544aeaba5',1,'task_user.cpp']]]
 ];

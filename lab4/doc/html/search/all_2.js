@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['diag_5fddr',['diag_DDR',['../classmotor__driver.html#a6b1aa2bcd4eecada6abe2e3d11fecd88',1,'motor_driver']]],
-  ['diag_5fpin',['diag_PIN',['../classmotor__driver.html#ad97987799de2b9467ce7b01f5b291fcb',1,'motor_driver']]],
-  ['diag_5fport',['diag_PORT',['../classmotor__driver.html#af0259585bf3d8d7a3cf236913255a543',1,'motor_driver']]]
+  ['encoder_5fcount',['encoder_count',['../main_8cpp.html#a23620c74793eea7c070bd9799260bef4',1,'main.cpp']]],
+  ['encoder_5fticks_5fper_5ftask',['encoder_ticks_per_task',['../main_8cpp.html#ab8ab0b810225c2501e1952586bb99533',1,'main.cpp']]]
 ];

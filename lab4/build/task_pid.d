@@ -3,13 +3,13 @@ build/task_pid.o: task_pid.cpp ../lib/frtcpp/textqueue.h \
  ../lib/freertos/projdefs.h ../lib/freertos/portable.h \
  ../lib/freertos/portmacro.h ../lib/freertos/mpu_wrappers.h \
  ../lib/freertos/queue.h ../lib/serial/emstream.h \
- ../lib/frtcpp/baseshare.h ../lab4/headers/task_pid.h \
+ ../lib/frtcpp/baseshare.h ../testing/headers/task_pid.h \
  ../lib/freertos/task.h ../lib/freertos/list.h ../lib/frtcpp/taskbase.h \
  ../lib/frtcpp/time_stamp.h ../lib/misc/mechutil.h \
  ../lib/frtcpp/time_stamp.h ../lib/frtcpp/taskqueue.h \
  ../lib/frtcpp/taskshare.h ../lib/serial/rs232int.h \
  ../lib/serial/base232.h ../lib/serial/emstream.h \
- ../lab4/headers/satmath.h ../lab4/headers/shares.h
+ ../testing/headers/satmath.h ../testing/headers/shares.h
 
 ../lib/frtcpp/textqueue.h:
 
@@ -31,7 +31,7 @@ build/task_pid.o: task_pid.cpp ../lib/frtcpp/textqueue.h \
 
 ../lib/frtcpp/baseshare.h:
 
-../lab4/headers/task_pid.h:
+../testing/headers/task_pid.h:
 
 ../lib/freertos/task.h:
 
@@ -55,6 +55,6 @@ build/task_pid.o: task_pid.cpp ../lib/frtcpp/textqueue.h \
 
 ../lib/serial/emstream.h:
 
-../lab4/headers/satmath.h:
+../testing/headers/satmath.h:
 
-../lab4/headers/shares.h:
+../testing/headers/shares.h:

@@ -427,7 +427,6 @@ void task_user::run (void)
                                   << endl << PMS ("\t->Press 'r' to refresh the DashBoard ") << endl;
                         transition_to(2);
                         resetMenus();
-                        activate_encoder -> put(1);
                         break;
                     case ('o'):
                         resetMenus();
@@ -511,17 +510,11 @@ void task_user::run (void)
                         break;
                     case ('r'):
                         //constant refreshing already
-
+                        transition_to(1)
+                        in_imu_module = true;
                         break;
                     default:
-                        *p_serial << ATERM_CURSOR_TO_YX(9, 16)
-                                  << ATERM_ERASE_IN_LINE(0)
-                                  << ATERM_CURSOR_TO_YX(9, 16)
-                                  << encoder_count -> get();
-                        *p_serial << ATERM_CURSOR_TO_YX(10, 19)
-                                  << ATERM_ERASE_IN_LINE(0)
-                                  << ATERM_CURSOR_TO_YX(10, 19)
-                                  << encoder_ticks_per_task -> get();
+                        
                         break;
                     }
             }
@@ -544,29 +537,19 @@ void task_user::run (void)
                         transition_to(0);
 
                         in_imu_module = false;
-                        resetMenus();
+                        resetMenus();   
 
                         break;
+                        default:
+                        break;
+                        *p_serial << ATERM_CLEAR_SCREEN;
+                    }
+
+
+
+
                     case ('r'):
-                        uint8_t registers;
-                        *p_serial << PMS("Input Register to read: ") << endl;
-                        getNumberInput();
-                        registers = (uint8_t) number_entered;
-                        *p_serial << endl << PMS("How many Bytes?: ") << endl;
-                        getNumberInput();
-                        uint8_t bytes;
-
-
-                        bytes = (uint8_t)number_entered;
-                        int8_t tempssss;
-                        tempssss = p_imu -> readIMU(registers, bytes);
-                        *p_serial
-                                << endl << endl
-                                << PMS ("\tIMU WILL READ: ") << hex << registers
-                                << PMS(". ") << endl;
-
-                        //resetMenus();
-                        //printIMUModuleOptions();
+                        
                         break;
                     default:
                         break;
@@ -621,21 +604,9 @@ void task_user::run (void)
                     default:
                         break;
                     }
-
-
-                //get adc values
-                //x_direction = (int16_t)(p_adc_x -> read_once(1));
-                //y_direction = (int16_t)(p_adc_y -> read_once(0));
-
-                //Alter x_direction to have neg
-                //x_direction = (x_direction * 2) - CENTERZERO + X_CENTER;
-                //y_direction = (y_direction * 2) - CENTERZERO + Y_CENTER;
-                //setMotor(0, x_direction, SETPOWER);
-                //motor_directive -> put(SETPOWER);
-                //motor_power -> put(x_direction);
                 int16_t x_direction = y_joystick -> get();
                 int16_t map_x = x_direction - 526;
-                if(x_direction > 526)
+                if (x_direction > 526)
                 {
                     map_x = 2 * (x_direction - 526);
                 }
@@ -643,87 +614,43 @@ void task_user::run (void)
                 {
                     map_x = -2 * (526 - x_direction);
                 }
-               
+
                 motor_setpoint -> put(map_x);
 
                 motor_directive -> put(SETPOWER);
 
-                *p_serial 
-                    << ATERM_CURSOR_TO_YX(19, 1)
-                    << ATERM_ERASE_IN_LINE(0)
-                    << PMS ("Motor 1\t\t") 
-                    << motor_setpoint -> get() 
-                    << PMS("\t") 
-                    << PMS("\t")
-                    << motor_power -> get() 
-                    << PMS("\t") 
-                    << PMS("\t")
-                    << encoder_count -> get() 
-                    << PMS("\t")
-                    << ATERM_CURSOR_TO_YX(23, 1)
-                    << ATERM_ERASE_IN_LINE(0)
-                    << steering_power -> get()
-                    << PMS("    \t")
-                    << encoder_ticks_per_task -> get() 
-                    << PMS("\t") 
-                    << PMS("\t")
-                    << x_joystick -> get()
-                    << PMS("\t") 
-                    << PMS("\t")
-                    << y_joystick -> get()
-                    << PMS("\t");
+                // *p_serial
+                //         << ATERM_CURSOR_TO_YX(19, 1)
+                //         << ATERM_ERASE_IN_LINE(0)
+                //         << gear_state -> get()
+                //         << PMS ("\t\t")
+                //         << motor_setpoint -> get()
+                //         << PMS("\t")
+                //         << PMS("\t")
+                //         << motor_power -> get()
+                //         << PMS("\t")
+                //         << PMS("\t")
+                //         << encoder_count -> get()
+                //         << PMS("\t")
+                //         << ATERM_CURSOR_TO_YX(23, 1)
+                //         << ATERM_ERASE_IN_LINE(0)
+                //         << steering_power -> get()
+                //         << PMS("    \t")
+                //         << encoder_ticks_per_task -> get()
+                //         << PMS("\t")
+                //         << PMS("\t")
+                //         << x_joystick -> get()
+                //         << PMS("\t")
+                //         << PMS("\t")
+                //         << y_joystick -> get()
+                //         << PMS("\t");
+                *p_serial << encoder_ticks_per_task -> get() << endl;
 
             }
             break;
         //JoyStick test
         case (6):
-        // if (in_joystick_mode)
-        // {
-        //     printJoyStickOptions();
-        //     if (hasUserInput())
-        //         switch (char_in)
-        //         {
-        //         case ('q'):
-        //             *p_serial << ATERM_CLEAR_SCREEN
-        //                       << PMS("->Selected: ") << char_in << endl
-        //                       << endl
-        //                       << endl
-        //                       << PMS("\t->Returning to Mission Control.. ")
-        //                       << endl
-        //                       << PMS("\t->Releasing Drive Mode..") << endl;
-        //             transition_to(0);
-        //             in_drive_mode = false;
-        //             resetMenus();
-        //             break;
-        //         case ('s'):
-        //             *p_serial << endl
-        //                       << PMS("Input Power Value for Motor: ")
-        //                       << endl;
-        //             getNumberInput();
-        //             setMotor(0, (int16_t)number_entered, SETPOWER);
-        //             *p_serial
-        //                     << endl << endl
-        //                     << PMS ("\tPower set at ") << number_entered
-        //                     << PMS (". ") << endl << endl
-        //                     << PMS ("Printing DashBoard.. ") << endl
-        //                     << endl;
-        //             resetMenus();
-        //             printDashBoard();
-        //             break;
-        //         case ('r'):
-        //             *p_serial
-        //                     << PMS ("Printing DashBoard.. ")
-        //                     << endl
-        //                     << endl;
-        //             resetMenus();
-        //             printDashBoard();
-
-        //             break;
-        //         default:
-        //             break;
-        //         }
-        //}
-        //break;
+            break;
         default:
             *p_serial << PMS ("Illegal state! Resetting AVR") << endl;
             wdt_enable (WDTO_120MS);
@@ -736,7 +663,7 @@ void task_user::run (void)
 
         // No matter the state, wait for approximately a millisecond before we
         // run the loop again. This gives lower priority tasks a chance to run
-        delay_ms (1);
+        delay_ms (5);
     }
 
 }

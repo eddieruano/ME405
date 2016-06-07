@@ -43,6 +43,7 @@
 #include "taskqueue.h"                      // Header of wrapper for FreeRTOS queues
 #include "textqueue.h"                      // Header for a "<<" queue class
 #include "taskshare.h"                      // Header for thread-safe shared data
+#include "bno055_driver.h"
 
 #include "shares.h"                         // Global ('extern') queue declarations
 

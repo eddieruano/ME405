@@ -9,8 +9,8 @@ build/main.o: main.cpp ../lib/freertos/FreeRTOS.h \
  ../lib/frtcpp/taskbase.h ../lib/frtcpp/time_stamp.h \
  ../lib/misc/mechutil.h ../lib/frtcpp/textqueue.h \
  ../lib/frtcpp/baseshare.h ../lib/frtcpp/taskqueue.h \
- ../lib/frtcpp/taskshare.h shares.h task_brightness.h adc.h \
- ../lib/freertos/semphr.h ../lib/freertos/queue.h task_user.h
+ ../lib/frtcpp/taskshare.h shares.h task_controller.h adc.h \
+ ../lib/freertos/semphr.h ../lib/freertos/queue.h task_transmitter.h
 
 ../lib/freertos/FreeRTOS.h:
 
@@ -58,7 +58,7 @@ build/main.o: main.cpp ../lib/freertos/FreeRTOS.h \
 
 shares.h:
 
-task_brightness.h:
+task_controller.h:
 
 adc.h:
 
@@ -66,4 +66,4 @@ adc.h:
 
 ../lib/freertos/queue.h:
 
-task_user.h:
+task_transmitter.h:

@@ -85,6 +85,7 @@
 #include "shift_driver.h"
 #include "i2c_driver.h"
 #include "bno055_driver.h"
+#include "task_reciever.h"
 
 // Set all defines
 /// Set the initital motor selector to something neutral
@@ -171,7 +172,7 @@ int main (void)
     // the task scheduler has been started by the function vTaskStartScheduler()
     rs232* p_ser_port = new rs232 (9600, 1);
     // print this identifier line.
-    *p_ser_port << clrscr << PMS ("ME405 Lab 5 IMU Controller") << endl;
+    *p_ser_port << clrscr << ATERM_BKG_BLACK << PMS ("ME405 LegoCar Final Project") << endl;
 
     //initialize the A/D converter for potentiometer control
     adc* p_main_adc = new adc (p_ser_port);
@@ -235,7 +236,7 @@ int main (void)
     bno055_driver* bno055_ptr = new bno055_driver(p_ser_port, 0x29);
 
     // Create tasks to control motors, encoders, and IMUs
-    new task_user ("UserInt", task_priority (1), 260, p_ser_port, bno055_ptr);
+    //new task_user ("UserInt", task_priority (1), 260, p_ser_port, bno055_ptr);
 
 
     new task_imu ("IMU Sensor Task", task_priority(2), 280, p_ser_port, bno055_ptr);
@@ -256,6 +257,7 @@ int main (void)
     // And the default saturation limits
     new task_pid ("PID", task_priority(4), 280, p_ser_port, motor_setpoint, encoder_ticks_per_task, motor_power, 1024, 0, 0, 0, -1023, 1023);
 
+    new task_reciever("recv", task_priority(3), 280, p_ser_port, y_joystick, x_joystick, gear_state);
 
     vTaskStartScheduler ();
 }

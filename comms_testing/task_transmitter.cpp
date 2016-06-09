@@ -130,7 +130,7 @@ void task_transmitter::run (void)
         {
             uint16_t motor_value = p_motor->get();
             uint16_t steer_value = p_steer->get();
-            bool  set_gear_high = (p_gears->get() != 0) ? (true) : (false);
+            uint8_t  set_gear_high = (p_gears->get() != 0) ? (true) : (false);
             bool enter_cmd_mode = true;
             
             // any calculations we need to do?

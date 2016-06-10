@@ -12,7 +12,7 @@
  *
  *  @author Eddie Ruano
  *
- *  Revisions: @ 6/1/2016 <<EDD>> made the heading, roll and pitch functions 
+ *  Revisions: @ 6/1/2016 EDD made the heading, roll and pitch functions 
  *                                super streamlined.
  *  License:
  *   BNO055 driver class for the ATMEGA1281 C
@@ -428,6 +428,9 @@ bool bno055_driver::getCalibrationStatus(void)
     return false;
 }
 
+/**
+ * @brief      Calibrates the IMU with predefined values
+ */
 void bno055_driver::calibrate(void)
 {
     // Using these values to calibrate

@@ -35,9 +35,9 @@
 
 // Declare Letter constants based on ASCII
 #define UPPERCASE_A     65
-#define UPPERCASE_Z     90
-#define LOWERCASE_A     97
-#define LOWERCASE_Z     122
+#define UPPERCASE_F     70
+#define CHAR_ZERO       48
+#define CHAR_NINE       57
 
 // Declare all modes of operation
 #define DRIVE_MODE      0x02
@@ -81,101 +81,109 @@ task_receiver::task_receiver (
     p_ser_bt = new rs232(0, 0);
     UCSR0A |= (1 << U2X0); // set the double-speed bit
     UBRR0 = 16; // set baud rate to 115200
+    // memset(message, 0, 3);
+
 }
 
 
-//-------------------------------------------------------------------------------------
-/** This method is called once by the RTOS scheduler, and runs forever. Sets up the
- *  buffers and a serial line on pins E0 and E1, then enters an infinite loop. Inside
- *  the loop, the reciever has two modes: command and drive. In command mode, it
- *  listens for short (4-character) phrases for configuration or testing. In drive mode,
- *  it listens for long strings of characters representing the state of each module as
- *  hexadecimal values. Features a watchdog timer that will zero all controls if enough
- *  time has passed since last command. @b note: drive mode needs to be attached to actual
- *  controls.
+/**
+ * @brief      { function_description }
  */
-
 void task_receiver::run (void)
 {
     // Make a variable which will hold times to use for precise task scheduling
     TickType_t previousTicks = xTaskGetTickCount ();
 
     // Get pair going
-    *p_serial << "In Run" << endl;
-    char pairkey[] = "_CON";
-    for (; (!paired);)
-    {
-        if (p_ser_bt -> check_for_char())
-        {
-            char_in = p_ser_bt -> getchar();
+    // *p_serial << "In Run" << endl;
+    // char pairkey[] = "_CON";
+    // for (; (!paired);)
+    // {
+    //     if (p_ser_bt -> check_for_char())
+    //     {
+    //         char_in = p_ser_bt -> getchar();
 
-            if (char_in == '_')
-            {
-                getCommand();
-                *p_serial << "ACOMD: " << buffer << endl;
-                if (strcmp(buffer, pairkey) == 0)
-                {
-                    *p_serial << "Paired !" << endl;
-                    *p_ser_bt << "_ACK" << endl;
-                    paired = true;
-                }
-            }
-        }
-        delay_from_for_ms(previousTicks, 100);
-    }
+    //         if (char_in == '_')
+    //         {
+    //             getCommand();
+    //             // *p_serial << "ACOMD: " << buffer << endl;
+    //             if (strcmp(buffer, pairkey) == 0)
+    //             {
+    //                 *p_serial << "Paired !" << endl;
+    //                 *p_ser_bt << "_ACK" << endl;
+    //                 paired = true;
+    //             }
+    //         }
+    //     }
+    //     delay_from_for_ms(previousTicks, 150);
+    // }
 
-    // get the drive mode going
-    char drvkey[] = "_DRV";
-    for (; !in_drive;)
-    {
-        if (p_ser_bt -> check_for_char())
-        {
-            char_in = p_ser_bt -> getchar();
+    // // get the drive mode going
+    // char drvkey[] = "_DRV";
+    // for (; !in_drive;)
+    // {
+    //     if (p_ser_bt -> check_for_char())
+    //     {
+    //         char_in = p_ser_bt -> getchar();
 
-            if (char_in == '_')
-            {
-                getCommand();
-                *p_serial << "DCMD: " << buffer << endl;
-                if (strcmp(buffer, drvkey) == 0)
-                {
-                    *p_serial << "Paired !" << endl;
-                    *p_ser_bt << PMS("_ACK") << endl;
-                    in_drive = true;
-                }
-            }
-        }
-        delay_from_for_ms(previousTicks, 100);
-    }
-    // DRIVE MODEE
+    //         if (char_in == '_')
+    //         {
+    //             getCommand();
+    //             *p_serial << "DCMD: " << buffer << endl;
+    //             if (strcmp(buffer, drvkey) == 0)
+    //             {
+    //                 *p_serial << "Drive !" << endl;
+    //                 *p_ser_bt << PMS("_ACK") << endl;
+    //                 in_drive = true;
+    //             }
+    //             else if(strcmp(buffer, pairkey) == 0)
+    //             {
+    //                 *p_ser_bt << PMS("_ACK")<< endl;
+    //                 *p_serial << "+";
+    //             }
+    //         }
+    //     }
+    //     delay_from_for_ms(previousTicks, 100);
+    // }
+
+    //Drive Mode, Engage Payload Exchange Protocol
+
     count = 0;
+    // Start loop that will continously check data
     for (;;)
     {
-        *p_serial << "WE IN IT" << endl;
-        if (p_ser_bt -> check_for_char())
+
+        while (p_ser_bt -> check_for_char())
         {
             char_in = p_ser_bt -> getchar();
-            buffer[count] = char_in;
+            if (char_in == '*')
+            {
+                if (receivePayload())
+                {
+                    deliverPayload();
+                }
 
-            count++;
-            *p_serial << "C: " << char_in << endl;
+                printBuffer();
+            }
+            *p_serial << hex;
+            *p_serial << "X Joystick: " << x_joystick -> get() << endl;
+            *p_serial << "Y Joystick: " << y_joystick -> get() << endl;
+            *p_serial << "Gear State: " << gear_state -> get() << endl;
         }
-        if (count == 9)
-        {
-            *p_ser_bt << PMS("_ACK") << endl;
-            count = 0;
-            //printBuffer();
-        }
+
+        // Print Shares for confirmation
+
         delay_from_for_ms(previousTicks, 200);
+
     }
 
 }
 
-// void task_receiver::getInput(uint8_t size)
-// {
-//     count = 0;
-
-// }
-//
+/**
+ * @brief      Grabs the command that starts w/ underscore
+ *
+ * @return     { description_of_the_return_value }
+ */
 bool task_receiver::getCommand(void)
 {
 
@@ -197,6 +205,9 @@ bool task_receiver::getCommand(void)
     return false;
 }
 
+/**
+ * @brief      { function_description }
+ */
 void task_receiver::printBuffer()
 {
     for (count = 0; count < 8; count++)
@@ -204,4 +215,114 @@ void task_receiver::printBuffer()
         *p_serial << "Buffer[" << count << "]: " << buffer[count] << endl;
     }
     return;
+}
+
+
+/**
+ * @brief      { function_description }
+ */
+bool task_receiver::receivePayload()
+{
+    memset(buffer, 0, 7);
+    count = 0;
+    buffer[count] = char_in;
+    count++;
+
+    while (p_ser_bt -> check_for_char())
+    {
+        char_in = p_ser_bt -> getchar();
+        buffer[count] = char_in;
+        if (count == 7)
+        {
+            printBuffer();
+            *p_ser_bt << PMS("_ACK") << endl;
+            return true;
+        }
+        count++;
+        // *p_serial << "in char";
+    }
+    if (count != 7)
+    {
+        return false;
+    }
+}
+
+/**
+ * @brief      Decodes payload and then delivers the payloads
+ *
+ * @details
+ *
+ *
+ */
+void task_receiver::deliverPayload()
+{
+    // First position of Buffer is the pass key '*' character
+    // Start at count = 1
+    // Declare temporary scaffolding variables
+    int16_t x_joy_rec;
+    int16_t y_joy_rec;
+    int8_t gear_rec;
+
+    x_joy_rec = decodeValue(buffer[1], buffer[2], buffer[3], buffer[4]);
+    y_joy_rec = decodeValue(buffer[5], buffer[6], buffer[7], buffer[8]);
+    gear_rec  = (int8_t)hexConversion(buffer[9]);
+
+    x_joystick -> put(x_joy_rec);
+    y_joystick -> put(y_joy_rec);
+    gear_state -> put(gear_rec);
+    *p_serial << "Val Converted: " << hex << x_joy_rec << endl;
+    return;
+}
+
+/**
+ * @brief
+ * @details
+ *
+ *
+ * @param[in]  a     char
+ * @param[in]  b
+ * @param[in]  c
+ * @param[in]  d
+ *
+ * @return     returns a 16 bit signed for the shares
+ */
+int16_t task_receiver::decodeValue(char a, char b, char c, char d)
+{
+    int16_t temp;
+    temp = 0x0000;
+    temp |= (int16_t)(hexConversion(a) << 12);
+    temp |= (int16_t)(hexConversion(b) << 8);
+    temp |= (int16_t)hexConversion(c) << 4;
+    temp |= (int16_t)hexConversion(d);
+
+    return temp;
+}
+
+/**
+ * @brief      { function_description }
+ *
+ * @param[in]  a     { parameter_description }
+ *
+ * @return     { description_of_the_return_value }
+ */
+uint8_t task_receiver::hexConversion(char a)
+{
+    uint8_t temp;
+    temp = (uint8_t)a;
+    if ((a <= CHAR_NINE) && (a >= CHAR_ZERO))
+    {
+        temp = temp - 48;
+
+    }
+    else if ((a <= UPPERCASE_F) && (a >= UPPERCASE_A))
+    {
+        temp = temp - 55;
+    }
+    else
+    {
+        temp = 0;
+        *p_serial << "Error Char" << endl;
+    }
+    *p_serial << "Temp: " << temp << endl;
+    return temp;
 }

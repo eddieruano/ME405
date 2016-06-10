@@ -13,8 +13,8 @@
  *  @author Eddie Ruano
  *
  *  Revisions:
-        @ 5/30/2016 <<EDD>> added comments, updated license.
-        @ 5/28/2016 <<EDD>> fixed everything and made everything more
+        @ 5/30/2016 EDD added comments, updated license.
+        @ 5/28/2016 EDD fixed everything and made everything more
  *       robust and fixed a much of calls. Made it so that it's easier
  *       to use function.
 
@@ -37,14 +37,13 @@
 #include "task.h"                           // Needed for the vTaskDelay() function
 #include "i2c_driver.h"                     // Header for this class
 #include <util/delay.h>
-// #define F_CPU 16000000UL  // 16 MHz
-// Define the port where SDA and SCL are located
+/// Define the port where SDA and SCL are located
 #define I2C_PORT        PORTD
 /// Define the location of the SDA pin
 #define SDA_PIN         PD1
 /// Define the location of the SCL pin
 #define SCL_PIN         PD0
-// Define the STOP keyword to make code more legible
+/// Define the STOP keyword to make code more legible
 #define STOP            false
 /// Define the CONTINUE keyword to make code more legible
 #define CONTINUE        true
@@ -56,7 +55,6 @@
 #define MASK_STATUS     0xF8
 /// User can define a value for timeout here
 #define TIMEOUT         300000
-// #define DELAY           300000
 /// Sequence to return mutex and return a false when failure occurs.
 #define RET_FAILURE     { xSemaphoreGive (mutex); stop(); return false; }
 /**

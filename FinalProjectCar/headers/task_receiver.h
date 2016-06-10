@@ -76,6 +76,16 @@ private:
 protected:
     // No protected variables or methods for this class
 
+    typedef struct {
+        uint16_t x_joystick;
+        uint16_t y_joystick;
+        uint16_t gear_state;
+        char passkey;
+        
+    } Package;
+
+    Package *payload;
+
 public:
     // This constructor creates the task.
     task_receiver (
@@ -95,7 +105,12 @@ public:
     bool pairDevices(void);
     bool isValidPair(char);
     bool getCommand(void);
-    char buffer[8];
+    bool receivePayload(void);
+    void deliverPayload(void);
+    char buffer[10];
+    uint8_t hexConversion(char a);
+    int16_t decodeValue(char a, char b, char c, char d);
+
 };
 
 #endif // _TASK_RECV_H_

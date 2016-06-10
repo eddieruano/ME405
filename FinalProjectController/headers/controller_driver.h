@@ -2,22 +2,22 @@
 /** @file controller_driver.h
  *  @brief     Header class for the conroller_driver class.
  *
- *  @details   Based heavily on JR Ridgely's methodology, incorporated with 
- *             previous code already established. It is more tailored for 
- *             specific use with our BNO055 IMU and establishes a more 
+ *  @details   Based heavily on JR Ridgely's methodology, incorporated with
+ *             previous code already established. It is more tailored for
+ *             specific use with our BNO055 IMU and establishes a more
  *             structured approach to performing the protocol. Furthermore,
- *             this driver cuts down on extra functions by creating 2 
- *             universal fucntions for reading and writing instead of having 
+ *             this driver cuts down on extra functions by creating 2
+ *             universal fucntions for reading and writing instead of having
  *             seperate ones for different sizes of payloads.
  *
  *  @author Eddie Ruano
  *
- *  Revisions: 
+ *  Revisions:
         @ 5/30/2016 <<EDD>> added comments, updated license.
         @ 5/28/2016 <<EDD>> fixed everything and made everything more
  *       robust and fixed a much of calls. Made it so that it's easier
  *       to use function.
-              
+
  *  License:
  *   BNO055 driver class for the ATMEGA1281 C
  *   Copyright (C) 2016  Eddie Ruano
@@ -75,6 +75,41 @@ public:
     );
 
     void read(uint16_t*);
+    void paired(bool t)
+    {
+        if (t)
+        {
+            DDRE |= (1 << PE5);
+            PORTE |= (1 << PE5);
+            *p_local_serial_port << "ON" << endl;
+            *p_local_serial_port << hex << PINE << endl;
+        }
+        else
+        {
+            DDRE &= ~(1 << PE5);
+            PORTE &= ~(1 << PE5);
+            *p_local_serial_port << "OFF" << endl;
+            *p_local_serial_port << hex << PINE << endl;
+        }
+    }
+
+    void drivemode(bool t)
+    {
+        if (t)
+        {
+            DDRE |= (1 << PE6);
+            PORTE |= (1 << PE6);
+            // *p_local_serial_port << "ON" << endl;
+            // *p_local_serial_port << hex << PINE << endl;
+        }
+        else
+        {
+            DDRE &= ~(1 << PE6);
+            PORTE &= ~(1 << PE6);
+            // *p_local_serial_port << "OFF" << endl;
+            // *p_local_serial_port << hex << PINE << endl;
+        }
+    }
 };
 #endif //  _CONT_DRIVER_H
 

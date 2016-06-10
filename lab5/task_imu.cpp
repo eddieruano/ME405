@@ -8,8 +8,9 @@
  *  @author Eddie Ruano
  *
  *  Revisions:
-        @ 6/1/2016 <<EDD>> finally fixed lagg problem
-        @ 5/28/2016 <<EDD>> created barebones
+        @ 6/1/2016  EDD patched up comments
+        @ 6/1/2016  EDD finally fixed lagg problem
+        @ 5/28/2016 EDD created barebones
 
  *  License:
  *   BNO055 Sensor Control Task for use with FreeRTOS
@@ -39,7 +40,8 @@
  * @param       a_priority    Task priority, 1-5, this particular task runs at 
  *                            [2]
  * @param       a_stack_size  Stack size for this task
- */
+ *
+*/
 task_imu::task_imu (const char* a_name,
                         unsigned portBASE_TYPE a_priority,
                         size_t a_stack_size,
@@ -57,7 +59,7 @@ task_imu::task_imu (const char* a_name,
  *
  * @details     We want data that is reliable and that means the most 
  *              IMMEDIATE data in my opinion, So We update every 100ms.
- */
+*/
 void task_imu::run (void)
 {
     TickType_t previousTicks = xTaskGetTickCount ();

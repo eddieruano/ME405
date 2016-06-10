@@ -163,6 +163,11 @@ int main (void)
     // print this identifier line.
     *p_ser_port << clrscr << PMS ("ME405 Lego Car Comms Test") << endl;
 
+    // set up USART0 on E0 and E1 for external comms
+    // rs232* p_ser_bt = new rs232(0, 0);
+    // UCSR0A |= (1 << U2X0); // set the double-speed bit
+    // UBRR0 = 16; // set baud rate to 115200
+
     //initialize the A/D converter for potentiometer control
     // adc* p_main_adc = new adc (p_ser_port);
 
@@ -188,8 +193,8 @@ int main (void)
     gear_state = new TaskShare<int8_t> ("Shift State");
 
     // new task_encoder ("EncoderControl", task_priority(5), 280, p_ser_port, p_hctl);
-    
-    new task_receiver ("REC", task_priority(5), 280, p_ser_port);
+
+    new task_receiver ("REC", task_priority(5), 300, p_ser_port);
 
     //*p_ser_port << "Waiting.." << endl;
 
@@ -232,14 +237,14 @@ int main (void)
 
 
     // new task_shift ("ShiftControl", task_priority(4), 280, p_ser_port,p_shift_servo, 1, p_local_shift);
-    
+
 
     // // create a new PID manager for the motor, with K values of:
     // // Proportional = 1, Integral = 0, Derivative = 0, Windup = 0
     // // And the default saturation limits
     // new task_pid ("PID", task_priority(4), 280, p_ser_port, motor_setpoint, encoder_ticks_per_task, motor_power, 1024, 0, 0, 0, -1023, 1023);
 
-    
+
 
 
     vTaskStartScheduler ();

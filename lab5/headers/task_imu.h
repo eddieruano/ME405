@@ -14,8 +14,8 @@
  *  @author Eddie Ruano
  *
  *  Revisions:
-        @ 5/30/2016 <<EDD>> added comments, updated license.
-        @ 5/28/2016 <<EDD>> created barebones
+        @ 5/30/2016 EDD added comments, updated license.
+        @ 5/28/2016 EDD created barebones
 
  *  License:
  *   BNO055 Sensor Control Task for use with FreeRTOS

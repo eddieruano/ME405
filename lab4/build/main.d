@@ -5,20 +5,20 @@ build/main.o: main.cpp ../lib/freertos/FreeRTOS.h \
  ../lib/freertos/list.h ../lib/freertos/queue.h \
  ../lib/freertos/croutine.h ../lib/serial/rs232int.h \
  ../lib/serial/base232.h ../lib/serial/emstream.h \
- ../testing/headers/ansi_terminal.h ../lib/serial/emstream.h \
+ ../lab4/headers/ansi_terminal.h ../lib/serial/emstream.h \
  ../lib/frtcpp/time_stamp.h ../lib/frtcpp/taskbase.h \
  ../lib/frtcpp/time_stamp.h ../lib/misc/mechutil.h \
  ../lib/frtcpp/textqueue.h ../lib/frtcpp/baseshare.h \
  ../lib/frtcpp/taskqueue.h ../lib/frtcpp/taskshare.h \
- ../testing/headers/shares.h ../testing/headers/task_brightness.h \
- ../testing/headers/adc.h ../lib/freertos/semphr.h \
- ../lib/freertos/queue.h ../testing/headers/motor_driver.h \
- ../testing/headers/task_user.h ../testing/headers/shares.h \
- ../testing/headers/imu_driver.h ../testing/headers/task_motor.h \
- ../testing/headers/task_motor.h ../testing/headers/task_encoder.h \
- ../testing/headers/hctl_driver.h ../testing/headers/hctl_driver.h \
- ../testing/headers/imu_driver.h ../testing/headers/hctl.h \
- ../testing/headers/task_pid.h ../testing/headers/satmath.h
+ ../lab4/headers/shares.h ../lab4/headers/task_brightness.h \
+ ../lab4/headers/adc.h ../lib/freertos/semphr.h ../lib/freertos/queue.h \
+ ../lab4/headers/motor_driver.h ../lab4/headers/task_user.h \
+ ../lab4/headers/shares.h ../lab4/headers/imu_driver.h \
+ ../lab4/headers/task_motor.h ../lab4/headers/task_motor.h \
+ ../lab4/headers/task_encoder.h ../lab4/headers/hctl_driver.h \
+ ../lab4/headers/hctl_driver.h ../lab4/headers/imu_driver.h \
+ ../lab4/headers/hctl.h ../lab4/headers/task_pid.h \
+ ../lab4/headers/satmath.h
 
 ../lib/freertos/FreeRTOS.h:
 
@@ -46,7 +46,7 @@ build/main.o: main.cpp ../lib/freertos/FreeRTOS.h \
 
 ../lib/serial/emstream.h:
 
-../testing/headers/ansi_terminal.h:
+../lab4/headers/ansi_terminal.h:
 
 ../lib/serial/emstream.h:
 
@@ -66,38 +66,38 @@ build/main.o: main.cpp ../lib/freertos/FreeRTOS.h \
 
 ../lib/frtcpp/taskshare.h:
 
-../testing/headers/shares.h:
+../lab4/headers/shares.h:
 
-../testing/headers/task_brightness.h:
+../lab4/headers/task_brightness.h:
 
-../testing/headers/adc.h:
+../lab4/headers/adc.h:
 
 ../lib/freertos/semphr.h:
 
 ../lib/freertos/queue.h:
 
-../testing/headers/motor_driver.h:
+../lab4/headers/motor_driver.h:
 
-../testing/headers/task_user.h:
+../lab4/headers/task_user.h:
 
-../testing/headers/shares.h:
+../lab4/headers/shares.h:
 
-../testing/headers/imu_driver.h:
+../lab4/headers/imu_driver.h:
 
-../testing/headers/task_motor.h:
+../lab4/headers/task_motor.h:
 
-../testing/headers/task_motor.h:
+../lab4/headers/task_motor.h:
 
-../testing/headers/task_encoder.h:
+../lab4/headers/task_encoder.h:
 
-../testing/headers/hctl_driver.h:
+../lab4/headers/hctl_driver.h:
 
-../testing/headers/hctl_driver.h:
+../lab4/headers/hctl_driver.h:
 
-../testing/headers/imu_driver.h:
+../lab4/headers/imu_driver.h:
 
-../testing/headers/hctl.h:
+../lab4/headers/hctl.h:
 
-../testing/headers/task_pid.h:
+../lab4/headers/task_pid.h:
 
-../testing/headers/satmath.h:
+../lab4/headers/satmath.h:

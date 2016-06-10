@@ -75,9 +75,9 @@ private:
     /// Current mode of receiver
     uint8_t mode;
     /// General buffer
-    char buffer[8];
+    char buffer[10];
     /// Buffer Outgoing
-    char outbuffer[8];
+    char outbuffer[10];
     /// Holder controller data
     uint16_t reader_data[4];
     /// Speed of the task
@@ -90,9 +90,18 @@ private:
     bool in_drive;
 
 
+
 protected:
     // No protected variables or methods for this class
-    
+    typedef struct {
+        uint16_t x_joystick;
+        uint16_t y_joystick;
+        uint16_t gear_state;
+        char passkey;
+        
+    } Package;
+
+    Package *payload;
 
 public:
     /// Constructor takes the usual task arguments, as well as three shared variables that store the motor setpoint, the steering angle, and the state of the gearbox.
@@ -118,6 +127,29 @@ public:
     bool getCommand(void);
     bool send(void);
     void encodeData(void);
+    bool isAnyValid(char in)
+    {
+        switch (in)
+        {
+        case ('A'):
+        case ('C'):
+        case ('K'):
+        case ('_'):
+            return true;
+        default:
+            return false;
+        }
+    }
+    void fillStruct(void)
+    {
+        payload -> x_joystick = 0xAAAA;
+        payload -> y_joystick = 0xBBBB;
+        payload -> gear_state = 0xCCCC;
+        payload -> passkey = '*';
+        *p_serial << payload -> x_joystick << endl;
+    }
 };
+
+
 
 #endif // _TASK_TRAN_H_

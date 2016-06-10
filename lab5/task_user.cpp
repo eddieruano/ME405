@@ -1,61 +1,37 @@
 //*****************************************************************************
 /** @file task_user.cpp
- *  @brief     This is the file for the 'task_user' class that is what any
- *             user will mainly interact with
+ *  @brief     Task lets the user interact with the system on a serial rs232 
+ *             connection and a standard terminal window. Prints menus and 
+ *             lets the user input keyboard text to either tests or view data.
  *
- *  @details   Built on top of JR Ridgely's architecture, this task uses case
- *             statements that infinitely loop in order to perform certain
- *             operations. In this version of this class (v1.1) the only
- *             module avaliable is the 'Main Motor Module' which allows the
- *             user to control both motors in on either HBridge
- *             simultaneously.
+ *  @details   Task user serves as a debugging platform mostly
  *
  *  @author Eddie Ruano
- *  @author JR Ridgely
  *
- *  Revisions: @li 4/26/2016 ERR added a new module for testing of the encoder
- *             task
- *             @li 4/23/2016 added a bunch of helper methods to make testing
- *             easier in the future
- *             @li 4/21/2016 overhauled entire case structure
- *             @li 09-30-2012 JRR Original file was a one-file demonstration
- *             with two tasks
- *             @li 10-05-2012 JRR Split into multiple files, one for each task
- *             @li 10-25-2012 JRR Changed to a more fully C++ version with
- *             class task_user
- *             @li 11-04-2012 JRR Modified from the data acquisition example
- *             to the test suite
- *             @li 01-04-2014 JRR Changed base class names to TaskBase,
- *             TaskShare, etc.
- *  License:
- *    This file is copyright 2012 by JR Ridgey and released under the Lesser
- *    GNU
- *    Public License, version 2. It intended for educational use only, but its
- *    use
- *    is not limited thereto. */
-/*    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
- *    IS"
- *    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- *    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- *    PURPOSE
- *    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- *    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- *    CONSEQUEN-
- *    TIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
- *    GOODS
- *    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- *    HOWEVER
- *    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- *    LIABILITY,
- *    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
- *    THE USE
- *    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
-//*****************************************************************************
+ *  Revisions:
+        @ 6/1/2016  EDD fixed comments
+        @ 6/1/2016  EDD finally fixed lagg problem
+        @ 5/15/2016 EDD changed license to GNU 3 
 
-#include <avr/io.h>                         // Port I/O for SFR's
+ *  License:
+ *   BNO055 Sensor Control Task for use with FreeRTOS
+ *   Copyright (C) 2016  Eddie Ruano
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+*/
+
+#include <avr/io.h>                     // Port I/O for SFR's
 #include <avr/wdt.h>
-#include "task_user.h"                      // task_user header file
-#include "ansi_terminal.h" //testing ansi
+#include "task_user.h"                  // task_user header file
+#include "ansi_terminal.h"              //testing ansi
 #include "task_user_library.h"
 #include "bno055_driver.h"
 #include <imumaths.h>
@@ -63,7 +39,7 @@
 
 /**  This constant sets how many RTOS ticks the task delays if the user's not
  *   talking The duration is calculated to be about 5 ms.
- */
+*/
 const TickType_t ticks_to_delay = ((configTICK_RATE_HZ / 1000) * 5);
 
 //-----------------------------------------------------------------------------
@@ -83,7 +59,7 @@ const TickType_t ticks_to_delay = ((configTICK_RATE_HZ / 1000) * 5);
  *                            (default: configMINIMAL_STACK_SIZE)
  * @param      p_ser_dev      Pointer to a serial device (port, radio, SD
  *                            card, etc.
- */
+*/
 task_user::task_user (const char* a_name,
                       unsigned portBASE_TYPE a_priority,
                       size_t a_stack_size,
@@ -96,8 +72,6 @@ task_user::task_user (const char* a_name,
     *p_serial << ATERM_BKG_WHITE;
     p_bno055 = p_drv;
 }
-imu::Vector<3> vector_heading;
-
 
 /**
  * @brief      This method runs when the 'task_user' is called.
@@ -106,15 +80,15 @@ imu::Vector<3> vector_heading;
  *             is contained in here. A for(;;) loop runs until it gets to the
  *             end where it delays for 1 ms to allow other lower level
  *             priority tasks a chance to run.
- */
+*/
 void task_user::run (void)
 {
-    time_stamp a_time;             // Holds the time so it can be displayed
-    number_entered = 0;            // Holds a number being entered by user
-    uint8_t count;
-    count = 0;
-    uint8_t data[16];
-    //
+    time_stamp a_time;              // Holds the time so it can be displayed
+    number_entered = 0;             // Holds a number being entered by user
+    uint8_t count;                  // Holds general purpose counter
+    count = 0;                      // initializes gen purpose counter
+    uint8_t data[16];               // for storing data from IMU
+    imu::Vector<3> vector_heading;  // Will hold vector returned from IMU
     for (;;)
     {
         switch (state)

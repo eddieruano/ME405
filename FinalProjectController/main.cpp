@@ -85,7 +85,7 @@ int main (void)
     rs232* p_ser_port = new rs232 (9600, 1);
     *p_ser_port << clrscr << PMS ("| ME405 LegoCar Transmitter |") << endl;
 
-    // set up USART0 on E0 and E1 for external comms
+    //set up USART0 on E0 and E1 for external comms
     // rs232* p_ser_bt = new rs232(0, 0);
     // UCSR0A |= (1 << U2X0); // set the double-speed bit
     // UBRR0H = 0;
@@ -94,6 +94,8 @@ int main (void)
 
     // Create the queues and other shared data items here
     p_print_ser_queue = new TextQueue (32, "Print", p_ser_port, 10);
+
+    // p_send_bt_queue = new TextQueue(32, "Send", p_ser_bt, 15);
 
 
     // Declare instance of driver to read input from controller joysticks etc.

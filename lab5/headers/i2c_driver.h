@@ -13,8 +13,8 @@
  *  @author Eddie Ruano
  *
  *  Revisions: 
-        @ 5/30/2016 <<EDD>> added comments, updated license.
-        @ 5/28/2016 <<EDD>> fixed everything and made everything more
+        @ 5/30/2016 EDD added comments, updated license.
+        @ 5/28/2016 EDD fixed everything and made everything more
  *       robust and fixed a much of calls. Made it so that it's easier
  *       to use function.
               
@@ -49,7 +49,7 @@ class i2c_driver
 protected:
     /// @brief       Pointer to serial port object used for debugging purposes
     emstream* p_serial;
-    /// @brief       Function to reset timer used for timeouts
+    /// Function to reset timer used for timeouts
     void resetTimer(void);
     /// @brief       Pointer to timer variable
     uint32_t local_timer;
@@ -65,9 +65,9 @@ protected:
     SemaphoreHandle_t mutex;
     /// @brief       Starts I2C communication protocol
     bool start(void);
-    /// @brief       Stops I2C communication protocol
+    /// Stops I2C communication protocol
     bool stop(void);
-    /// @brief       Creats and checks a Restart condition on I2C interface
+    /// Creats and checks a Restart condition on I2C interface
     bool restart(void);
     /*  @brief       Clears the flags resulting from stop and go comms on I2C interface, also re-enables the communcation, more like a Clear/Enable dual function.
     */
@@ -81,7 +81,7 @@ public:
     bool readData(uint8_t, uint8_t, uint8_t *, uint8_t);
     /// Function to write data using I2C
     bool writeData(uint8_t, uint8_t, uint8_t);
-    /// Fucntion to ping address on SDA line
+    /// Function to ping address on SDA line
     bool ping(uint8_t);
 };
 #endif //  _I2C_DRIVER_H

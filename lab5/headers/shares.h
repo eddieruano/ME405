@@ -60,38 +60,6 @@
 // This queue allows tasks to send characters to the user interface task for display.
 extern TextQueue* p_print_ser_queue;
 
-/// This declares a taskshare which indicates that this variable is a shared
-/// variable. This variable stores the setpoint for the PID motor controller.
-extern TaskShare<int16_t>* motor_setpoint;
-
-/// This declares a taskshare which indicates that this variable is a shared 
-/// variable. This variable will hold the duty cycle of a motor. 
-extern TaskShare<int16_t>* motor_power;
-/// This declares a taskshare which indicates that this variable is a shared 
-/// variable. This variable will hold the command that the user wishes the motor
-/// to do.
-///  0 Indicates SET POWER
-///  1 Indicates BRAKE W/ brake_power
-///  2 Indicates FREEWHEEL
-extern TaskShare<uint8_t>* motor_directive;
-
-/// This variable holds the encoder count and is positive or negative relative to the rotation of the counts accumulated either ClockWise(+), or CounterClockWise (-)
-extern TaskShare<int32_t>* encoder_count;
-/// This variable holds the ticks per seconds so that other tasks like task_user may access it.
-extern TaskShare<int16_t>* encoder_ticks_per_task;
-/// This holds the total number of errors detected by the ISR when setting the counts        
-extern TaskShare<uint32_t>* data_read;
-
-extern TaskShare<int16_t>* steering_power;
-
-extern TaskShare<uint16_t>* steering_angle;
-
-extern TaskShare<int16_t>* x_joystick;
-
-extern TaskShare<int16_t>* y_joystick;
-
-extern TaskShare<int8_t>* gear_state;
-
 /* Start IMU variables */
 
 /// Holds current heading taken from BNO055 chip on BNO055 driver every 100 ms 

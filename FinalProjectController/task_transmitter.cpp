@@ -114,59 +114,69 @@ void task_transmitter::run (void)
     // bool in_cmd_mode = true;
     // char debug_buf[20];
     
-    for (; (!paired);)
-    {
-        *p_ser_bt << PMS("_CON") << endl;
-        if (p_ser_bt -> check_for_char())
-        {
-            char_in = p_ser_bt -> getchar();
+    // for (; (!paired);)
+    // {
+    //     *p_ser_bt << PMS("_CON") << endl;
+        
+    //     if (p_ser_bt -> check_for_char())
+    //     {
+    //         char_in = p_ser_bt -> getchar();
 
-            if (char_in == '_')
-            {
-                getCommand();
-                *p_serial << "Rec: " << buffer << endl;
-                if (strcmp(buffer, ack) == 0)
-                {
-                    *p_serial << "Paired !" << endl;
-                    *p_ser_bt << "_DRV" << endl;
-                    paired = true;
-                }
-            }
-        }
-        delay_from_for_ms(previousTicks, 500);
-    }
+    //         if (char_in == '_')
+    //         {
+    //             getCommand();
+    //             *p_serial << "Rec: " << buffer << endl;
+    //             if (strcmp(buffer, ack) == 0)
+    //             {
+    //                 *p_serial << "Paired !" << endl;
+    //                 *p_ser_bt << "_DRV" << endl;
+    //                 paired = true;
+    //             }
+    //         }
+    //     }
+    //     *p_serial << "waiting.." << endl;
+    //     delay_from_for_ms(previousTicks, 200);
+    // }
+    // // Turn on PINE5 to acknowledge pair
+    // p_local_controller_driver -> paired(true);
 
-    for (; !in_drive;)
-    {
-        *p_ser_bt << PMS("_DRV") << endl;
-        if (p_ser_bt -> check_for_char())
-        {
-            char_in = p_ser_bt -> getchar();
 
-            if (char_in == '_')
-            {
-                getCommand();
-                *p_serial << "Rec: " << buffer << endl;
-                if (strcmp(buffer, ack) == 0)
-                {
-                    *p_serial << "In Drive !" << endl;
-                    in_drive = true;
-                }
-            }
-        }
-        delay_from_for_ms(previousTicks, 500);
-    }
+    // for (; !in_drive;)
+    // {
+    //     *p_ser_bt << PMS("_DRV") << endl;
+    //     if (p_ser_bt -> check_for_char())
+    //     {
+    //         char_in = p_ser_bt -> getchar();
 
+    //         if (char_in == '_')
+    //         {
+    //             getCommand();
+    //             *p_serial << "Rec: " << buffer << endl;
+    //             if (strcmp(buffer, ack) == 0)
+    //             {
+    //                 *p_serial << "In Drive !" << endl;
+    //                 in_drive = true;
+    //             }
+    //         }
+    //     }
+    //     delay_from_for_ms(previousTicks, 500);
+    // }
+    // p_local_controller_driver -> drivemode(true);
+
+    //Drive Mode, Engage Payload Exchange Protocol v2.0
     for (;;)
     {
 
         // get the data
-        p_local_controller_driver -> read(reader_data);
+        // p_local_controller_driver -> read(reader_data);
         // encode everything in buffer
         encodeData();
+
         while (!send());
-        *p_serial << "Sent" << endl;
-        delay_from_for_ms(previousTicks, 500);
+
+        *p_serial << "Sent@ " << previousTicks << endl;
+        printBuffer();
+        delay_ms(250);
     }
 
 
@@ -190,16 +200,21 @@ bool task_transmitter::getCommand(void)
         }
         count++;
     }
+    *p_serial << "no char";
     return false;
 }
 
 bool task_transmitter::send(void)
 {
     count = 0;
-    for(count = 0; count < 8; count++)
+    char rsd[] = "_RSD";
+    for(count = 0; count < 10; count++)
     {
-        *p_ser_bt << outbuffer[count] << endl;
+        char in = outbuffer[count];
+        *p_ser_bt << in;
+        *p_serial << in << "+";
     }
+    return true;
     // check for ack
     while (p_ser_bt -> check_for_char())
     {
@@ -208,31 +223,63 @@ bool task_transmitter::send(void)
         {
             getCommand();
             
-            printBuffer();
+            
             if (strcmp(buffer, ack) == 0)
             {
                 *p_serial << "Payload Received" << endl;
+                // printBuffer();
                 return true;
+            }
+            else if(strcmp(buffer, rsd) == 0)
+            {
+                *p_serial << "fucked up.." << endl;
+                return false;
+            }
+            else
+            {
+                *p_serial << "no recognize msg+" << endl;
+                printBuffer();
+                return false;
             }
         }
     }
     return false;
 }
 
+
+
+/**
+ *
+ * @brief      
+ * 
+ */
 void task_transmitter::encodeData()
 {
-    for(count = 0; count < 8; count++)
-    {
-        outbuffer[count] = 'F';
-    }
+    outbuffer[0] = '*';
+    outbuffer[1] = 'A';
+    outbuffer[2] = 'B';
+    outbuffer[3] = 'C';
+    outbuffer[4] = 'D';
+
+    outbuffer[5] = 'E';
+    outbuffer[6] = 'F';
+    outbuffer[7] = '1';
+    outbuffer[8] = '2';
+    outbuffer[9] = '3';
+
+    // for(count = 1; count < 10; count++)
+    // {
+    //     outbuffer[count] = 'F';
+    // }
+    
     return;
 }
 
 void task_transmitter::printBuffer()
 {
-    for(count = 0; count < 8; count++)
+    for(count = 0; count < 10; count++)
     {
-        *p_serial << "Buffer[" << count << "]: " << outbuffer[count] << endl;
+        *p_serial << "Buffer[" << count << "]: " << buffer[count] << endl;
     }
     return;
 }

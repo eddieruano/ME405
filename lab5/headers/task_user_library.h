@@ -46,156 +46,156 @@ void task_user::printMainMenu (void)
 
 }
 
-/**
- * @brief      Method prints out the 'Main Motor Module' menu
- * @details    Only print the menu if the is_menu_visible flag is false. This
- *             is so that it doesn't inifinitely print as the user is trying
- *             to input a value or trying to read it.
- */
-void task_user::printMotorMenu (void)
-{
-    if (!is_menu_visible)
-    {
-        *p_serial
-                << endl << endl
-                //<< PMS ("Motor\t\tStatus\t\tPower\t\tDirection")
-                << PMS ("|\t\t    Main Motor Control Module    \t\t|") << endl
-                << PMS ("|---------------------------------------------------------------|") << endl
-                << PMS ("|\t\t '1'     to operate Motor 1      \t\t|") << endl
-                << PMS ("|\t\t '2'     to operate Motor 2      \t\t|") << endl
-                << PMS ("|\t\t 'q'     Return to Main Menu     \t\t|") << endl;
-        is_menu_visible = true;
-    }
-}
+// /**
+//  * @brief      Method prints out the 'Main Motor Module' menu
+//  * @details    Only print the menu if the is_menu_visible flag is false. This
+//  *             is so that it doesn't inifinitely print as the user is trying
+//  *             to input a value or trying to read it.
+//  */
+// void task_user::printMotorMenu (void)
+// {
+//     if (!is_menu_visible)
+//     {
+//         *p_serial
+//                 << endl << endl
+//                 //<< PMS ("Motor\t\tStatus\t\tPower\t\tDirection")
+//                 << PMS ("|\t\t    Main Motor Control Module    \t\t|") << endl
+//                 << PMS ("|---------------------------------------------------------------|") << endl
+//                 << PMS ("|\t\t '1'     to operate Motor 1      \t\t|") << endl
+//                 << PMS ("|\t\t '2'     to operate Motor 2      \t\t|") << endl
+//                 << PMS ("|\t\t 'q'     Return to Main Menu     \t\t|") << endl;
+//         is_menu_visible = true;
+//     }
+// }
 
-/**
- * @brief      Method prints out the 'Single Motor Control Module' menu
- *
- * @details    Only print the menu if the is_menu_visible flag is false. This
- *             is so that it doesn't inifinitely print as the user is trying
- *             to input a value or trying to read it.
- */
-void task_user::printSingleMotorOptions(void)
-{
-    if (is_menu_visible == false)
-    {   *p_serial << endl;
-        *p_serial << PMS ("|\t\t   Single Motor Control Module   \t\t|") << endl;
-        *p_serial << PMS ("|---------------------------------------------------------------|") << endl;
-        *p_serial << PMS ("|\t\t 's'     Set the motor power     \t\t|") << endl;
-        *p_serial << PMS ("|\t\t 'b'     Apply the motor brake   \t\t|") << endl;
-        *p_serial << PMS ("|\t\t 'f'     Freewheel motor         \t\t|") << endl;
-        *p_serial << PMS ("|\t\t 'p'     Enter Potentiometer Mode\t\t|") << endl;
-        *p_serial << PMS ("|\t\t 'q'     Return to previous menu \t\t|") << endl;
-        is_menu_visible = true;
-    }
-}
-/**
- * @brief      Method prints out useful information about both motors.
- *
- * @details    Only print the menu if the is_menu_visible flag is false. This
- *             is so that it doesn't inifinitely print as the user is trying
- *             to input a value or trying to read it. Furthermore, it prints
- *             out 'status', 'power', & 'direction'
- */
-void task_user::printDashBoard(void)
-{
-    if (!is_menu_visible)
-    {
+// /**
+//  * @brief      Method prints out the 'Single Motor Control Module' menu
+//  *
+//  * @details    Only print the menu if the is_menu_visible flag is false. This
+//  *             is so that it doesn't inifinitely print as the user is trying
+//  *             to input a value or trying to read it.
+//  */
+// void task_user::printSingleMotorOptions(void)
+// {
+//     if (is_menu_visible == false)
+//     {   *p_serial << endl;
+//         *p_serial << PMS ("|\t\t   Single Motor Control Module   \t\t|") << endl;
+//         *p_serial << PMS ("|---------------------------------------------------------------|") << endl;
+//         *p_serial << PMS ("|\t\t 's'     Set the motor power     \t\t|") << endl;
+//         *p_serial << PMS ("|\t\t 'b'     Apply the motor brake   \t\t|") << endl;
+//         *p_serial << PMS ("|\t\t 'f'     Freewheel motor         \t\t|") << endl;
+//         *p_serial << PMS ("|\t\t 'p'     Enter Potentiometer Mode\t\t|") << endl;
+//         *p_serial << PMS ("|\t\t 'q'     Return to previous menu \t\t|") << endl;
+//         is_menu_visible = true;
+//     }
+// }
+// /**
+//  * @brief      Method prints out useful information about both motors.
+//  *
+//  * @details    Only print the menu if the is_menu_visible flag is false. This
+//  *             is so that it doesn't inifinitely print as the user is trying
+//  *             to input a value or trying to read it. Furthermore, it prints
+//  *             out 'status', 'power', & 'direction'
+//  */
+// void task_user::printDashBoard(void)
+// {
+//     if (!is_menu_visible)
+//     {
 
-        const char* status;
-        const char* direction;
-        //int16_t temp_power;
-        //if(motor_select)
-        if (local_motor1_directive == 0)
-        {
-            status = "Stopped\t";
-            direction = "N/A";
-        }
-        else if (local_motor1_directive == 1)
-        {
-            status = "Running\t";
-        }
-        else if (local_motor1_directive == 2)
-        {
-            status = "Frwheel\t";
-        }
-        else if (local_motor1_directive == 3)
-        {
-            status = "PotMeter";
+//         const char* status;
+//         const char* direction;
+//         //int16_t temp_power;
+//         //if(motor_select)
+//         if (local_motor1_directive == 0)
+//         {
+//             status = "Stopped\t";
+//             direction = "N/A";
+//         }
+//         else if (local_motor1_directive == 1)
+//         {
+//             status = "Running\t";
+//         }
+//         else if (local_motor1_directive == 2)
+//         {
+//             status = "Frwheel\t";
+//         }
+//         else if (local_motor1_directive == 3)
+//         {
+//             status = "PotMeter";
 
-        }
-        else
-        {
-            status = "Error\t";
-        }
+//         }
+//         else
+//         {
+//             status = "Error\t";
+//         }
 
-        if (!(local_motor1_directive == BRAKE))
-        {
+//         if (!(local_motor1_directive == BRAKE))
+//         {
 
-            if (local_motor1_power < 0)
-            {
-                direction = "Reverse";
-            }
-            else if (local_motor1_power > 0)
-            {
-                direction = "Forwards";
-            }
+//             if (local_motor1_power < 0)
+//             {
+//                 direction = "Reverse";
+//             }
+//             else if (local_motor1_power > 0)
+//             {
+//                 direction = "Forwards";
+//             }
 
-        }
-        else
-        {
-            direction = "N/A";
-        }
-
-
-        *p_serial << endl;
-        *p_serial
-        //<< PMS ("")
-                << PMS ("-------\t\t--------\t-------\t\t-----------")
-                << endl
-                << PMS ("Motor\t\tStatus\t\tPower\t\tDirection")
-                << endl
-                << PMS ("-------\t\t--------\t-------\t\t-----------")
-                << endl
-                << PMS ("Motor 1\t\t") << status << PMS("\t") << local_motor1_power << PMS("\t\t") << direction << endl
-                << endl;
-
-        *p_serial
-                << endl
-                << PMS ("Debugging Info: ") << endl
-                << PMS ("-------\t\t--------\t-------\t\t-----------")
-                << endl
-                << PMS ("Motor\t\tSetPoint\t Power\t\tEncoderCount")
-                << endl
-                << PMS ("-------\t\t--------\t-------\t\t-----------")
-                << endl
-                << PMS ("Motor 1\t\t")
-                << motor_setpoint -> get() << PMS("\t") << PMS("\t")
-                << motor_power -> get() << PMS("\t") << PMS("\t")
-                << encoder_count -> get() << PMS("\t")
-                << endl
-                << PMS ("-------\t\t--------\t-------\t\t-----------")
-                << endl
-                << PMS ("STE_P\t\tNcoder/s\t X-DIRC\t\tY-DIRC")
-                << endl
-                << PMS ("-------\t\t--------\t-------\t\t-----------")
-                << endl
-                << PMS ("Motor 1\t\t")
-                << steering_power-> get()
-                << PMS("\t")
-                << PMS("\t")
-                << x_direction
-                << PMS("\t")
-                << PMS("\t")
-                << y_direction
-                << PMS("\t")
-                << endl;
+//         }
+//         else
+//         {
+//             direction = "N/A";
+//         }
 
 
+//         *p_serial << endl;
+//         *p_serial
+//         //<< PMS ("")
+//                 << PMS ("-------\t\t--------\t-------\t\t-----------")
+//                 << endl
+//                 << PMS ("Motor\t\tStatus\t\tPower\t\tDirection")
+//                 << endl
+//                 << PMS ("-------\t\t--------\t-------\t\t-----------")
+//                 << endl
+//                 << PMS ("Motor 1\t\t") << status << PMS("\t") << local_motor1_power << PMS("\t\t") << direction << endl
+//                 << endl;
 
-        is_menu_visible = true;
-    }
-}
+//         *p_serial
+//                 << endl
+//                 << PMS ("Debugging Info: ") << endl
+//                 << PMS ("-------\t\t--------\t-------\t\t-----------")
+//                 << endl
+//                 << PMS ("Motor\t\tSetPoint\t Power\t\tEncoderCount")
+//                 << endl
+//                 << PMS ("-------\t\t--------\t-------\t\t-----------")
+//                 << endl
+//                 << PMS ("Motor 1\t\t")
+//                 << motor_setpoint -> get() << PMS("\t") << PMS("\t")
+//                 << motor_power -> get() << PMS("\t") << PMS("\t")
+//                 << encoder_count -> get() << PMS("\t")
+//                 << endl
+//                 << PMS ("-------\t\t--------\t-------\t\t-----------")
+//                 << endl
+//                 << PMS ("STE_P\t\tNcoder/s\t X-DIRC\t\tY-DIRC")
+//                 << endl
+//                 << PMS ("-------\t\t--------\t-------\t\t-----------")
+//                 << endl
+//                 << PMS ("Motor 1\t\t")
+//                 << steering_power-> get()
+//                 << PMS("\t")
+//                 << PMS("\t")
+//                 << x_direction
+//                 << PMS("\t")
+//                 << PMS("\t")
+//                 << y_direction
+//                 << PMS("\t")
+//                 << endl;
+
+
+
+//         is_menu_visible = true;
+//     }
+// }
 
 /**
  * @brief      This method contains the old main menu that has extra
@@ -291,8 +291,8 @@ void task_user::getNumberInput(void)
             }
         }
 
-        // Check the print queue to see if another task has sent this task
-        // something to be printed
+        // // Check the print queue to see if another task has sent this task
+        // // something to be printed
         else if (p_print_ser_queue->check_for_char ())
         {
             p_serial->putchar (p_print_ser_queue->getchar ());
@@ -331,163 +331,163 @@ void task_user::show_status (void)
 
 }
 
-/**
- * @brief      Method sets motor to the correct state as specified by user.
- *
- * @details    This method sets the global registers to the correct values so
- *             that 'task_motor' can affect the correct motor. Also sets
- *             appropriate local values to store the state of this motor so
- *             that when 'printDashBoard()' is called it can print info on
- *             each motor because the global registers can only hold info for
- *             one motor at a time.
- *
- * @param[in]  motor_id  The motor select identifier
- * @param[in]  power     The power setting specified by the user in the run()
- * @param[in]  direct    The directive, or what we want the motor to do
- */
-void task_user::setMotor(uint8_t motor_id, int16_t power, uint8_t direct)
-{
-    //place in global taskshares
-    //motor_select -> put(motor_id);
-    motor_directive ->put(direct);
-    //*p_serial << PMS("POWER INTO SETPOINT: ") << power << endl;
+// /**
+//  * @brief      Method sets motor to the correct state as specified by user.
+//  *
+//  * @details    This method sets the global registers to the correct values so
+//  *             that 'task_motor' can affect the correct motor. Also sets
+//  *             appropriate local values to store the state of this motor so
+//  *             that when 'printDashBoard()' is called it can print info on
+//  *             each motor because the global registers can only hold info for
+//  *             one motor at a time.
+//  *
+//  * @param[in]  motor_id  The motor select identifier
+//  * @param[in]  power     The power setting specified by the user in the run()
+//  * @param[in]  direct    The directive, or what we want the motor to do
+//  */
+// void task_user::setMotor(uint8_t motor_id, int16_t power, uint8_t direct)
+// {
+//     //place in global taskshares
+//     //motor_select -> put(motor_id);
+//     motor_directive ->put(direct);
+//     //*p_serial << PMS("POWER INTO SETPOINT: ") << power << endl;
 
-    motor_setpoint ->put(power);
-    //*p_serial << PMS("POWER IN SETPOINT: ") << motor_setpoint -> get() << endl;
-    //motor_power->put(power);
-    //work with local vars
-    //**DROPPING SUPPORT 2 MOTORS
-    // if (motor_id == 1)
-    // {
-    //     local_motor1_directive = direct;
-    //     local_motor1_power = power;
-    //     return;
-    // }
-    // else if (motor_id == 2)
-    // {
-    //     local_motor2_directive = direct;
-    //     local_motor2_power = power;
-    //     return;
-    // }
-    local_motor1_directive = direct;
-    local_motor1_power = power;
+//     motor_setpoint ->put(power);
+//     //*p_serial << PMS("POWER IN SETPOINT: ") << motor_setpoint -> get() << endl;
+//     //motor_power->put(power);
+//     //work with local vars
+//     //**DROPPING SUPPORT 2 MOTORS
+//     // if (motor_id == 1)
+//     // {
+//     //     local_motor1_directive = direct;
+//     //     local_motor1_power = power;
+//     //     return;
+//     // }
+//     // else if (motor_id == 2)
+//     // {
+//     //     local_motor2_directive = direct;
+//     //     local_motor2_power = power;
+//     //     return;
+//     // }
+//     local_motor1_directive = direct;
+//     local_motor1_power = power;
 
-    return;
-}
-/**
- * @brief      Method checks if the motor selected is a valid input.
- *
- * @param[in]  motor_number  The number number entered by the user.
- *
- * @return     returns TRUE if the motor value is valid, FALSE otherwise
- */
-bool task_user::isValidMotor(int16_t motor_number)
-{
-    if (motor_number == 1 || motor_number == 2)
-    {
-        return true;
-    }
-    return false;
-}
+//     return;
+// }
+// /**
+//  * @brief      Method checks if the motor selected is a valid input.
+//  *
+//  * @param[in]  motor_number  The number number entered by the user.
+//  *
+//  * @return     returns TRUE if the motor value is valid, FALSE otherwise
+//  */
+// bool task_user::isValidMotor(int16_t motor_number)
+// {
+//     if (motor_number == 1 || motor_number == 2)
+//     {
+//         return true;
+//     }
+//     return false;
+// }
 
-/**
- * @brief      Method resets the is_menu_visible flag so that another menu may
- *             be printed.
- */
-void task_user::resetMenus(void)
-{
-    is_menu_visible = false;
-}
+// /**
+//  * @brief      Method resets the is_menu_visible flag so that another menu may
+//  *             be printed.
+//  */
+// void task_user::resetMenus(void)
+// {
+//     is_menu_visible = false;
+// }
 
-/**
- * @brief      Method prints out the 'Encoder Control Module' menu
- *
- * @details    Only print the menu if the is_menu_visible flag is false. This
- *             is so that it doesn't inifinitely print as the user is trying
- *             to input a value or trying to read it.
- */
-void task_user::printEncoderModuleOptions(void)
-{
-    if (is_menu_visible == false)
-    {
-
-
-        *p_serial << PMS ("|\t\t        Encoder Control Module          \t\t|") << endl;
-        *p_serial << PMS ("|---------------------------------------------------------------------- |") << endl;
-        *p_serial << PMS ("|\t\t 'r'    Refresh the data                \t\t|") << endl;
-        *p_serial << PMS ("|\t\t 'q'    quit to main menu               \t\t|") << endl;
-        *p_serial << PMS("Encoder Count: ") << encoder_count -> get() << endl
-                  << PMS("Encoder Ticks/ms: ") << encoder_ticks_per_task -> get() << endl
-                  << endl << PMS("\t\t-> press 'r' to refresh ") << endl << endl;
-        is_menu_visible = true;
-    }
-}
+// /**
+//  * @brief      Method prints out the 'Encoder Control Module' menu
+//  *
+//  * @details    Only print the menu if the is_menu_visible flag is false. This
+//  *             is so that it doesn't inifinitely print as the user is trying
+//  *             to input a value or trying to read it.
+//  */
+// void task_user::printEncoderModuleOptions(void)
+// {
+//     if (is_menu_visible == false)
+//     {
 
 
-
-/**
- * @brief      Method prints out the 'IMU Control Module' menu
- *
- * @details    Only print the menu if the is_menu_visible flag is false. This
- *             is so that it doesn't inifinitely print as the user is trying
- *             to input a value or trying to read it.
- */
-void task_user::printIMUModuleOptions(void)
-{
-    if (is_menu_visible == false)
-    {
+//         *p_serial << PMS ("|\t\t        Encoder Control Module          \t\t|") << endl;
+//         *p_serial << PMS ("|---------------------------------------------------------------------- |") << endl;
+//         *p_serial << PMS ("|\t\t 'r'    Refresh the data                \t\t|") << endl;
+//         *p_serial << PMS ("|\t\t 'q'    quit to main menu               \t\t|") << endl;
+//         *p_serial << PMS("Encoder Count: ") << encoder_count -> get() << endl
+//                   << PMS("Encoder Ticks/ms: ") << encoder_ticks_per_task -> get() << endl
+//                   << endl << PMS("\t\t-> press 'r' to refresh ") << endl << endl;
+//         is_menu_visible = true;
+//     }
+// }
 
 
-        *p_serial << PMS ("|\t\t          IMU Control Module            \t\t|") << endl;
-        *p_serial << PMS ("|---------------------------------------------------------------------- |") << endl;
-        *p_serial << PMS ("|\t\t 'r'    Refresh the data                \t\t|") << endl;
-        *p_serial << PMS ("|\t\t 'q'    quit to main menu               \t\t|") << endl;
-        *p_serial << PMS("IMU DATA: ") << encoder_count -> get() << endl
-                  << endl << PMS("\t\t-> press 'r' to refresh ") << endl << endl;
-        is_menu_visible = true;
-    }
-}
 
-/**
- * @brief      Method prints out the 'Drive Control' menu
- *
- * @details    Only print the menu if the is_menu_visible flag is false. This
- *             is so that it doesn't inifinitely print as the user is trying
- *             to input a value or trying to read it.
- */
-void task_user::printDriveModeOptions(void)
-{
-    if (is_menu_visible == false)
-    {
+// /**
+//  * @brief      Method prints out the 'IMU Control Module' menu
+//  *
+//  * @details    Only print the menu if the is_menu_visible flag is false. This
+//  *             is so that it doesn't inifinitely print as the user is trying
+//  *             to input a value or trying to read it.
+//  */
+// void task_user::printIMUModuleOptions(void)
+// {
+//     if (is_menu_visible == false)
+//     {
 
 
-        *p_serial << PMS ("|\t\t          Drive Control Mode            \t\t|") << endl;
-        *p_serial << PMS ("|---------------------------------------------------------------------- |") << endl;
-        *p_serial << PMS ("|\t\t    Use the JoyStick to move around     \t\t|") << endl;
-        *p_serial << PMS ("|\t\t 'q'    quit to main menu               \t\t|") << endl << endl;
-        printDashBoard();
-        is_menu_visible = true;
+//         *p_serial << PMS ("|\t\t          IMU Control Module            \t\t|") << endl;
+//         *p_serial << PMS ("|---------------------------------------------------------------------- |") << endl;
+//         *p_serial << PMS ("|\t\t 'r'    Refresh the data                \t\t|") << endl;
+//         *p_serial << PMS ("|\t\t 'q'    quit to main menu               \t\t|") << endl;
+//         *p_serial << PMS("IMU DATA: ") << encoder_count -> get() << endl
+//                   << endl << PMS("\t\t-> press 'r' to refresh ") << endl << endl;
+//         is_menu_visible = true;
+//     }
+// }
+
+// /**
+//  * @brief      Method prints out the 'Drive Control' menu
+//  *
+//  * @details    Only print the menu if the is_menu_visible flag is false. This
+//  *             is so that it doesn't inifinitely print as the user is trying
+//  *             to input a value or trying to read it.
+//  */
+// void task_user::printDriveModeOptions(void)
+// {
+//     if (is_menu_visible == false)
+//     {
 
 
-    }
-}
-
-/**
- * @brief      Method prints out the 'Drive Control' menu
- *
- * @details    Only print the menu if the is_menu_visible flag is false. This
- *             is so that it doesn't inifinitely print as the user is trying
- *             to input a value or trying to read it.
- */
-void task_user::printJoystickOptions(void)
-{
-    if (is_menu_visible == false)
-    {
+//         *p_serial << PMS ("|\t\t          Drive Control Mode            \t\t|") << endl;
+//         *p_serial << PMS ("|---------------------------------------------------------------------- |") << endl;
+//         *p_serial << PMS ("|\t\t    Use the JoyStick to move around     \t\t|") << endl;
+//         *p_serial << PMS ("|\t\t 'q'    quit to main menu               \t\t|") << endl << endl;
+//         printDashBoard();
+//         is_menu_visible = true;
 
 
-        *p_serial << PMS ("|\t\t          JoyStick Control Mode         \t\t|") << endl;
-        *p_serial << PMS ("|---------------------------------------------------------------------- |") << endl;
-        *p_serial << PMS ("|\t\t 'q'    quit to main menu               \t\t|") << endl;
-        is_menu_visible = true;
-    }
-}
+//     }
+// }
+
+// /**
+//  * @brief      Method prints out the 'Drive Control' menu
+//  *
+//  * @details    Only print the menu if the is_menu_visible flag is false. This
+//  *             is so that it doesn't inifinitely print as the user is trying
+//  *             to input a value or trying to read it.
+//  */
+// void task_user::printJoystickOptions(void)
+// {
+//     if (is_menu_visible == false)
+//     {
+
+
+//         *p_serial << PMS ("|\t\t          JoyStick Control Mode         \t\t|") << endl;
+//         *p_serial << PMS ("|---------------------------------------------------------------------- |") << endl;
+//         *p_serial << PMS ("|\t\t 'q'    quit to main menu               \t\t|") << endl;
+//         is_menu_visible = true;
+//     }
+// }

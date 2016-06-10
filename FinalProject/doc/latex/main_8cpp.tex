@@ -1,0 +1,80 @@
+\hypertarget{main_8cpp}{\section{main.\-cpp File Reference}
+\label{main_8cpp}\index{main.\-cpp@{main.\-cpp}}
+}
+
+
+Contains main function in which R\-T\-O\-S libraries are loaded and the task scheduler is started.  
+
+
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$avr/io.\-h$>$}\\*
+{\ttfamily \#include $<$avr/wdt.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}Free\-R\-T\-O\-S.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}task.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}queue.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}croutine.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}rs232int.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}ansi\-\_\-terminal.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}time\-\_\-stamp.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}taskbase.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}textqueue.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}taskqueue.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}taskshare.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}shares.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}task\-\_\-user.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}task\-\_\-imu.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}i2c\-\_\-driver.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}bno055\-\_\-driver.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{int \hyperlink{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}{main} (void)}\label{main_8cpp_a840291bc02cba5474a4cb46a9b9566fe}
+
+\begin{DoxyCompactList}\small\item\em Main function runs until board is powered off. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+Text\-Queue $\ast$ \hyperlink{main_8cpp_acd99bf5d187d4809af2f460a5415e904}{p\-\_\-print\-\_\-ser\-\_\-queue}
+\item 
+\hypertarget{main_8cpp_aa0fdd4294636611c2a8545b04f189cbf}{Task\-Share$<$ int16\-\_\-t $>$ $\ast$ \hyperlink{main_8cpp_aa0fdd4294636611c2a8545b04f189cbf}{heading}}\label{main_8cpp_aa0fdd4294636611c2a8545b04f189cbf}
+
+\begin{DoxyCompactList}\small\item\em Holds current heading tasken from B\-N\-O055 chip on B\-N\-O055 driver every 100 ms. \end{DoxyCompactList}\item 
+\hypertarget{main_8cpp_ae5cfa145094d2c46c60264d6968ddd42}{Task\-Share$<$ int16\-\_\-t $>$ $\ast$ \hyperlink{main_8cpp_ae5cfa145094d2c46c60264d6968ddd42}{roll}}\label{main_8cpp_ae5cfa145094d2c46c60264d6968ddd42}
+
+\begin{DoxyCompactList}\small\item\em Holds current roll taken from B\-N\-O055 chip on B\-N\-O055 driver every 100 ms. \end{DoxyCompactList}\item 
+\hypertarget{main_8cpp_a92c2c9edd359cbfe54f3f5c073871f57}{Task\-Share$<$ int16\-\_\-t $>$ $\ast$ \hyperlink{main_8cpp_a92c2c9edd359cbfe54f3f5c073871f57}{pitch}}\label{main_8cpp_a92c2c9edd359cbfe54f3f5c073871f57}
+
+\begin{DoxyCompactList}\small\item\em Holds current pitch taken from B\-N\-O055 chip on B\-N\-O055 driver every 100 ms. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Contains main function in which R\-T\-O\-S libraries are loaded and the task scheduler is started. The main function contains the instance of the bno055 we're going to test an the task I\-M\-U which currently only updates the shares with the values in the bno055. If we want to change the pins for the B\-N\-O055, we unfortunately can't because the only i2c pins on the board are wired to P\-D0, and P\-D1 which in turn are I\-R\-Q an C\-E on the Mi\-Rf socket.
+
+\begin{DoxyAuthor}{Author}
+Eddie Ruano
+\end{DoxyAuthor}
+Revisions\-: @ 6/1/2016 E\-D\-D patched up comments @ 6/1/2016 E\-D\-D finally fixed lagg problem @ 5/28/2016 E\-D\-D created barebones
+
+License\-: B\-N\-O055 Sensor Control Task for use with Free\-R\-T\-O\-S Copyright (C) 2016 Eddie Ruano
+
+This program is free software\-: you can redistribute it and/or modify it under the terms of the G\-N\-U General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but W\-I\-T\-H\-O\-U\-T A\-N\-Y W\-A\-R\-R\-A\-N\-T\-Y; without even the implied warranty of M\-E\-R\-C\-H\-A\-N\-T\-A\-B\-I\-L\-I\-T\-Y or F\-I\-T\-N\-E\-S\-S F\-O\-R A P\-A\-R\-T\-I\-C\-U\-L\-A\-R P\-U\-R\-P\-O\-S\-E. See the G\-N\-U General Public License for more details. 
+
+Definition in file \hyperlink{main_8cpp_source}{main.\-cpp}.
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{main_8cpp_acd99bf5d187d4809af2f460a5415e904}{\index{main.\-cpp@{main.\-cpp}!p\-\_\-print\-\_\-ser\-\_\-queue@{p\-\_\-print\-\_\-ser\-\_\-queue}}
+\index{p\-\_\-print\-\_\-ser\-\_\-queue@{p\-\_\-print\-\_\-ser\-\_\-queue}!main.cpp@{main.\-cpp}}
+\subsubsection[{p\-\_\-print\-\_\-ser\-\_\-queue}]{\setlength{\rightskip}{0pt plus 5cm}Text\-Queue$\ast$ p\-\_\-print\-\_\-ser\-\_\-queue}}\label{main_8cpp_acd99bf5d187d4809af2f460a5415e904}
+prototypes of Text\-Queues Text queue for printing text 
+
+Definition at line 62 of file main.\-cpp.
+
+
+
+Referenced by main().
+

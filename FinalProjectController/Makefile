@@ -31,7 +31,7 @@ PROJECT_NAME = FinalProjectController
 # A list of the source (.c, .cc, .cpp) files in the project. Files in library 
 # subdirectories do not go in this list; they're included automatically 
 # task_transmitter.cpp
-SOURCES = main.cpp 
+SOURCES = main.cpp task_transmitter.cpp
 
 # Clock frequency of the CPU, in Hz. This number should be an unsigned long integer.
 # For example, 16 MHz would be represented as 16000000UL. 

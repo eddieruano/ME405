@@ -33,12 +33,9 @@
 #include "shares.h"                         // Shared inter-task communications
 #include <util/delay.h>
 
-
 // Declare Letter constants based on ASCII
-#define UPPERCASE_A     65
-#define UPPERCASE_Z     90
-#define LOWERCASE_A     97
-#define LOWERCASE_Z     122
+#define UPPERCASE_A_OFFSET    55
+#define CHAR_ZERO             48
 
 // Declare all modes of operation
 #define DRIVE_MODE      0x02
@@ -82,7 +79,7 @@ task_transmitter::task_transmitter (
     in_drive = false;
     count = 0;
     entry_token = true;
-    memset(buffer, 0, 7);
+    memset(outbuffer, 0, 13);
     mode = 0;
 
     /// Start at 1000ms for pairing
@@ -92,6 +89,8 @@ task_transmitter::task_transmitter (
     p_ser_bt = new rs232(0, 0);
     UCSR0A |= (1 << U2X0); // set the double-speed bit
     UBRR0 = 16; // set baud rate to 115200
+    memset(superbuffer,0, 2);
+    memset(joy_read, 0, 1);
 
 }
 
@@ -174,9 +173,10 @@ void task_transmitter::run (void)
 
         while (!send());
 
-        *p_serial << "Sent@ " << previousTicks << endl;
+        // *p_serial << "Sent@ " << previousTicks << endl;
         printBuffer();
-        delay_ms(250);
+        runs++;
+        delay_ms(1);
     }
 
 
@@ -206,44 +206,45 @@ bool task_transmitter::getCommand(void)
 
 bool task_transmitter::send(void)
 {
-    count = 0;
-    char rsd[] = "_RSD";
-    for(count = 0; count < 10; count++)
-    {
-        char in = outbuffer[count];
-        *p_ser_bt << in;
-        *p_serial << in << "+";
-    }
+    // count = 0;
+    // char rsd[] = "_RSD";
+    // for(count = 0; count < 3; count++)
+    // {
+    //     char in = superbuffer[count];
+    //     *p_ser_bt << superbuffer[0] << supper;
+    //     // *p_serial << in << "+";
+    // }
+    *p_ser_bt << superbuffer[0] << superbuffer[1] << superbuffer[2];
     return true;
     // check for ack
-    while (p_ser_bt -> check_for_char())
-    {
-        char_in = p_ser_bt -> getchar();
-        if (char_in == '_')
-        {
-            getCommand();
+    // while (p_ser_bt -> check_for_char())
+    // {
+    //     char_in = p_ser_bt -> getchar();
+    //     if (char_in == '_')
+    //     {
+    //         getCommand();
             
             
-            if (strcmp(buffer, ack) == 0)
-            {
-                *p_serial << "Payload Received" << endl;
-                // printBuffer();
-                return true;
-            }
-            else if(strcmp(buffer, rsd) == 0)
-            {
-                *p_serial << "fucked up.." << endl;
-                return false;
-            }
-            else
-            {
-                *p_serial << "no recognize msg+" << endl;
-                printBuffer();
-                return false;
-            }
-        }
-    }
-    return false;
+    //         if (strcmp(buffer, ack) == 0)
+    //         {
+    //             // *p_serial << "Payload Received" << endl;
+    //             // printBuffer();
+    //             return true;
+    //         }
+    //         else if(strcmp(buffer, rsd) == 0)
+    //         {
+    //             // *p_serial << "fucked up.." << endl;
+    //             return false;
+    //         }
+    //         else
+    //         {
+    //             // *p_serial << "no recognize msg+" << endl;
+    //             printBuffer();
+    //             return false;
+    //         }
+    //     }
+    // }
+    // return false;
 }
 
 
@@ -255,35 +256,112 @@ bool task_transmitter::send(void)
  */
 void task_transmitter::encodeData()
 {
-    outbuffer[0] = '*';
-    outbuffer[1] = 'A';
-    outbuffer[2] = 'B';
-    outbuffer[3] = 'C';
-    outbuffer[4] = 'D';
+    // outbuffer[0] = '*';
+    // outbuffer[1] = 'A';
+    // outbuffer[2] = 'B';
+    // outbuffer[3] = 'C';
+    // outbuffer[4] = 'D';
 
-    outbuffer[5] = 'E';
-    outbuffer[6] = 'F';
-    outbuffer[7] = '1';
-    outbuffer[8] = '2';
-    outbuffer[9] = '3';
+    // outbuffer[5] = 'E';
+    // outbuffer[6] = 'F';
+    // outbuffer[7] = '1';
+    // outbuffer[8] = '2';
+    // outbuffer[9] = '3';
 
     // for(count = 1; count < 10; count++)
     // {
     //     outbuffer[count] = 'F';
     // }
     
-    // Since the first value is the passkey '*' always place this in the first buff
-    outbuffer[0] = '*';
-    p_local_controller_driver -> read(reader_data);
+    // Since the first value is the passkey '*' always place in buffer[0]
+    //outbuffer[0] = '*';
+    // Get data from controller
+    //p_local_controller_driver -> read(reader_data);
+    // Beginning to work with values obtained
+    /*
+        reader_data[0] = x joystick position in uint16_t
+        reader_data[1] = y joystick position in uint16_t
+        reader_data[2] = gear state in          uint16_t
+    */
+    // for(count = 0; count < 3; count++)
+    // {
+    //     // *p_serial << "RDat[" << count << "]: " << reader_data[count] << endl;
+    // }
+    // // Bits [16-12] of X Joystick
+    // outbuffer[1] = encodeToHexChar((reader_data[0] >> 12));
+    // // Bits [16-12] of X Joystick
+    // outbuffer[2] = encodeToHexChar((reader_data[0] >> 8));
+    // // Bits [16-12] of X Joystick
+    // outbuffer[3] = encodeToHexChar((reader_data[0] >> 4));
+    // // Bits [16-12] of X Joystick
+    // outbuffer[4] = encodeToHexChar((reader_data[0]));
+
+    // /* Start Y Joystick */
+
+    // // Bits [16-12] of X Joystick
+    // outbuffer[5] = encodeToHexChar((reader_data[1] >> 12));
+    // // Upper 4 bits of X Joystick
+    // outbuffer[6] = encodeToHexChar((reader_data[1] >> 8));
+    // // Upper 4 bits of X Joystick
+    // outbuffer[7] = encodeToHexChar((reader_data[1] >> 4));
+    // // Upper 4 bits of X Joystick
+    // outbuffer[8] = encodeToHexChar((reader_data[1]));
+
+    // /* Start Gear State */
+
+    // // Bits [16-12] of Gear State
+    // outbuffer[9] = encodeToHexChar((reader_data[2] >> 12));
+    // // Bits [12-8] of Gear State
+    // outbuffer[10] = encodeToHexChar((reader_data[2] >> 8));
+    // // Bits [8-4] of Gear State
+    // outbuffer[11] = encodeToHexChar((reader_data[2] >> 4));
+    // // Bits 4-0] of Gear State
+    // outbuffer[12] = encodeToHexChar((reader_data[2]));
+
+    p_local_controller_driver -> read(joy_read);
+    // outbuffer[1] = joy_read[0];
+    // outbuffer[2] = joy_read[1];
+    superbuffer[0] = '*';
+    *p_serial << "J0: " << joy_read[0] << endl;
+    *p_serial << "J1: " << joy_read[1] << endl;
+    superbuffer[1] = (char)joy_read[0];
+    superbuffer[2] = (char)joy_read[1];
     
     return;
 }
 
 void task_transmitter::printBuffer()
 {
-    for(count = 0; count < 10; count++)
+    for(count = 0; count < 3; count++)
     {
-        *p_serial << "Buffer[" << count << "]: " << buffer[count] << endl;
+        *p_serial << "Buffer[" << count << "]: " << (uint8_t)superbuffer[count] << endl;
     }
     return;
 }
+
+char task_transmitter::encodeToHexChar(uint16_t val)
+{
+    // Declare scaffolding 8bit variable
+    uint8_t temp_8;
+    // Working with lowest bits of variable val so apply mask for lower 4bits
+    val &= 0x000F;
+
+
+    if (val >= 0 && val <= 9)
+    {
+        temp_8 = CHAR_ZERO + val;
+    }
+    else if (val >= 10 && val <= 15)
+    {
+        temp_8 = UPPERCASE_A_OFFSET + val;
+    }
+    else
+    {
+        temp_8 = CHAR_ZERO;
+        *p_serial << "This is not valid -> " << val << " <- " << endl;
+    }
+    // *p_serial << temp_8 << endl;
+    return (char)temp_8;
+}
+
+

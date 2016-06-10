@@ -107,7 +107,7 @@ public:
     bool getCommand(void);
     bool receivePayload(void);
     void deliverPayload(void);
-    char buffer[10];
+    char buffer[13];
     uint8_t hexConversion(char a);
     int16_t decodeValue(char a, char b, char c, char d);
 

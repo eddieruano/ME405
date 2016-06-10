@@ -134,7 +134,7 @@ TaskShare<int16_t>* x_joystick;
 
 TaskShare<int16_t>* y_joystick;
 
-TaskShare<int8_t>* gear_state;
+TaskShare<int16_t>* gear_state;
 
 
 
@@ -190,7 +190,7 @@ int main (void)
     x_joystick = new TaskShare<int16_t> ("X Joystick Position");
     y_joystick = new TaskShare<int16_t> ("Y Joystick Position");
     // Start  Shares Gear Variables
-    gear_state = new TaskShare<int8_t> ("Shift State");
+    gear_state = new TaskShare<int16_t> ("Shift State");
 
     // new task_encoder ("EncoderControl", task_priority(5), 280, p_ser_port, p_hctl);
 

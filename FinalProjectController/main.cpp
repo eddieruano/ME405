@@ -93,7 +93,7 @@ int main (void)
     // *p_ser_bt << clrscr << PMS ("BT transmission check") << endl;
 
     // Create the queues and other shared data items here
-    p_print_ser_queue = new TextQueue (32, "Print", p_ser_port, 10);
+    // p_print_ser_queue = new TextQueue (32, "Print", p_ser_port, 10);
 
     // p_send_bt_queue = new TextQueue(32, "Send", p_ser_bt, 15);
 
@@ -101,7 +101,7 @@ int main (void)
     // Declare instance of driver to read input from controller joysticks etc.
     controller_driver* p_controller_driver = new controller_driver(p_ser_port);
 
-    *p_ser_port << "Hello" << endl;
+    // *p_ser_port << "Hello" << endl;
 
 
     // Start the transmission task and send it the driver for the controller.

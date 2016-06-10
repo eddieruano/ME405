@@ -74,7 +74,7 @@ public:
         emstream*
     );
 
-    void read(uint16_t*);
+    void read(uint8_t*);
     void paired(bool t)
     {
         if (t)

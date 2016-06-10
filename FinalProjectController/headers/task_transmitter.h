@@ -76,8 +76,8 @@ private:
     uint8_t mode;
     /// General buffer
     char buffer[10];
-    /// Buffer Outgoing
-    char outbuffer[10];
+    /// Buffer Outgoing 13 chars in total
+    char outbuffer[13];
     /// Holder controller data
     uint16_t reader_data[3];
     /// Speed of the task
@@ -88,6 +88,10 @@ private:
     bool paired;
     uint32_t timeout;
     bool in_drive;
+
+    char superbuffer[3];
+
+    uint8_t joy_read[2];
 
 
 
@@ -119,19 +123,7 @@ public:
     bool getCommand(void);
     bool send(void);
     void encodeData(void);
-    bool isAnyValid(char in)
-    {
-        switch (in)
-        {
-        case ('A'):
-        case ('C'):
-        case ('K'):
-        case ('_'):
-            return true;
-        default:
-            return false;
-        }
-    }
+    char encodeToHexChar(uint16_t);
     
 };
 

@@ -163,8 +163,9 @@ void task_receiver::run (void)
                     deliverPayload();
                 }
 
-                //printBuffer();
+                printBuffer();
             }
+
             *p_serial << hex;
             *p_serial << "X Joystick: " << x_joystick -> get() << endl;
             *p_serial << "Y Joystick: " << y_joystick -> get() << endl;
@@ -173,7 +174,7 @@ void task_receiver::run (void)
 
         // Print Shares for confirmation
 
-        delay_from_for_ms(previousTicks, 200);
+        delay_from_for_ms(previousTicks, 50);
 
     }
 
@@ -210,7 +211,7 @@ bool task_receiver::getCommand(void)
  */
 void task_receiver::printBuffer()
 {
-    for (count = 0; count < 9; count++)
+    for (count = 0; count < 13; count++)
     {
         *p_serial << "Buffer[" << count << "]: " << buffer[count] << endl;
     }
@@ -223,7 +224,7 @@ void task_receiver::printBuffer()
  */
 bool task_receiver::receivePayload()
 {
-    memset(buffer, 0, 9);
+    memset(buffer, 0, 12);
     count = 0;
     buffer[count] = char_in;
     count++;
@@ -232,16 +233,16 @@ bool task_receiver::receivePayload()
     {
         char_in = p_ser_bt -> getchar();
         buffer[count] = char_in;
-        if (count == 9)
+        if (count == 12)
         {
-            //printBuffer();
+            // printBuffer();
             *p_ser_bt << PMS("_ACK") << endl;
             return true;
         }
         count++;
         // *p_serial << "in char";
     }
-    if (count != 9)
+    if (count != 12)
     {
         return false;
     }
@@ -261,11 +262,11 @@ void task_receiver::deliverPayload()
     // Declare temporary scaffolding variables
     int16_t x_joy_rec;
     int16_t y_joy_rec;
-    int8_t gear_rec;
+    int16_t gear_rec;
 
     x_joy_rec = decodeValue(buffer[1], buffer[2], buffer[3], buffer[4]);
     y_joy_rec = decodeValue(buffer[5], buffer[6], buffer[7], buffer[8]);
-    gear_rec  = (int8_t)hexConversion(buffer[9]);
+    gear_rec  = decodeValue(buffer[9], buffer[10], buffer[11], buffer[12]);
 
     x_joystick -> put(x_joy_rec);
     y_joystick -> put(y_joy_rec);
@@ -292,8 +293,8 @@ int16_t task_receiver::decodeValue(char a, char b, char c, char d)
     temp = 0x0000;
     temp |= (int16_t)(hexConversion(a) << 12);
     temp |= (int16_t)(hexConversion(b) << 8);
-    temp |= (int16_t)hexConversion(c) << 4;
-    temp |= (int16_t)hexConversion(d);
+    temp |= (int16_t)(hexConversion(c) << 4);
+    temp |= (int16_t)(hexConversion(d));
 
     return temp;
 }
@@ -325,6 +326,6 @@ uint8_t task_receiver::hexConversion(char a)
         temp = 0;
         *p_serial << "Error Char+ " << hex << (uint8_t)a << endl;
     }
-    //*p_serial << "Temp: " << temp << endl;
+    *p_serial << "Temp: " << temp << endl;
     return temp;
 }

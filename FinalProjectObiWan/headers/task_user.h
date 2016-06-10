@@ -65,11 +65,11 @@
 #include "taskshare.h"                      // Header for thread-safe shared data
 
 #include "shares.h"                         // Global ('extern') queue declarations
-#include "bno055_driver.h"
+#include "imu_driver.h"
 
 /// This macro defines a string that identifies the name and version of this
 /// program.
-#define PROGRAM_VERSION PMS ("ME 405 Lab 5 IMU Testing")
+#define PROGRAM_VERSION PMS ("ME405 Testing Platfrom v7.0")
 
 
 /**
@@ -86,11 +86,11 @@ private:
     int16_t number_entered;
     /// This holds a boolean variable that holds a whether case1 will go into the main motor module if TRUE or the single motor module if FALSE
     bool in_main_motor_module;
-    bool in_imu_module;
+    // bool in_imu_module;
     bool in_encoder_module;
     bool in_drive_mode;
     bool in_joystick_mode;
-    bno055_driver* p_bno055;
+    /// 
     int16_t local_motor1_power;
     /// This holds the local power variable for motor 2 in order to be able to display all info in printDashBoard()
     int16_t local_motor2_power;
@@ -143,11 +143,11 @@ protected:
 
 public:
     /// This constructor creates a user interface task object
-    task_user (const char*, unsigned portBASE_TYPE, size_t, emstream*, bno055_driver*);
+    task_user (const char*, unsigned portBASE_TYPE, size_t, emstream*);
 
     /** This method is called by the RTOS once to run the task loop for ever and ever.
      */
     void run (void);
-    //imu_driver* p_imu;
+    // imu_driver* p_imu;
 };
 #endif // _TASK_USER_H_

@@ -55,7 +55,7 @@ controller_driver::controller_driver (emstream* p_ser_port)
 /**
  * @brief       Inititalize the controller
  *
- * @details     
+ * @details
  *
  */
 void controller_driver::initialize(void)
@@ -70,7 +70,7 @@ void controller_driver::initialize(void)
     normalize(JOYSTICK_ANALOG_INPUT_X, local_error_x);
     // Normalize channel 1, ADC1[Y-DIR]
     normalize(JOYSTICK_ANALOG_INPUT_Y, local_error_y);
-    memset(local_read_data, 0, 3);
+    memset(local_read_data, 0, 2);
 
     return;
 }
@@ -79,29 +79,109 @@ void controller_driver::initialize(void)
 void controller_driver::normalize(uint8_t channel_select, uint16_t local_error_select)
 {
 
-   int8_t count = 0; 
-   uint16_t temp_error_adc = 0;
-   while (count < 10)
-   {
-      temp_error_adc = temp_error_adc + (p_local_adc -> read_once(channel_select));
-      count++;
-   }
+    int8_t count = 0;
+    uint16_t temp_error_adc = 0;
+    while (count < 10)
+    {
+        temp_error_adc = temp_error_adc + (p_local_adc -> read_once(channel_select));
+        count++;
+    }
 
-   temp_error_adc = (512 - (temp_error_adc / 10));
+    temp_error_adc = (512 - (temp_error_adc / 10));
 
-   *p_local_serial_port <<"Channel: " << channel_select << " ERROR: " << temp_error_adc << endl;
-   local_error_select = temp_error_adc;
-   return;
+    *p_local_serial_port << "Channel: " << channel_select << " ERROR: " << temp_error_adc << endl;
+    local_error_select = temp_error_adc;
+    return;
 }
 
 
-void controller_driver::read(uint16_t* dat)
+// void controller_driver::read(uint16_t* dat)
+// {
+//     uint16_t data[3];
+//     int16_t div = 19;
+//     memset(data, 0, 2);
+
+//     // dat[0] = p_local_adc -> read_once(JOYSTICK_ANALOG_INPUT_X) - 512;
+//     // dat[0] = (int16_t)dat[0] / div;
+//     // dat[1] = ((p_local_adc -> read_once(JOYSTICK_ANALOG_INPUT_Y)) * 2) - 1024;
+//     // dat[2] = p_local_adc -> read_once(JOYSTICK_ANALOG_INPUT_GEAR);
+
+//     dat[0] = (p_local_adc -> read_once(JOYSTICK_ANALOG_INPUT_X) - 512) / 4;
+//     dat[0] = (int16_t)dat[0] / div;
+//     dat[1] = (((p_local_adc -> read_once(JOYSTICK_ANALOG_INPUT_Y)) * 2) - 1024) / 4;
+//     dat[2] = (p_local_adc -> read_once(JOYSTICK_ANALOG_INPUT_GEAR)) /4;
+
+
+//     *p_local_serial_port << "X Joystick: " << dec << (int16_t)dat[0] << endl;
+//     *p_local_serial_port << "Y Joystick: " << dec << (int16_t)dat[1] << endl;
+//     *p_local_serial_port << "Gear State: " << dec << (int16_t)dat[2] << endl;
+//     *p_local_serial_port << endl << endl;
+
+// }
+
+
+void controller_driver::read(uint8_t* dat)
 {
-    uint16_t data[3];
-    memset(data, 0, 2);
-    dat[0] = p_local_adc -> read_once(JOYSTICK_ANALOG_INPUT_X);
-    dat[1] = p_local_adc -> read_once(JOYSTICK_ANALOG_INPUT_Y);
-    dat[2] = p_local_adc -> read_once(JOYSTICK_ANALOG_INPUT_GEAR);
+    int16_t read_x_joy, read_y_joy, read_gear;
+    read_x_joy = read_x_joy = read_gear = 0;
+
+
+    int16_t div = 19;
+
+    // dat[0] = p_local_adc -> read_once(JOYSTICK_ANALOG_INPUT_X) - 512;
+    // dat[0] = (int16_t)dat[0] / div;
+    // dat[1] = ((p_local_adc -> read_once(JOYSTICK_ANALOG_INPUT_Y)) * 2) - 1024;
+    // dat[2] = p_local_adc -> read_once(JOYSTICK_ANALOG_INPUT_GEAR);
+
+
+    uint8_t gear_low_mask;
+    // This will bring bit 6 low which isn't used in 2's
+    gear_low_mask = 0b11011111;
+
+    uint8_t x_joy;
+    uint8_t y_joy;
+
+    read_x_joy = p_local_adc -> read_once(JOYSTICK_ANALOG_INPUT_X) - 512;
+    *p_local_serial_port << "pX Joystick: " << dec << read_x_joy << endl;
+    //read_x_joy = (int16_t)dat[0] / div;
+    read_x_joy = read_x_joy / div;
+    read_y_joy = (((int16_t)(p_local_adc -> read_once(JOYSTICK_ANALOG_INPUT_Y)) * 2) - 1024) / 8;
+    read_gear = ((int16_t)(p_local_adc -> read_once(JOYSTICK_ANALOG_INPUT_GEAR))) / 4;
+
+
+
+
+
+    // x_joy = (uint8_t)data[0];
+    // // bring value of -1023 to 1023 to -128 to 128
+    // y_joy = (uint8_t)data[1] / 8;
+
+
+
+    // Here 10 is the threshold
+    if(read_gear < 20)
+    {
+      read_x_joy &= gear_low_mask;
+    }
+    else
+    {
+        read_x_joy |= ~(gear_low_mask);
+    }
+
+
+
+    dat[0] = (uint8_t)read_x_joy;
+    dat[1] = (uint8_t)read_y_joy;
+    // dat[2] = (uint8_t)data[2];
+
+    *p_local_serial_port << "pX Joystick: " << dec << read_x_joy << endl;
+    *p_local_serial_port << "Y Joystick: " << dec << read_y_joy << endl;
+    *p_local_serial_port << "Gear State: " << dec << read_gear << endl;
+    *p_local_serial_port << endl << endl;
+    *p_local_serial_port << "xArr: " << bin << (int8_t)dat[0] << endl;
+    *p_local_serial_port << "yArr: " << dec << (int8_t)dat[1] << endl;
+    // *p_local_serial_port << "gArr: " << dec << dat[2] << endl;
+    *p_local_serial_port << endl << endl;
 
 }
 

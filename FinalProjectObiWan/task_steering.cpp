@@ -174,7 +174,7 @@ void task_steering::run (void)
 
       // This is a method we use to cause a task to make one run through its task
       // loop every N milliseconds and let other tasks run at other times
-      delay_from_for_ms (previousTicks, 1);
+      delay_from_for_ms (previousTicks, 5);
    }
 
 

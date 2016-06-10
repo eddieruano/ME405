@@ -1,3 +1,4 @@
-build/satmath.o: ../lab5/drivers/satmath.cpp ../lab5/headers/satmath.h
+build/satmath.o: ../FinalProjectObiWan/drivers/satmath.cpp \
+ ../FinalProjectObiWan/headers/satmath.h
 
-../lab5/headers/satmath.h:
+../FinalProjectObiWan/headers/satmath.h:

@@ -84,6 +84,7 @@
 #include "task_imu.h"
 #include "i2c_driver.h"
 #include "bno055_driver.h"
+#include "task_receiver.h"
 
 // Set all defines
 /// Set the initital motor selector to something neutral
@@ -138,7 +139,7 @@ TaskShare<int16_t>* x_joystick;
 
 TaskShare<int16_t>* y_joystick;
 
-TaskShare<int8_t>* gear_state;
+TaskShare<int16_t>* gear_state;
 
 /*Start IMU variables */
 TaskShare<int16_t>* heading;
@@ -165,7 +166,8 @@ int main (void)
     MCUSR = 0;
     wdt_disable ();
     // MAKE RESET INTERRUPT
-
+    DDRE |= (1 << PE6);
+    PORTE |= (1 << PE6);
     // time_stamp the_time_now;
 
     // Configure a serial port which can be used by a task to print debugging infor-
@@ -200,29 +202,16 @@ int main (void)
     x_joystick  = new TaskShare<int16_t> ("X Joystick Position");
     y_joystick  = new TaskShare<int16_t> ("Y Joystick Position");
     // Start  Shares Gear Variables
-    gear_state      = new TaskShare<int8_t> ("Shift State");
+    gear_state      = new TaskShare<int16_t> ("Shift State");
     // Start IMU Position variables
     heading         = new TaskShare<int16_t> ("Vehicle Heading");
     del_heading     = new TaskShare<int16_t> ("Heading delta");
     roll            = new TaskShare<int16_t> ("Vehicle Roll");
     pitch           = new TaskShare<int16_t> ("Vehicle Pitch");
 
-    // Start Testing BNO055 by creating instance
-    // uint8_t data[106];
-    // uint8_t count;
-    // memset(data, 0, 106);
-    //i2c_driver* p_i2c_driver = new i2c_driver(p_ser_port);
-    // p_i2c_driver -> writeData(0x29, 0x55, 0xFF);
-    // p_i2c_driver -> readData(0x29, 0x00, data, 106);
-    // for(count = 0; count < 106; count++)
-    // {
-    //     *p_ser_port << "Register "<< hex << count << ": " << data[count] << endl;
-    // }
-    // 
-    // 
     // //initilaize two different motor driver pointers to pass into two tasks
     motor_driver* p_motor1 = new motor_driver(p_ser_port, &PORTC, &PORTC, &PORTB, &OCR1B, PC0, PC1, PC2, PB6);
-
+    motor_directive->put(1);
     //USE TIMER AND COUNTER 3
     // this is steering
     servo_driver* p_steering_servo = new servo_driver(p_ser_port, &TCCR3A, &TCCR3B, &ICR3, &OCR3A, 8, 20000, PE3);
@@ -235,10 +224,7 @@ int main (void)
     // make instance of hctl_driver to count external ticks from hctl chip
     hctl_driver* p_hctl = new hctl_driver(p_ser_port, &PORTA, &PORTC, 7, &PORTC, 6);
 
-    //shift_driver* p_local_shift = new shift_driver(p_ser_port, &EICRB, &EIMSK, &PORTE, ISC50, INT5, PE5);
-
-    //p_i2c_driver -> ping(0x29);
-    bno055_driver* bno055_ptr = new bno055_driver(p_ser_port, 0x29);
+    // bno055_driver* bno055_ptr = new bno055_driver(p_ser_port, 0x29);
     
     // this can all be in task_user with an input radius
     // {
@@ -247,35 +233,41 @@ int main (void)
     steering_target->put(calc_angle);
     *p_ser_port << PMS ("Angle is: ") << calc_angle << endl;
     // }
-    
+    int8_t in;
+    in = -30;
+    *p_ser_port << "Test: " << bin << in << endl;
     // Create tasks to control motors, encoders, and IMUs
-    new task_user ("UserInt", task_priority (1), 260, p_ser_port, bno055_ptr);
+    new task_user ("UserInt", task_priority (1), 260, p_ser_port);
+
+    new task_receiver ("REC", task_priority(5), 300, p_ser_port);
 
 
-    new task_imu ("IMU Sensor Task", task_priority(2), 280, p_ser_port, bno055_ptr);
+    // new task_imu ("IMU Sensor Task", task_priority(2), 280, p_ser_port, bno055_ptr);
 
-    new task_motor ("MotorControl", task_priority (2), 280, p_ser_port, p_motor1, p_main_adc, 1);
+    // new task_motor ("MotorControl", task_priority (2), 280, p_ser_port, p_motor1, p_main_adc, 1);
 
     //start encoder and give the highest priority
-    new task_encoder ("EncoderControl", task_priority(5), 280, p_ser_port, p_hctl);
+    // new task_encoder ("EncoderControl", task_priority(5), 280, p_ser_port, p_hctl);
 
-    new task_steering ("SteeringControl", task_priority(3), 280, p_ser_port, p_steering_servo, 1);
+    // new task_steering ("SteeringControl", task_priority(3), 280, p_ser_port, p_steering_servo, 1);
 
 
-    new task_shift ("ShiftControl", task_priority(4), 280, p_ser_port,p_shift_servo, 1);
+    // new task_shift ("ShiftControl", task_priority(3), 280, p_ser_port,p_shift_servo, 1);
     
 
     // create a new PID manager for the motor, with K values of:
     // Proportional = 1, Integral = 0, Derivative = 0, Windup = 0
     // And the default saturation limits
     gear_state -> put(0);
-    motor_directive->put(1);
-    motor_setpoint->put(1020);
-    new task_pid ("PID", task_priority(4), 280, p_ser_port, motor_setpoint, encoder_ticks_per_task, motor_power, 1024, 0, 0, 0, -1023, 1023);
+    
+    // motor_setpoint->put(1020);
+    // new task_pid ("PID", task_priority(3), 280, p_ser_port, motor_setpoint, encoder_ticks_per_task, motor_power, 1024, 0, 0, 0, -1023, 1023);
 
     
-    steering_angle->put(0);
-    new task_pid ("Steering", task_priority(3), 280, p_ser_port, steering_target, del_heading, steering_angle, 1024, 0, 3072, 0, -25, 25);
+    // steering_angle->put(0);
+    // new task_pid ("Steering", task_priority(3), 280, p_ser_port, steering_target, del_heading, steering_angle, 1024, 0, 3072, 0, -25, 25);
+
+    
 
     vTaskStartScheduler ();
 }

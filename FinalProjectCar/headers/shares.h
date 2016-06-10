@@ -90,7 +90,7 @@ extern TaskShare<int16_t>* x_joystick;
 
 extern TaskShare<int16_t>* y_joystick;
 
-extern TaskShare<int8_t>* gear_state;
+extern TaskShare<int16_t>* gear_state;
 
 /* Start IMU variables */
 

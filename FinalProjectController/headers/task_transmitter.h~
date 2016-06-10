@@ -79,7 +79,7 @@ private:
     /// Buffer Outgoing
     char outbuffer[10];
     /// Holder controller data
-    uint16_t reader_data[3];
+    uint16_t reader_data[4];
     /// Speed of the task
     uint16_t task_speed;
     /// Gen purpose
@@ -93,7 +93,15 @@ private:
 
 protected:
     // No protected variables or methods for this class
+    typedef struct {
+        uint16_t x_joystick;
+        uint16_t y_joystick;
+        uint16_t gear_state;
+        char passkey;
+        
+    } Package;
 
+    Package *payload;
 
 public:
     /// Constructor takes the usual task arguments, as well as three shared variables that store the motor setpoint, the steering angle, and the state of the gearbox.
@@ -132,7 +140,14 @@ public:
             return false;
         }
     }
-    
+    void fillStruct(void)
+    {
+        payload -> x_joystick = 0xAAAA;
+        payload -> y_joystick = 0xBBBB;
+        payload -> gear_state = 0xCCCC;
+        payload -> passkey = '*';
+        *p_serial << payload -> x_joystick << endl;
+    }
 };
 
 

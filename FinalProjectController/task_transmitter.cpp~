@@ -272,10 +272,6 @@ void task_transmitter::encodeData()
     //     outbuffer[count] = 'F';
     // }
     
-    // Since the first value is the passkey '*' always place this in the first buff
-    outbuffer[0] = '*';
-    p_local_controller_driver -> read(reader_data);
-    
     return;
 }
 

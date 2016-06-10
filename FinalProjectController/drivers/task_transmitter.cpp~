@@ -86,7 +86,7 @@ void task_transmitter::run (void)
     {
         switch (state)
         {
-        // Pairing Mode Sending "_CON"
+        // Pairing Mode Sending "CONN"
         case (0):
             if (p_ser_bt -> check_for_char ())      // If the user typed a
             {   // character, read
